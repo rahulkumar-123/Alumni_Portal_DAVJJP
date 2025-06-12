@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import messageService from '../services/messageService';
 import groupService from '../services/groupService';
 import useAuth from '../hooks/useAuth';
+import { useSocket } from '../context/SocketContext'; 
 import toast from 'react-hot-toast';
 import Spinner from '../components/common/Spinner';
 import { PaperAirplaneIcon, ArrowLeftIcon } from '@heroicons/react/24/solid';
@@ -10,6 +11,7 @@ import { PaperAirplaneIcon, ArrowLeftIcon } from '@heroicons/react/24/solid';
 export default function GroupChat() {
     const { id: groupId } = useParams();
     const { user: authUser } = useAuth();
+    const socket = useSocket();
     const [group, setGroup] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
@@ -38,20 +40,43 @@ export default function GroupChat() {
         fetchGroupData();
     }, [groupId]);
 
+    useEffect(() => {
+        if (socket) {
+            // Join the specific group's room on the server
+            socket.emit('join_group', groupId);
+
+            // Set up a listener for incoming messages
+            const messageListener = (receivedMessage) => {
+                // Check if the message belongs to the current group
+                if (receivedMessage.group === groupId) {
+                    setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+                }
+            };
+            socket.on('receive_message', messageListener);
+
+            return () => {
+                socket.off('receive_message', messageListener);
+            };
+        }
+    }, [socket, groupId]);
+
     useEffect(scrollToBottom, [messages]);
 
-    const handleSendMessage = async (e) => {
+    const handleSendMessage = (e) => {
         e.preventDefault();
-        if (!newMessage.trim()) return;
+        if (!newMessage.trim() || !socket) return;
+        
+        // Emit a 'send_message' event to the server
+        socket.emit('send_message', {
+            groupId,
+            senderId: authUser.id,
+            text: newMessage,
+        });
 
-        try {
-            const res = await messageService.postMessage(groupId, { text: newMessage });
-            setMessages([...messages, res.data.data]);
-            setNewMessage('');
-        } catch (error) {
-            toast.error("Couldn't send message.");
-        }
+        // Clear the input field immediately for a better UX
+        setNewMessage('');
     };
+
 
     if (loading) return <Spinner />;
     if (!group) return <p>Group not found.</p>;
