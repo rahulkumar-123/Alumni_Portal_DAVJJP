@@ -9,7 +9,7 @@ export const useSocket = () => {
 };
 
 // Connect to the backend server URL
-const SOCKET_URL = "http://localhost:5000";
+const SOCKET_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 
 export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
