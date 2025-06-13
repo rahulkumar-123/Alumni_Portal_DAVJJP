@@ -23,7 +23,7 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000", // Your frontend URL
+        origin: "https://alumni-portal-davjjp.vercel.app/", // Your frontend URL
         methods: ["GET", "POST"]
     }
 });
