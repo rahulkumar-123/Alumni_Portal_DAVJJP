@@ -4,6 +4,7 @@ const PostSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
     title: { type: String, required: [true, 'Please add a title'], trim: true },
     content: { type: String, required: [true, 'Please add content'] },
+    //images: [{ type: String }],
     category: { type: String, required: true, enum: ['Job Opening', 'Article', 'Event', 'News Update'] },
     isApproved: { type: Boolean, default: false },
     comments: [

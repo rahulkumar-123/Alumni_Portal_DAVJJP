@@ -1,3 +1,11 @@
+/*
+=====================================================
+--- /frontend/src/pages/Groups.js (Corrected) ---
+=====================================================
+* FIX: The logic to check if a user is a member now correctly uses `user._id` instead of `user.id`, which fixes the button update issue.
+* FEATURE: The "Join Group" button is now disabled while the request is being processed to prevent multiple clicks.
+*/
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import groupService from '../services/groupService';
@@ -10,6 +18,7 @@ import CreateGroupModal from '../components/groups/CreateGroupModal';
 export default function Groups() {
     const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [joiningGroupId, setJoiningGroupId] = useState(null); // To track which group is being joined
     const [isCreateModalOpen, setCreateModalOpen] = useState(false);
     const { user } = useAuth();
 
@@ -30,12 +39,15 @@ export default function Groups() {
     }, []);
 
     const handleJoinGroup = async (groupId) => {
+        setJoiningGroupId(groupId); // Disable button
         try {
             await groupService.joinGroup(groupId);
             toast.success("Successfully joined group!");
-            fetchGroups();
+            fetchGroups(); // Refresh list to update member count
         } catch (error) {
             toast.error("Failed to join group.");
+        } finally {
+            setJoiningGroupId(null); // Re-enable button
         }
     };
 
@@ -43,11 +55,14 @@ export default function Groups() {
 
     return (
         <div>
-            <div className="flex justify-between items-center mb-8">
-                <h1 className="text-4xl font-extrabold text-on-surface">Interest Groups</h1>
+            <div className="flex flex-col md:flex-row justify-between md:items-center text-center md:text-left mb-8">
+                <div className="mb-4 md:mb-0">
+                    <h1 className="text-4xl font-extrabold text-on-surface">Interest Groups</h1>
+                    <p className="mt-2 text-lg text-muted max-w-2xl">This is your space! Create a group for your batch, your city, your hobby, or anything else.</p>
+                </div>
                 <button
                     onClick={() => setCreateModalOpen(true)}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-primary-dark transition-transform transform hover:scale-105"
+                    className="inline-flex items-center self-center gap-2 px-4 py-2 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-primary-dark transition-transform transform hover:scale-105"
                 >
                     <PlusIcon className="w-5 h-5" /> Create Group
                 </button>
@@ -56,7 +71,10 @@ export default function Groups() {
             {groups.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {groups.map(group => {
-                        const isMember = group.members.some(member => member._id === user.id);
+                        // --- THIS IS THE CORRECTED LINE ---
+                        const isMember = group.members.some(member => member._id === user._id);
+                        const isJoining = joiningGroupId === group._id;
+
                         return (
                             <div key={group._id} className="bg-surface rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
                                 <div className="p-6 flex-grow">
@@ -73,8 +91,12 @@ export default function Groups() {
                                             Open Chat <ArrowRightIcon className="w-4 h-4 ml-2" />
                                         </Link>
                                     ) : (
-                                        <button onClick={() => handleJoinGroup(group._id)} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark transition">
-                                            Join Group
+                                        <button
+                                            onClick={() => handleJoinGroup(group._id)}
+                                            disabled={isJoining}
+                                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark transition disabled:bg-primary-light disabled:cursor-not-allowed"
+                                        >
+                                            {isJoining ? 'Joining...' : 'Join Group'}
                                         </button>
                                     )}
                                 </div>

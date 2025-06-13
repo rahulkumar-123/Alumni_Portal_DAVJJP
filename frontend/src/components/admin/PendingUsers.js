@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import userService from '../../services/userService';
 import toast from 'react-hot-toast';
 import Spinner from '../common/Spinner';
+import { format } from 'date-fns';
 
 export default function PendingUsers() {
     const [users, setUsers] = useState([]);
@@ -46,27 +47,27 @@ export default function PendingUsers() {
     if (loading) return <Spinner />;
 
     return (
-        <div className="bg-white shadow overflow-hidden sm:rounded-md">
+        <div className="bg-surface shadow overflow-hidden sm:rounded-xl">
             <ul className="divide-y divide-gray-200">
                 {users.length > 0 ? users.map((user) => (
                     <li key={user.email}>
                         <div className="px-4 py-4 sm:px-6">
                             <div className="flex items-center justify-between">
-                                <p className="text-sm font-medium text-brand-blue truncate">{user.fullName}</p>
+                                <p className="text-lg font-bold text-primary truncate">{user.fullName}</p>
                                 <div className="ml-2 flex-shrink-0 flex space-x-2">
-                                    <button onClick={() => handleApprove(user._id)} className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Approve</button>
-                                    <button onClick={() => handleDelete(user._id)} className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Reject</button>
+                                    <button onClick={() => handleApprove(user._id)} className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 hover:bg-green-200">Approve</button>
+                                    <button onClick={() => handleDelete(user._id)} className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 hover:bg-red-200">Reject</button>
                                 </div>
                             </div>
-                            <div className="mt-2 sm:flex sm:justify-between">
-                                <div className="sm:flex">
-                                    <p className="flex items-center text-sm text-gray-500">{user.email}</p>
-                                    <p className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">Batch: {user.batchYear}</p>
-                                </div>
+                            <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-2 text-sm text-muted">
+                                <p><strong>Email:</strong> {user.email}</p>
+                                <p><strong>Batch:</strong> {user.batchYear}</p>
+                                <p><strong>Admission No:</strong> {user.admissionNumber}</p>
+                                <p><strong>DOB:</strong> {format(new Date(user.dateOfBirth), 'dd MMM yyyy')}</p>
                             </div>
                         </div>
                     </li>
-                )) : <p className="p-4 text-gray-500">No pending registrations.</p>}
+                )) : <p className="p-4 text-muted">No pending registrations.</p>}
             </ul>
         </div>
     );

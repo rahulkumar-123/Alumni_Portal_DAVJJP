@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AcademicCapIcon, UserGroupIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
 import { useInView } from 'react-intersection-observer';
-import Footer from '../components/layout/Footer';
 
 const notableAlumni = [
     { name: 'Priya Sharma', batch: '2010', achievement: 'CEO of TechSolutions Inc.' },
@@ -12,8 +11,8 @@ const notableAlumni = [
 
 const AnimatedSection = ({ children }) => {
     const { ref, inView } = useInView({
-        triggerOnce: true, 
-        threshold: 0.1, 
+        triggerOnce: true,
+        threshold: 0.1,
     });
 
     return (
@@ -25,14 +24,15 @@ const AnimatedSection = ({ children }) => {
 
 export default function LandingPage() {
     return (
-        <div className="bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {/* Hero Section */}
-            <section className="relative bg-primary text-white text-center py-20 lg:py-40 px-4 overflow-hidden">
-                <div className="absolute inset-0 bg-primary opacity-80 backdrop-blur-sm"></div>
+            <section className="relative text-white text-center py-20 lg:py-40">
+                {/* Darker overlay for better text contrast */}
+                <div className="absolute inset-0 bg-primary/90"></div>
                 <div className="relative z-10">
-                    <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">Welcome to the</h1>
-                    <h2 className="text-5xl md:text-7xl font-extrabold tracking-tight text-secondary mt-2">MN Jha DAV Alumni Portal</h2>
-                    <p className="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-primary-light">
+                    <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight [text-shadow:0_2px_4px_rgba(0,0,0,0.5)]">Welcome to the</h1>
+                    <h2 className="text-5xl md:text-7xl font-extrabold tracking-tight text-secondary mt-2 [text-shadow:0_2px_4px_rgba(0,0,0,0.5)]">MN Jha DAV Alumni Portal</h2>
+                    <p className="mt-6 max-w-2xl mx-auto text-lg md:text-xl text- [text-shadow:0_1px_3px_rgba(0,0,0,0.5)]">
                         Connect with fellow alumni, share opportunities, and stay in touch with your alma mater.
                     </p>
                     <div className="mt-10 flex justify-center gap-4">
@@ -47,7 +47,7 @@ export default function LandingPage() {
             </section>
 
             {/* About DAV JJP Section */}
-            <section id="about" className="py-20 px-4">
+            <section id="about" className="py-20">
                 <AnimatedSection>
                     <div className="container mx-auto max-w-5xl text-center">
                         <h3 className="text-4xl font-bold text-on-surface mb-4">About MN Jha D.A.V. Public School, Jhanjharpur</h3>
@@ -67,7 +67,7 @@ export default function LandingPage() {
             </section>
 
             {/* Notable Alumni Section */}
-            <section id="notable-alumni" className="py-20 px-4 bg-gray-100">
+            <section id="notable-alumni" className="py-20 bg-gray-50 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
                 <AnimatedSection>
                     <div className="container mx-auto max-w-5xl text-center">
                         <h3 className="text-4xl font-bold text-on-surface mb-12">Our Notable Alumni</h3>
@@ -83,9 +83,9 @@ export default function LandingPage() {
                     </div>
                 </AnimatedSection>
             </section>
-
-            {/* Footer Section */}
-            <Footer />
+            <section id="developer">
+                {/* Footer Section */}
+            </section>
         </div>
     );
 }
