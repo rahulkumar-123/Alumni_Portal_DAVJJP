@@ -46,7 +46,7 @@ const upload = multer({
     }
 });
 
-
+// important routes
 // All routes below are protected
 router.use(protect);
 
@@ -55,9 +55,9 @@ router.route('/')
 
 router.route('/profile')
     .put(updateProfile);
-
+// route to update profile picture
 router.route('/profile/picture')
-    .put(upload.single('profileImage'), updateProfilePicture);
+    .put(upload.single('profilePicture'), updateProfilePicture);
 
 router.route('/pending')
     .get(admin, getPendingRegistrations);

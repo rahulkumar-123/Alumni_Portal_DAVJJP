@@ -72,7 +72,6 @@ export default function Profile() {
             setLoading(false);
         }
     };
-
     // Add this function to handle profile picture upload
     const handleProfilePictureChange = async (e) => {
         const file = e.target.files[0];
