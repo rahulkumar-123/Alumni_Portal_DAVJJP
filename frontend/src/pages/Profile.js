@@ -69,7 +69,6 @@ export default function Profile() {
     }
   };
 
-  // Add this function to handle profile picture upload
   const handleProfilePictureChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -92,6 +91,7 @@ export default function Profile() {
       }));
       toast.success("Profile picture updated successfully!");
     } catch (error) {
+      console.error("Upload error:", error);
       toast.error("Failed to update profile picture");
     } finally {
       setUploading(false);
@@ -99,7 +99,7 @@ export default function Profile() {
   };
   console.log("Profile data:", profile);
   if (loading) return <Spinner />;
-
+  
   if (!profile) {
     return (
       <div className="text-center p-8">
@@ -119,10 +119,8 @@ export default function Profile() {
               <img
                 className="h-24 w-24 rounded-full object-cover"
                 src={
-                  profile.profilePicture?.startsWith("http")
+                  profile.profilePicture
                     ? profile.profilePicture
-                    : profile.profilePicture !== "no-photo.jpg"
-                    ? `${API_URL}${profile.profilePicture}`
                     : `https://ui-avatars.com/api/?name=${profile.fullName}&background=8344AD&color=fff`
                 }
                 alt={profile.fullName}
