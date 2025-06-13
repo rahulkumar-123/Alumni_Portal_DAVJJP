@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const sendEmail = require('../utils/sendEmail');
-
+// there is no requirem
 // @access  Private
 exports.getUsers = async (req, res) => {
     try {
@@ -70,6 +70,7 @@ exports.updateProfile = async (req, res) => {
 };
 
 // @access  Private
+// added uplaods folder to the path
 exports.updateProfilePicture = async (req, res) => {
     try {
         if (!req.file) {
@@ -77,7 +78,7 @@ exports.updateProfilePicture = async (req, res) => {
         }
 
         const user = await User.findById(req.user.id);
-
+      //  is this line necessary?
         user.profilePicture = `/${req.file.path.replace(/\\/g, "/")}`; // Normalize path for web
 
         const updatedUser = await user.save();

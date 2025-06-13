@@ -23,7 +23,7 @@ export default function Navbar() {
             setCurrentUser(null);
         }
     }, [user, logout]);
-
+  console.log("Current User :", currentUser);
     const handleLogout = () => {
         logout();
         toast.success('Logged out successfully');
