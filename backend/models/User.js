@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
   facebookProfile: { type: String },
   phoneNumber: { type: String },
   role: { type: String, enum: ['alumni', 'admin'], default: 'alumni' },
-  isApproved: { type: Boolean, default: true },
+  isApproved: { type: Boolean, default: false },
 }, { timestamps: true });
 
 UserSchema.pre('save', async function (next) {
