@@ -19,7 +19,6 @@ const app = express();
 
 // --- NEW, ROBUST CORS CONFIGURATION ---
 const allowedOrigins = [
-    // Replace with your Vercel/DigitalOcean frontend URL (no trailing slash)
     "https://davjjp-alumni-crhfw.ondigitalocean.app", 
     "https://alumni-portal-davjjp.vercel.app",
     "http://localhost:3000"
@@ -71,12 +70,13 @@ io.on('connection', (socket) => {
             });
             let savedMessage = await messageToSave.save();
 
-            savedMessage = await savedMessage.populate('sender', 'fullName profilePicture');
+            // We now populate `batchYear` and `profilePicture` in addition to the other fields.
+            savedMessage = await savedMessage.populate('sender', 'fullName profilePicture batchYear');
 
+            // 2. Broadcast the saved message to everyone in the group's room
             io.to(groupId).emit('receive_message', savedMessage);
         } catch (error) {
             console.error("Error saving or broadcasting message:", error);
-
         }
     });
 
