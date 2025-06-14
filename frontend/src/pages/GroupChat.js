@@ -63,15 +63,36 @@ export default function GroupChat() {
 
     useEffect(scrollToBottom, [messages]);
 
-    const handleSendMessage = (e) => {
+const handleSendMessage = (e) => {
         e.preventDefault();
-        if (!newMessage.trim() || !socket || !authUser) return;
+
+        console.log("--- Sending Message ---");
+
+        // We will now log every check to see where it fails
+        if (!socket) {
+            console.error("Send failed: Socket object does not exist.");
+            toast.error("Chat service not available. Please refresh.");
+            return;
+        }
+
+        if (!socket.connected) {
+            console.error("Send failed: Socket is not connected.");
+            toast.error("You are not connected to the chat. Please try again in a moment.");
+            return;
+        }
+
+        if (!newMessage.trim() || !authUser) {
+            console.error("Send failed: Message is empty or user is not available.");
+            return;
+        }
         
+        console.log("Checks passed. Emitting message to server...");
         socket.emit('send_message', {
             groupId,
-            senderId: authUser._id, // Ensure we use the full user object's ID
+            senderId: authUser._id,
             text: newMessage,
         });
+
         setNewMessage('');
     };
 
