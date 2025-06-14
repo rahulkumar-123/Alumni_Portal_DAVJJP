@@ -18,10 +18,21 @@ const app = express();
 
 
 // --- NEW, ROBUST CORS CONFIGURATION ---
-const corsOptions = {
+const allowedOrigins = [
     // Replace with your Vercel/DigitalOcean frontend URL (no trailing slash)
-    origin: "https://davjjp-alumni-crhfw.ondigitalocean.app", 
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allow all methods
+    "https://davjjp-alumni-crhfw.ondigitalocean.app", 
+    "https://alumni-portal-davjjp.vercel.app",
+    "http://localhost:3000"
+];
+const corsOptions = {
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 };
 app.use(cors(corsOptions));
