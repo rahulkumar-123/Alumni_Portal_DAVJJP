@@ -76,13 +76,11 @@ export default function Profile() {
     const handleProfilePictureChange = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-
         // Basic validation
         if (!file.type.startsWith("image/")) {
             toast.error("Please upload an image file");
             return;
         }
-
         const formData = new FormData();
         formData.append("profilePicture", file);
 
@@ -102,7 +100,6 @@ export default function Profile() {
     };
     console.log("Profile data:", profile);
     if (loading) return <Spinner />;
-
     if (!profile) {
         return (
             <div className="text-center p-8">
@@ -160,7 +157,7 @@ export default function Profile() {
                     >
                         {isEditing ? "Cancel" : "Edit Profile"}
                     </button>
-                </div>
+                      </div>
 
                 <hr className="my-6" />
 
