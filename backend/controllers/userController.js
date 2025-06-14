@@ -32,31 +32,25 @@ exports.getUsers = async (req, res) => {
             data: users
         });
     } catch (error) {
+        console.error("Error in getUsers:", error);
         res.status(500).json({ success: false, message: "Server Error" });
     }
-
-    const users = await query;
-    res.status(200).json({ success: true, count: users.length, data: users });
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Server Error" });
-  }
 };
 
 // @access  Private
 exports.getUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
+    try {
+        const user = await User.findById(req.params.id);
 
-    if (!user || (!user.isApproved && req.user.role !== "admin")) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
+        if (!user || (!user.isApproved && req.user.role !== "admin")) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        res.status(200).json({ success: true, data: user });
+    } catch (error) {
+        console.error("Error in getUser:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
     }
-
-    res.status(200).json({ success: true, data: user });
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Server Error" });
-  }
 };
 
 // @access  Private
@@ -73,51 +67,59 @@ exports.updateProfile = async (req, res) => {
             phoneNumber: req.body.phoneNumber,
         };
 
-        // Remove undefined fields
-        Object.keys(fieldsToUpdate).forEach(key => fieldsToUpdate[key] === undefined && delete fieldsToUpdate[key]);
+        Object.keys(fieldsToUpdate).forEach(key => {
+            if (fieldsToUpdate[key] === undefined) delete fieldsToUpdate[key];
+        });
 
         const user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
             new: true,
             runValidators: true
         });
 
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
         res.status(200).json({ success: true, data: user });
     } catch (error) {
+        console.error("Error in updateProfile:", error);
         res.status(400).json({ success: false, message: error.message });
     }
 };
 
 // @access  Private
-// updated profile picture function to use the new uploadToCloudinary utility
 exports.updateProfilePicture = async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({
-        success: false,
-        message: "Please upload a file",
-      });
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Please upload a file",
+            });
+        }
+
+        const cloudinaryUrl = await uploadToCloudinary(req.file);
+
+        const user = await User.findByIdAndUpdate(
+            req.user.id,
+            { profilePicture: cloudinaryUrl },
+            { new: true, runValidators: true }
+        );
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: user,
+        });
+    } catch (error) {
+        console.error("Error in updateProfilePicture:", error);
+        res.status(400).json({
+            success: false,
+            message: error.message,
+        });
     }
-
-    // Upload to Cloudinary
-    const cloudinaryUrl = await uploadToCloudinary(req.file);
-
-    // Update user profile with Cloudinary URL
-    const user = await User.findByIdAndUpdate(
-      req.user.id,
-      { profilePicture: cloudinaryUrl },
-      { new: true, runValidators: true }
-    );
-
-    res.status(200).json({
-      success: true,
-      data: user,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: error.message,
-    });
-  }
 };
 
 // @access  Private
@@ -139,6 +141,7 @@ exports.getTodaysBirthdays = async (req, res) => {
 
         res.status(200).json({ success: true, count: users.length, data: users });
     } catch (error) {
+        console.error("Error in getTodaysBirthdays:", error);
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };
@@ -147,61 +150,66 @@ exports.getTodaysBirthdays = async (req, res) => {
 
 // @access  Private/Admin
 exports.getPendingRegistrations = async (req, res) => {
-    const users = await User.find({ isApproved: false })
-        .select('+fullName +email +batchYear +admissionNumber +dateOfBirth');
-    res.status(200).json({ success: true, count: users.length, data: users });
+    try {
+        const users = await User.find({ isApproved: false })
+            .select('+fullName +email +batchYear +admissionNumber +dateOfBirth');
+
+        res.status(200).json({ success: true, count: users.length, data: users });
+    } catch (error) {
+        console.error("Error in getPendingRegistrations:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
 };
 
 // @access  Private/Admin
 exports.approveRegistration = async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      { isApproved: true },
-      { new: true }
-    );
-    if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
-    }
     try {
-      await sendEmail({
-        email: user.email,
-        subject: "Your Account has been Approved!",
-        message: `
+        const user = await User.findByIdAndUpdate(
+            req.params.id,
+            { isApproved: true },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        try {
+            await sendEmail({
+                email: user.email,
+                subject: "Your Account has been Approved!",
+                message: `
                     <h1>Welcome, ${user.fullName}!</h1>
                     <p>Your account for the MNJ DAV Alumni Portal has been approved by an administrator.</p>
                     <p>You can now log in and access all the features of the portal.</p>
                     <p>Thank you for joining!</p>
                 `,
-      });
-    } catch (emailError) {
-      console.error("Failed to send approval email:", emailError);
+            });
+        } catch (emailError) {
+            console.error("Failed to send approval email:", emailError);
+        }
+
+        res.status(200).json({ success: true, data: user });
+    } catch (error) {
+        console.error("Error in approveRegistration:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
     }
-    res.status(200).json({ success: true, data: user });
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Server Error" });
-  }
 };
 
 // @access  Private/Admin
 exports.deleteUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
+    try {
+        const user = await User.findById(req.params.id);
 
-    if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        await user.deleteOne();
+
+        res.status(200).json({ success: true, message: "User deleted successfully" });
+    } catch (error) {
+        console.error("Error in deleteUser:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
     }
-
-    await user.deleteOne();
-
-    res
-      .status(200)
-      .json({ success: true, message: "User deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Server Error" });
-  }
 };
