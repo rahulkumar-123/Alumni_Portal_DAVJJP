@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
+import { SocketProvider } from './context/SocketContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import PrivateRoute from './components/PrivateRoute';
@@ -19,13 +20,15 @@ import Feedback from './pages/Feedback';
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="flex flex-col min-h-screen bg-background">
-          <Navbar />
-          <MainContent />
-          <Footer />
-        </div>
-      </Router>
+      <SocketProvider>
+        <Router>
+          <div className="flex flex-col min-h-screen bg-background">
+            <Navbar />
+            <MainContent />
+            <Footer />
+          </div>
+        </Router>
+      </SocketProvider>
       <Toaster position="bottom-right" toastOptions={{
           className: 'bg-on-surface text-white rounded-lg shadow-lg',
           duration: 4000,
@@ -34,7 +37,6 @@ function App() {
   );
 }
 
-// This new component adds padding to every page EXCEPT the landing page
 const MainContent = () => {
   const location = useLocation();
   const isLandingPage = location.pathname === '/';
