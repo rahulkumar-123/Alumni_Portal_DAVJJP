@@ -4,9 +4,7 @@ import useAuth from '../hooks/useAuth';
 
 const SocketContext = createContext();
 
-export const useSocket = () => {
-    return useContext(SocketContext);
-};
+export const useSocket = () => useContext(SocketContext);
 
 // Connect to the backend server URL
 const SOCKET_URL = process.env.REACT_APP_API_URL.replace("/api", "");
