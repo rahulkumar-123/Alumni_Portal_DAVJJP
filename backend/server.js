@@ -86,5 +86,5 @@ app.use('/api/messages', require('./routes/messages'));
 
 
 // --- START THE SERVER ---
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => console.log(`Server with real-time chat running on port ${PORT}`));
