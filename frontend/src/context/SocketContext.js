@@ -38,6 +38,6 @@ export const SocketProvider = ({ children }) => {
     return (
         <SocketContext.Provider value={socket}>
             {children}
-        </Socket.Provider>
+        </SocketContext.Provider>
     );
 };
