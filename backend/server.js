@@ -3,7 +3,6 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
 const connectDB = require('./config/db');
-
 const http = require('http');
 const { Server } = require('socket.io');
 
@@ -25,7 +24,7 @@ const corsOptions = {
     methods: ["GET", "POST", "PUT", "DELETE"], // Allow all methods
     credentials: true
 };
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 // --- CREATE HTTP SERVER & SOCKET.IO INSTANCE ---
 const server = http.createServer(app);
