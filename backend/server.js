@@ -16,16 +16,21 @@ const User = require('./models/User');
 dotenv.config();
 connectDB();
 const app = express();
-app.use(express.json());
-app.use(cors());
 
+
+// --- NEW, ROBUST CORS CONFIGURATION ---
+const corsOptions = {
+    // Replace with your Vercel/DigitalOcean frontend URL (no trailing slash)
+    origin: "https://davjjp-alumni-crhfw.ondigitalocean.app", 
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allow all methods
+    credentials: true
+};
+app.use(cors());
+app.use(express.json());
 // --- CREATE HTTP SERVER & SOCKET.IO INSTANCE ---
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: {
-        origin: "https://davjjp-alumni-crhfw.ondigitalocean.app/", // Your frontend URL
-        methods: ["GET", "POST"]
-    }
+    cors: corsOptions
 });
 
 
