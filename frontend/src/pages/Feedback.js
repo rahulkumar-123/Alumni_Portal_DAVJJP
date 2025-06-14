@@ -26,18 +26,17 @@ export default function Feedback() {
 
     return (
         <div className="max-w-2xl mx-auto">
-            <div className="bg-white shadow-md rounded-lg p-8">
-                <h1 className="text-2xl font-bold text-gray-900 mb-4">Submit Feedback</h1>
-                <p className="text-gray-600 mb-6">We would love to hear your thoughts, suggestions, or concerns.</p>
+            <div className="bg-surface shadow-lg rounded-xl p-8">
+                <h1 className="text-2xl font-bold text-on-surface mb-4">Submit Feedback</h1>
+                <p className="text-muted mb-6">We would love to hear your thoughts, suggestions, or concerns.</p>
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    <input name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} required className="w-full p-2 border rounded-md" />
-                    <textarea name="message" placeholder="Your message" value={formData.message} onChange={handleChange} required rows="5" className="w-full p-2 border rounded-md"></textarea>
-                    <button type="submit" disabled={loading} className="w-full bg-brand-blue text-white py-2 rounded-md hover:bg-blue-800 disabled:bg-blue-300">
-                        {loading ? 'Submitting...' : 'Submit'}
+                    <input name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} required className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />
+                    <textarea name="message" placeholder="Your message" value={formData.message} onChange={handleChange} required rows="5" className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                    <button type="submit" disabled={loading} className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-white bg-primary hover:bg-primary-dark transition-colors disabled:bg-primary-light">
+                        {loading ? 'Submitting...' : 'Submit Feedback'}
                     </button>
                 </form>
             </div>
         </div>
     );
 }
-

@@ -3,8 +3,30 @@ const User = require('../models/User');
 
 // @access  Private
 exports.getPosts = async (req, res) => {
-    const posts = await Post.find({ isApproved: true }).populate('user', 'fullName profilePicture').sort({ createdAt: -1 });
-    res.status(200).json({ success: true, count: posts.length, data: posts });
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 10;
+    const startIndex = (page - 1) * limit;
+
+    try {
+        const total = await Post.countDocuments({ isApproved: true });
+        const posts = await Post.find({ isApproved: true })
+            .populate('user', 'fullName profilePicture role')
+            .sort({ createdAt: -1 })
+            .skip(startIndex)
+            .limit(limit);
+
+        res.status(200).json({
+            success: true,
+            count: posts.length,
+            pagination: {
+                currentPage: page,
+                totalPages: Math.ceil(total / limit)
+            },
+            data: posts
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
 };
 
 // @access  Private
