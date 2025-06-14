@@ -123,7 +123,7 @@ export default function GroupChat() {
                                    {/* Sender's Name and Batch */}
                                    {!isMyMessage && (
                                        <p className="font-bold text-xs mb-1 text-primary-dark">
-                                           {msg.sender?.fullName} ({msg.sender?.batchYear})
+                                           {msg.sender?.fullName}
                                        </p>
                                    )}
                                    <p>{msg.text}</p>
