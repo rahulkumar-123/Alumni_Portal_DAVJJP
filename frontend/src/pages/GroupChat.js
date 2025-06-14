@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import messageService from '../services/messageService';
@@ -8,6 +7,8 @@ import { useSocket } from '../context/SocketContext';
 import toast from 'react-hot-toast';
 import Spinner from '../components/common/Spinner';
 import { PaperAirplaneIcon, ArrowLeftIcon } from '@heroicons/react/24/solid';
+
+const API_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 
 export default function GroupChat() {
     const { id: groupId } = useParams();
@@ -63,30 +64,16 @@ export default function GroupChat() {
 
     useEffect(scrollToBottom, [messages]);
 
-const handleSendMessage = (e) => {
+    const handleSendMessage = (e) => {
         e.preventDefault();
-
-        console.log("--- Sending Message ---");
-
-        // We will now log every check to see where it fails
-        if (!socket) {
-            console.error("Send failed: Socket object does not exist.");
-            toast.error("Chat service not available. Please refresh.");
+        if (!socket || !socket.connected) {
+            toast.error("You are not connected to the chat. Please refresh and try again.");
             return;
         }
-
-        if (!socket.connected) {
-            console.error("Send failed: Socket is not connected.");
-            toast.error("You are not connected to the chat. Please try again in a moment.");
-            return;
-        }
-
         if (!newMessage.trim() || !authUser) {
-            console.error("Send failed: Message is empty or user is not available.");
             return;
         }
         
-        console.log("Checks passed. Emitting message to server...");
         socket.emit('send_message', {
             groupId,
             senderId: authUser._id,
@@ -108,7 +95,6 @@ const handleSendMessage = (e) => {
 
     return (
         <div className="h-[75vh] flex flex-col bg-surface rounded-2xl shadow-2xl">
-            {/* Header */}
             <div className="p-4 border-b flex items-center space-x-4 sticky top-0 bg-surface rounded-t-2xl">
                 <Link to="/groups" className="text-primary hover:text-primary-dark p-2 rounded-full hover:bg-gray-100">
                     <ArrowLeftIcon className="w-6 h-6"/>
@@ -116,19 +102,35 @@ const handleSendMessage = (e) => {
                 <h1 className="text-2xl font-bold text-on-surface">{group.name}</h1>
             </div>
 
-            {/* Messages Area */}
             <div className="flex-1 p-6 overflow-y-auto">
                 {messages.length > 0 ? (
-                    messages.map(msg => (
-                        <div key={msg._id} className={`flex my-2 items-end gap-2 ${msg.sender?._id === authUser._id ? 'justify-end' : 'justify-start'}`}>
-                            <div className={`p-3 rounded-2xl max-w-lg ${msg.sender?._id === authUser._id ? 'bg-primary text-white rounded-br-none' : 'bg-gray-200 text-on-surface rounded-bl-none'}`}>
-                               {msg.sender?._id !== authUser._id && (
-                                   <p className="font-bold text-xs mb-1 text-primary-dark">{msg.sender.fullName}</p>
-                               )}
-                               <p>{msg.text}</p>
+                    messages.map(msg => {
+                        const isMyMessage = msg.sender?._id === authUser?._id;
+                        const profileImageUrl = msg.sender?.profilePicture?.startsWith('http') 
+                            ? msg.sender.profilePicture 
+                            : msg.sender?.profilePicture && msg.sender.profilePicture !== 'no-photo.jpg' 
+                            ? `${API_URL}${msg.sender.profilePicture}` 
+                            : `https://ui-avatars.com/api/?name=${msg.sender?.fullName}&background=8344AD&color=fff`;
+
+                        return (
+                            <div key={msg._id} className={`flex my-2 items-end gap-2 ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
+                                {/* Profile Picture for other users */}
+                                {!isMyMessage && (
+                                    <img src={profileImageUrl} alt={msg.sender?.fullName} className="w-8 h-8 rounded-full object-cover self-start"/>
+                                )}
+
+                                <div className={`p-3 rounded-2xl max-w-lg ${isMyMessage ? 'bg-primary text-white rounded-br-none' : 'bg-gray-200 text-on-surface rounded-bl-none'}`}>
+                                   {/* Sender's Name and Batch */}
+                                   {!isMyMessage && (
+                                       <p className="font-bold text-xs mb-1 text-primary-dark">
+                                           {msg.sender?.fullName} ({msg.sender?.batchYear})
+                                       </p>
+                                   )}
+                                   <p>{msg.text}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))
+                        );
+                    })
                 ) : (
                     <div className="text-center text-muted py-10">
                         <p>No messages yet.</p>
@@ -138,7 +140,6 @@ const handleSendMessage = (e) => {
                 <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Form */}
             <div className="p-4 border-t bg-gray-50 rounded-b-2xl">
                 <form onSubmit={handleSendMessage} className="flex items-center space-x-3">
                     <input
