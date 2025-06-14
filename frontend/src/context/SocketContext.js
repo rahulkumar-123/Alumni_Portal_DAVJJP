@@ -3,25 +3,33 @@ import io from 'socket.io-client';
 import useAuth from '../hooks/useAuth';
 
 const SocketContext = createContext();
-
 export const useSocket = () => useContext(SocketContext);
 
-// Connect to the backend server URL
-const SOCKET_URL = process.env.REACT_APP_API_URL.replace("/api", "");
+let SOCKET_URL;
+if (process.env.NODE_ENV === 'production') {
+    // In production, derive the URL from the REACT_APP_API_URL env variable
+    SOCKET_URL = process.env.REACT_APP_API_URL.replace("/api", "");
+} else {
+    // For local development, use localhost
+    SOCKET_URL = "http://localhost:5000";
+}
 
 export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
     const { user } = useAuth();
 
     useEffect(() => {
-        // Only establish a connection if the user is logged in
         if (user) {
             const newSocket = io(SOCKET_URL);
             setSocket(newSocket);
+            console.log(`Attempting to connect socket to: ${SOCKET_URL}`);
+
+            newSocket.on('connect_error', (err) => {
+                console.error('Socket connection error:', err.message);
+            });
 
             return () => newSocket.close();
         } else {
-            // If there is no user, close any existing socket connection
             if (socket) {
                 socket.close();
                 setSocket(null);
