@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema({
   dateOfBirth: { type: Date, required: [true, 'Please add your date of birth'] },
     profilePicture: {
       type: String,
-      default: "https://ui-avatars.com/api/?background=8344AD&color=fff",
+      default: 'no-photo.jpg',
     },
   bio: { type: String, maxlength: 500 },
   batchYear: { type: Number, required: [true, 'Please add a batch year'] },
