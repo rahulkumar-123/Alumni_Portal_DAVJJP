@@ -177,12 +177,28 @@ exports.approveRegistration = async (req, res) => {
         try {
             await sendEmail({
                 email: user.email,
-                subject: "Your Account has been Approved!",
+                subject: `🎉 ${user.fullName} Welcome Home! Your Alumni Account is Now Active 🙌`,
                 message: `
-                    <h1>Welcome, ${user.fullName}!</h1>
-                    <p>Your account for the MNJ DAV Alumni Portal has been approved by an administrator.</p>
-                    <p>You can now log in and access all the features of the portal.</p>
+                    <h2>Dear ${user.fullName}!</h2>
+                    <p>It’s official; your account on the MNJ DAV Alumni Portal has been approved! 🚀</p>
+                    <p>After all these years, we finally have a place where DAVians from every batch can reconnect, relive memories, and rebuild the bond that never really broke.<br>
+                    No more “yaar uska number hai kya?”<br>
+                    No more lost connections.<br>
+                    Just one portal — and the whole DAV family is a click away.<br>
+                    </p>
+                    <p> Here’s what’s waiting for you inside:<br>
+                    🧑‍🤝‍🧑 Alumni Directory – Search and reconnect with old friends & even stalk old classmates (pyaar se, obviously 😅)<br>
+                    💬 Real-time Group Chats – jaise tiffin time pe hoti thi <br>
+                    📰 Community Feed – Share job openings, news, or just school-time stories<br>
+                    🎂 Birthday cards – kyunki wish toh banta hai na!<br>
+                    👤 Your Profile - batao duniya ko ki DAVian kya katr rahe hai (Nahi bhi kar rahe ho to KAR LENGE! afterall we are DAVians)<br>
+                    👉 Log in now: <a href= "https://alumni-portal-davjjp.vercel.app"> https://alumni-portal-davjjp.vercel.app </a><br>
+                    </p>
+                    <p>
+                    We may not be wearing uniforms anymore, but the memories are still stitched into our hearts.</p>
                     <p>Thank you for joining!</p>
+                    <p> – With nostalgia, warmth, and a lot of samose wali yaadein,<br>
+                    Your MNJ DAV Alumni Family</p>
                 `,
             });
         } catch (emailError) {
