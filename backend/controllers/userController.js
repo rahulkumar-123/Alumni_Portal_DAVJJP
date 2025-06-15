@@ -183,21 +183,21 @@ exports.approveRegistration = async (req, res) => {
       
       <h2 style="color:#007bff;">Dear ${user.fullName},</h2>
 
-      <p style="font-size:16px;">🎉 <strong>It's official</strong> — your MNJ DAV Alumni Portal account has been <span style="color:green;"><strong>approved!</strong></span></p>
+      <p style="font-size:16px;">🎉 <strong>It's official</strong>, your MNJ DAV Alumni Portal account has been <span style="color:green;"><strong>approved!</strong></span></p>
 
       <p style="font-size:15px;">For years we had no place to connect. No platform to say:  
         <br><em>"Arey uska number hai kya?"</em><br>  
-        No way to wish “Happy Birthday!” without a class group full of silence.<br><br>  
+        No way to wish “Happy Birthday!”<br><br>  
         But not anymore.
       </p>
 
-      <p style="font-size:15px;">Now, we’ve got a digital *school corridor* where every DAVian—young or grown, nostalgic or curious—can find their batchmates, long-lost friends, or that one bench partner they never dared message again. 😅</p>
+      <p style="font-size:15px;">Now, we’ve got a digital *school corridor* where every DAVian, young or grown, nostalgic or curious—can find their batchmates, long-lost friends, or that one bench partner they never dared message again. 😅</p>
 
       <hr style="margin:20px 0; border:0; border-top:1px solid #ddd;" />
 
       <p style="font-size:16px;"><strong>✨ What’s waiting for you inside?</strong></p>
       <ul style="padding-left:20px; font-size:15px; line-height:1.6;">
-        <li><strong>🧑‍🤝‍🧑 Alumni Directory:</strong> Stalk friends… pyaar se.</li>
+        <li><strong>🧑‍🤝‍🧑 Alumni Directory:</strong> Connect with your old classmates or seniors</li>
         <li><strong>💬 Real-time Chats:</strong> Like old tiffin gossip sessions, but online.</li>
         <li><strong>📰 Community Feed:</strong> Job openings, memories, memes – sab kuch!</li>
         <li><strong>🎂 Birthday Cards:</strong> Kyunki birthday pe wish na mile toh dukh hota hai!</li>
