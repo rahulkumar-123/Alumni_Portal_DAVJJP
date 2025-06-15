@@ -176,31 +176,56 @@ exports.approveRegistration = async (req, res) => {
 
         try {
             await sendEmail({
-                email: user.email,
-                subject: `🎉 ${user.fullName} Welcome Home! Your Alumni Account is Now Active 🙌`,
-                message: `
-                    <h2>Dear ${user.fullName}!</h2>
-                    <p>It’s official; your account on the MNJ DAV Alumni Portal has been approved! 🚀</p>
-                    <p>After all these years, we finally have a place where DAVians from every batch can reconnect, relive memories, and rebuild the bond that never really broke.<br>
-                    No more “yaar uska number hai kya?”<br>
-                    No more lost connections.<br>
-                    Just one portal — and the whole DAV family is a click away.<br>
-                    </p>
-                    <p> Here’s what’s waiting for you inside:<br>
-                    🧑‍🤝‍🧑 Alumni Directory – Search and reconnect with old friends & even stalk old classmates (pyaar se, obviously 😅)<br>
-                    💬 Real-time Group Chats – jaise tiffin time pe hoti thi <br>
-                    📰 Community Feed – Share job openings, news, or just school-time stories<br>
-                    🎂 Birthday cards – kyunki wish toh banta hai na!<br>
-                    👤 Your Profile - batao duniya ko ki DAVian kya katr rahe hai (Nahi bhi kar rahe ho to KAR LENGE! afterall we are DAVians)<br>
-                    👉 Log in now: <a href= "https://alumni-portal-davjjp.vercel.app"> https://alumni-portal-davjjp.vercel.app </a><br>
-                    </p>
-                    <p>
-                    We may not be wearing uniforms anymore, but the memories are still stitched into our hearts.</p>
-                    <p>Thank you for joining!</p>
-                    <p> – With nostalgia, warmth, and a lot of samose wali yaadein,<br>
-                    Your MNJ DAV Alumni Family</p>
-                `,
-            });
+  email: user.email,
+  subject: `${user.fullName}, Welcome Home! Your MNJ DAV Alumni Account is Now Active 🎉`,
+  message: `
+    <div style="font-family:Segoe UI, Roboto, sans-serif; max-width:600px; margin:auto; padding:20px; border-radius:8px; background:#f9f9f9; color:#333;">
+      
+      <h2 style="color:#007bff;">Dear ${user.fullName},</h2>
+
+      <p style="font-size:16px;">🎉 <strong>It's official</strong> — your MNJ DAV Alumni Portal account has been <span style="color:green;"><strong>approved!</strong></span></p>
+
+      <p style="font-size:15px;">For years we had no place to connect. No platform to say:  
+        <br><em>"Arey uska number hai kya?"</em><br>  
+        No way to wish “Happy Birthday!” without a class group full of silence.<br><br>  
+        But not anymore.
+      </p>
+
+      <p style="font-size:15px;">Now, we’ve got a digital *school corridor* where every DAVian—young or grown, nostalgic or curious—can find their batchmates, long-lost friends, or that one bench partner they never dared message again. 😅</p>
+
+      <hr style="margin:20px 0; border:0; border-top:1px solid #ddd;" />
+
+      <p style="font-size:16px;"><strong>✨ What’s waiting for you inside?</strong></p>
+      <ul style="padding-left:20px; font-size:15px; line-height:1.6;">
+        <li><strong>🧑‍🤝‍🧑 Alumni Directory:</strong> Stalk friends… pyaar se.</li>
+        <li><strong>💬 Real-time Chats:</strong> Like old tiffin gossip sessions, but online.</li>
+        <li><strong>📰 Community Feed:</strong> Job openings, memories, memes – sab kuch!</li>
+        <li><strong>🎂 Birthday Cards:</strong> Kyunki birthday pe wish na mile toh dukh hota hai!</li>
+        <li><strong>👤 Your Profile:</strong> Show what DAVians are up to (ya kya karne wale hai 👀)</li>
+      </ul>
+
+      <p style="margin:25px 0;">
+        <a href="https://alumni-portal-davjjp.vercel.app" 
+           style="background-color:#007bff; color:white; padding:12px 20px; 
+           text-decoration:none; border-radius:5px; display:inline-block; font-weight:bold;">
+          🔓 Log In to the Alumni Portal
+        </a>
+      </p>
+
+      <p style="font-size:15px;">We may not wear uniforms anymore... but those <strong>samose wali yaadein</strong> are stitched into our hearts forever 💙</p>
+
+      <p style="font-size:15px;">Welcome back to the family.</p>
+
+      <p style="font-weight:bold; color:#444;">– With nostalgia and warmth,<br>  
+      Your MNJ DAV Alumni Team</p>
+
+      <hr style="margin:30px 0; border:0; border-top:1px solid #ddd;" />
+
+      <p style="font-size:12px; color:#999;">You received this email because you signed up on our alumni portal.<br>
+      If this wasn’t you, just ignore it – no dant, no detention.</p>
+    </div>
+  `
+});
         } catch (emailError) {
             console.error("Failed to send approval email:", emailError);
         }
