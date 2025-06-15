@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
@@ -16,8 +17,30 @@ import Groups from './pages/Groups';
 import GroupChat from './pages/GroupChat';
 import AdminDashboard from './pages/AdminDashboard';
 import Feedback from './pages/Feedback';
+import Preloader from './components/layout/Preloader'; // This import is correct
 
 function App() {
+  const [showPreloader, setShowPreloader] = useState(true);
+
+  useEffect(() => {
+    // This logic ensures the preloader is only shown once per session
+    const hasLoaded = sessionStorage.getItem('hasLoaded');
+    if (hasLoaded) {
+      setShowPreloader(false);
+    } else {
+      const timer = setTimeout(() => {
+        setShowPreloader(false);
+        sessionStorage.setItem('hasLoaded', 'true');
+      }, 3500); // Preloader will show for 3.5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  // Conditionally render the preloader
+  if (showPreloader) {
+    return <Preloader />;
+  }
+
   return (
     <AuthProvider>
       <SocketProvider>
@@ -37,6 +60,7 @@ function App() {
   );
 }
 
+// This component remains unchanged
 const MainContent = () => {
   const location = useLocation();
   const isLandingPage = location.pathname === '/';
@@ -60,3 +84,4 @@ const MainContent = () => {
 }
 
 export default App;
+
