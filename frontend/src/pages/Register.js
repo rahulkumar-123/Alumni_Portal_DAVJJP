@@ -24,11 +24,11 @@ export default function Register() {
         setLoading(true);
         try {
             for (const key in formData) {
-                if (!formData[key]) {
-                    toast.error(`Please fill out the ${key.replace(/([A-Z])/g, ' $1').toLowerCase()} field.`);
-                    setLoading(false);
-                    return;
-                }
+    if (!formData[key] && key !== 'admissionNumber') {
+        toast.error(`Please fill out the ${key.replace(/([A-Z])/g, ' $1').toLowerCase()} field.`);
+        setLoading(false);
+        return;
+    }
             }
             await authService.register(formData);
             toast.success('Registration successful! Please wait for admin approval.');
@@ -58,7 +58,7 @@ export default function Register() {
                     <input name="email" type="email" placeholder="Email Address" required onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />
                     <input name="password" type="password" placeholder="Password (min 6 characters)" required minLength="6" onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />
                     <input name="batchYear" type="number" placeholder="Batch Year (e.g., 2015)" required onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />
-                    <input name="admissionNumber" type="text" placeholder="Admission Number" required onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />
+                    <input name="admissionNumber" type="text" placeholder="Admission Number (optional)" onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />
                     <div>
                         <label htmlFor="dateOfBirth" className="block text-sm font-medium text-muted mb-1">Date of Birth</label>
                         <input id="dateOfBirth" name="dateOfBirth" type="date" required onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />
