@@ -1,12 +1,10 @@
 import React from 'react';
 import { CakeIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
-// This line defines the base URL for your backend to correctly load images.
 const API_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 
 export default function BirthdayCard({ user, onDismiss }) {
 
-    // THIS IS THE LOGIC THAT WAS MISSING.
     // It determines which image to show: the uploaded one or a default avatar.
     const profileImageUrl = user.profilePicture?.startsWith('http')
         ? user.profilePicture
