@@ -5,7 +5,7 @@ import { formatDistanceToNow } from 'date-fns';
 import CommentSection from './CommentSection';
 import useAuth from '../../hooks/useAuth';
 import postService from '../../services/postService';
-import Linkify from 'react-linkify'; //Need to install
+import Linkify from 'react-linkify';
 
 const API_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 
@@ -14,7 +14,7 @@ export default function PostCard({ post, refreshFeed }) {
     const [showComments, setShowComments] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
 
-    // Define character limit for collapsing post
+    // character limit for collapsing post
     const MAX_LENGTH = 300;
     const isLongPost = post.content.length > MAX_LENGTH;
 
