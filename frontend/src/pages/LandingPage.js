@@ -4,6 +4,7 @@ import { AcademicCapIcon, UserGroupIcon, GlobeAltIcon } from '@heroicons/react/2
 import { useInView } from 'react-intersection-observer';
 
 const notableAlumni = [
+    //Random data
     { name: 'Priya Sharma', batch: '2010', achievement: 'CEO of TechSolutions Inc.' },
     { name: 'Amit Singh', batch: '2008', achievement: 'Lead Scientist at BioGen Labs' },
     { name: 'Anjali Verma', batch: '2012', achievement: 'Award-winning Documentary Filmmaker' },
@@ -25,7 +26,7 @@ const AnimatedSection = ({ children }) => {
 export default function LandingPage() {
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Hero Section */}
+        
             <section className="relative text-white text-center py-20 lg:py-40">
                 {/* Darker overlay for better text contrast */}
                 <div className="absolute inset-0 bg-primary/90"></div>
