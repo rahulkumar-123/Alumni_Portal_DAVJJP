@@ -1,10 +1,3 @@
-/*
-=====================================================
---- /frontend/src/pages/Groups.js (Corrected) ---
-=====================================================
-* FIX: The logic to check if a user is a member now correctly uses `user._id` instead of `user.id`, which fixes the button update issue.
-* FEATURE: The "Join Group" button is now disabled while the request is being processed to prevent multiple clicks.
-*/
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -43,11 +36,11 @@ export default function Groups() {
         try {
             await groupService.joinGroup(groupId);
             toast.success("Successfully joined group!");
-            fetchGroups(); // Refresh list to update member count
+            fetchGroups(); 
         } catch (error) {
             toast.error("Failed to join group.");
         } finally {
-            setJoiningGroupId(null); // Re-enable button
+            setJoiningGroupId(null); 
         }
     };
 
@@ -71,7 +64,7 @@ export default function Groups() {
             {groups.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {groups.map(group => {
-                        // --- THIS IS THE CORRECTED LINE ---
+                    
                         const isMember = group.members.some(member => member._id === user._id);
                         const isJoining = joiningGroupId === group._id;
 
