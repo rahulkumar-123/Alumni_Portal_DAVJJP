@@ -1,12 +1,3 @@
-/*
-=====================================================
---- /frontend/src/components/layout/Navbar.js (Complete & Corrected) ---
-=====================================================
-* This is the full code for the Navbar component.
-* It includes the logic for both desktop and mobile navigation.
-* It fixes the mobile menu not working, including the "Your Profile" and "Sign Out" links.
-* It correctly handles scrolling on the landing page and navigation on other pages.
-*/
 
 import React, { Fragment } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
@@ -129,7 +120,7 @@ export default function Navbar() {
                         </div>
                     </div>
 
-                    {/* --- THIS IS THE CORRECTED MOBILE MENU PANEL --- */}
+                    {/* --- THIS IS THE MOBILE MENU PANEL --- */}
                     <Disclosure.Panel className="sm:hidden">
                         <div className="space-y-1 pt-2 pb-3 px-2">
                             {navigation.map((item) => (
@@ -140,7 +131,7 @@ export default function Navbar() {
                                         href={item.href}
                                         onClick={(e) => {
                                             item.onClick(e, item.href);
-                                            close(); // Close menu after clicking
+                                            close();
                                         }}
                                         className="block rounded-md py-2 px-3 text-base font-medium text-muted hover:bg-gray-100"
                                     >
@@ -151,7 +142,7 @@ export default function Navbar() {
                                         as={NavLink}
                                         key={item.name}
                                         to={item.href}
-                                        onClick={() => close()} // Close menu after clicking
+                                        onClick={() => close()}
                                         className={({ isActive }) =>
                                             classNames(
                                                 isActive ? 'bg-primary-light/50 text-primary-dark' : 'text-muted hover:bg-gray-100',
@@ -166,7 +157,7 @@ export default function Navbar() {
                         </div>
                         <div className="border-t border-gray-200 pt-4 pb-3">
                             {user ? (
-                                // --- LOGGED-IN MOBILE MENU (FIXED) ---
+                                // --- LOGGED-IN MOBILE MENU---
                                 <div className="px-2 space-y-1">
                                     <div className="flex items-center px-3 mb-2">
                                         <div className="flex-shrink-0">
