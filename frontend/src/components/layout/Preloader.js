@@ -1,16 +1,10 @@
-/*
-=====================================================
---- /frontend/src/components/layout/Preloader.js (WOW Version 2.0) ---
-=====================================================
-* This version improves the subtitle animation for a more elegant "writing" effect.
-* The timing of all animations has been adjusted for a smoother sequence.
-*/
+
 
 import React from 'react';
 
 export default function Preloader() {
     const schoolName = "MNJ DAV".split('');
-    const subtitle = "Alumni Portal".split(''); // Split subtitle for animation
+    const subtitle = "Alumni Portal".split('');
 
     return (
         <div className="fixed inset-0 bg-primary flex flex-col justify-center items-center z-50 overflow-hidden">
@@ -62,10 +56,7 @@ export default function Preloader() {
                     ))}
                 </h1>
 
-                {/* The animated line now draws and fades out */}
                 <div className="line-animate mx-auto max-w-xs"></div>
-
-                {/* The subtitle with a new, more elegant letter-by-letter animation */}
                 <p className="mt-4 text-2xl text-primary-light tracking-wider">
                     {subtitle.map((letter, index) => (
                         <span
