@@ -13,9 +13,8 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
         if (user) {
-            // Updated connection options for production robustness
             const newSocket = io(SOCKET_URL, {
-                transports: ['websocket'], // Force WebSocket connection
+                transports: ['websocket'],
                 reconnection: true,
                 reconnectionAttempts: 5,
                 reconnectionDelay: 1000,
