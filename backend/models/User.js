@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
   fullName: { type: String, required: [true, 'Please add a full name'] },
   email: { type: String, required: true, unique: true, match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please add a valid email'] },
   password: { type: String, required: true, minlength: 6, select: false },
-  admissionNumber: { type: String, required: [true, 'Please add an admission number'] },
+  admissionNumber: { type: String },
   dateOfBirth: { type: Date, required: [true, 'Please add your date of birth'] },
     profilePicture: {
       type: String,
