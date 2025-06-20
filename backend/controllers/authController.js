@@ -58,8 +58,9 @@ exports.login = async (req, res) => {
 
 
 exports.getMe = async (req, res) => {
-
-    res.status(200).json({ success: true, data: req.user });
+    const userId = req.user._id;
+    const user = await User.findById(userId).select('+phoneNumber');
+    res.status(200).json({ success: true, data: user});
 };
 
 // Helper to send token response
