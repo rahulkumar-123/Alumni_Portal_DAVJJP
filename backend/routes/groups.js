@@ -3,7 +3,8 @@ const {
     createGroup, 
     getGroups, 
     joinGroup, 
-    getGroupDetails
+    getGroupDetails,
+    isGroupMember
 } = require('../controllers/groupController');
 const { protect } = require('../middleware/authMiddleware');
 const router = express.Router();
@@ -17,6 +18,9 @@ router.route('/')
 
 router.route('/:id')
     .get(getGroupDetails);
+
+router.route('/:id/isGroupMember')
+    .get(isGroupMember);
 
 // This route handles joining a group
 router.route('/:id/join')

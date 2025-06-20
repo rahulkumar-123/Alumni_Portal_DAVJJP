@@ -7,6 +7,7 @@ import { useSocket } from '../context/SocketContext';
 import toast from 'react-hot-toast';
 import Spinner from '../components/common/Spinner';
 import { PaperAirplaneIcon, ArrowLeftIcon } from '@heroicons/react/24/solid';
+import NotMemberModal from '../components/groups/NotMemberModal';
 
 const API_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 
@@ -21,6 +22,14 @@ export default function GroupChat() {
     const [loading, setLoading] = useState(true);
     const messagesEndRef = useRef(null);
 
+    const [isGroupMember, setIsGroupMember] = useState(false);
+    const [isNotMemberModalOpen, setNotMemberModalOpen] = useState(false);
+
+    const CloseNotMemberModal = () => {
+        setNotMemberModalOpen(false);
+        window.location.href = '/groups';
+    };
+
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
@@ -32,13 +41,14 @@ export default function GroupChat() {
             try {
                 const [groupRes, messagesRes] = await Promise.all([
                     groupService.getGroupDetails(groupId),
-                    messageService.getMessages(groupId)
+                    messageService.getMessages(groupId),
                 ]);
                 setGroup(groupRes.data.data);
                 setMessages(messagesRes.data.data);
             } catch (error) {
                 toast.error("Failed to load chat data.");
                 console.error(error);
+                setNotMemberModalOpen(true);
             } finally {
                 setLoading(false);
             }
@@ -62,6 +72,21 @@ export default function GroupChat() {
         }
     }, [socket, groupId]);
 
+    useEffect(() => {
+        const checkGroupMembership = async () => {
+            try {
+                const res = await groupService.isGroupMember(groupId);
+                setIsGroupMember(res.data.isMember);
+                setNotMemberModalOpen(true);
+            } catch (error) {
+                console.error("Error checking group membership:", error);
+                setIsGroupMember(false);
+            }
+        }
+        checkGroupMembership();
+    }, [groupId]);
+
+
     useEffect(scrollToBottom, [messages]);
 
     const handleSendMessage = (e) => {
@@ -84,6 +109,7 @@ export default function GroupChat() {
     };
 
     if (loading) return <Spinner />;
+
     if (!group) return (
         <div className="text-center py-20">
             <h2 className="text-2xl font-bold text-muted">Group not found.</h2>
@@ -92,6 +118,15 @@ export default function GroupChat() {
             </Link>
         </div>
     );
+
+    if (!isGroupMember && !loading) {
+        return (
+            <NotMemberModal
+                isOpen={isNotMemberModalOpen}
+                onClose={CloseNotMemberModal}
+            />
+        );
+    }
 
     return (
         <div className="h-[75vh] flex flex-col bg-surface rounded-2xl shadow-2xl">
