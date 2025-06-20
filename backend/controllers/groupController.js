@@ -59,3 +59,17 @@ exports.getGroupDetails = async (req, res) => {
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };
+
+// checks if the user is a member of the group
+exports.isGroupMember = async (req, res) => {
+    try {
+        const group = await Group.findById(req.params.id);
+        if (!group) {
+            return res.status(404).json({ success: false, message: 'Group not found.' });
+        }
+        const isMember = group.members.includes(req.user.id);
+        res.status(200).json({ success: true, isMember });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+}

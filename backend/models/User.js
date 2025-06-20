@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
   linkedInProfile: { type: String },
   instagramProfile: { type: String },
   facebookProfile: { type: String },
-  phoneNumber: { type: String },
+  phoneNumber: { type: String, select: false },
   role: { type: String, enum: ['alumni', 'admin'], default: 'alumni' },
   isApproved: { type: Boolean, default: false },
 }, { timestamps: true });
