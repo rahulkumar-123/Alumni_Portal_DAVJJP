@@ -33,51 +33,19 @@ exports.getPosts = async (req, res) => {
 exports.createPost = async (req, res) => {
     try {
         req.body.user = req.user.id;
-        // All posts are auto-approved (no approval required)
         req.body.isApproved = true;
 
         const post = await Post.create(req.body);
 
-        res.status(201).json({
-            success: true,
-            data: post,
-            message: 'Post created successfully.'
-        });
+        const message = req.user.role === 'Post created successfully.';
+
+        res.status(201).json({ success: true, data: post, message });
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });
     }
 };
 
-// @access  Private
-exports.updatePost = async (req, res) => {
-    try {
-        let post = await Post.findById(req.params.id);
 
-        if (!post) {
-            return res.status(404).json({ success: false, message: 'Post not found' });
-        }
-
-        if (post.user.toString() !== req.user.id && req.user.role !== 'admin') {
-            return res.status(401).json({ success: false, message: 'Not authorized to update this post' });
-        }
-
-        // All posts remain approved after update (no re-approval required)
-        req.body.isApproved = true;
-
-        post = await Post.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true
-        });
-
-        res.status(200).json({
-            success: true,
-            data: post,
-            message: 'Post updated successfully.'
-        });
-    } catch (error) {
-        res.status(400).json({ success: false, message: error.message });
-    }
-};
 
 // @access  Private
 exports.deletePost = async (req, res) => {
@@ -102,15 +70,15 @@ exports.deletePost = async (req, res) => {
 };
 
 
+// --- Admin specific post controllers ---
+
 // @access  Private/Admin
-// Note: This function not be needed anymore since all posts are auto-approved
 exports.getPendingPosts = async (req, res) => {
     const posts = await Post.find({ isApproved: false }).populate('user', 'fullName');
     res.status(200).json({ success: true, count: posts.length, data: posts });
 };
 
 // @access  Private/Admin
-// Note: This function not needed anymore since all posts are auto-approved
 exports.approvePost = async (req, res) => {
     try {
         const post = await Post.findByIdAndUpdate(req.params.id, { isApproved: true }, { new: true });
