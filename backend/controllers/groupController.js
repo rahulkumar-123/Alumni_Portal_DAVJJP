@@ -25,7 +25,7 @@ exports.getGroups = async (req, res) => {
     try {
         const groups = await Group.find()
             .populate('creator', 'fullName')
-            .populate('members', '_id fullName profilePicture'); // <-- UPDATED
+            .populate('members', '_id fullName profilePicture');
         res.status(200).json({ success: true, data: groups });
     } catch (error) {
         res.status(500).json({ success: false, message: "Server Error" });
