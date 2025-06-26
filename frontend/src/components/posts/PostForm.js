@@ -7,7 +7,10 @@ export default function PostForm({ onPostCreated }) {
     const handleChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value }); };
     const handleSubmit = async (e) => {
         e.preventDefault(); setLoading(true);
-        try { await postService.createPost(formData); toast.success('Post submitted for approval!'); setFormData({ title: '', content: '', category: 'News Update' }); onPostCreated(); } catch (error) { toast.error("Failed to create post."); } finally { setLoading(false); }
+        try {
+            await postService.createPost(formData);
+            toast.success('Post created successfully!'); setFormData({ title: '', content: '', category: 'News Update' }); onPostCreated();
+        } catch (error) { toast.error("Failed to create post."); } finally { setLoading(false); }
     };
     return (<form onSubmit={handleSubmit} className="space-y-4">
         <input name="title" placeholder="Title for your post..." value={formData.title} onChange={handleChange} required className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />

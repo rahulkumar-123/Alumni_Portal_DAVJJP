@@ -8,8 +8,8 @@ exports.getPosts = async (req, res) => {
     const startIndex = (page - 1) * limit;
 
     try {
-        const total = await Post.countDocuments({ isApproved: true });
-        const posts = await Post.find({ isApproved: true })
+        const total = await Post.countDocuments();
+        const posts = await Post.find()
             .populate('user', 'fullName profilePicture role')
             .sort({ createdAt: -1 })
             .skip(startIndex)
@@ -33,16 +33,16 @@ exports.getPosts = async (req, res) => {
 exports.createPost = async (req, res) => {
     try {
         req.body.user = req.user.id;
-        // Admin posts are auto-approved
-        if (req.user.role === 'admin') {
-            req.body.isApproved = true;
-        }
+        // All posts are auto-approved (no approval required)
+        req.body.isApproved = true;
 
         const post = await Post.create(req.body);
 
-        const message = req.user.role === 'admin' ? 'Post created successfully.' : 'Post submitted for approval.';
-
-        res.status(201).json({ success: true, data: post, message });
+        res.status(201).json({
+            success: true,
+            data: post,
+            message: 'Post created successfully.'
+        });
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });
     }
@@ -61,24 +61,23 @@ exports.updatePost = async (req, res) => {
             return res.status(401).json({ success: false, message: 'Not authorized to update this post' });
         }
 
-        // Admin auto approves on edit, user posts need re-approval
-        if (req.user.role !== 'admin') {
-            req.body.isApproved = false;
-        }
+        // All posts remain approved after update (no re-approval required)
+        req.body.isApproved = true;
 
         post = await Post.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true
         });
 
-        const message = req.user.role === 'admin' ? 'Post updated successfully.' : 'Post updated and submitted for re-approval.';
-
-        res.status(200).json({ success: true, data: post, message });
+        res.status(200).json({
+            success: true,
+            data: post,
+            message: 'Post updated successfully.'
+        });
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });
     }
 };
-
 
 // @access  Private
 exports.deletePost = async (req, res) => {
@@ -103,15 +102,15 @@ exports.deletePost = async (req, res) => {
 };
 
 
-// --- Admin specific post controllers ---
-
 // @access  Private/Admin
+// Note: This function not be needed anymore since all posts are auto-approved
 exports.getPendingPosts = async (req, res) => {
     const posts = await Post.find({ isApproved: false }).populate('user', 'fullName');
     res.status(200).json({ success: true, count: posts.length, data: posts });
 };
 
 // @access  Private/Admin
+// Note: This function not needed anymore since all posts are auto-approved
 exports.approvePost = async (req, res) => {
     try {
         const post = await Post.findByIdAndUpdate(req.params.id, { isApproved: true }, { new: true });
@@ -178,5 +177,3 @@ exports.deleteComment = async (req, res) => {
         res.status(500).json({ success: false, message: 'Server Error' });
     }
 };
-
-
