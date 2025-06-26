@@ -16,9 +16,10 @@ export default function Footer() {
         <footer className="bg-[#111827] text-gray-400">
             <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8 relative">
                 <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-                    <div className="text-sm">
+                    <div className="text-sm gap-4 flex flex-col md:flex-row items-center">
                         <p>&copy; {new Date().getFullYear()} MN Jha DAV Alumni Association.</p>
                         <Link to="/privacy-policy" className="hover:text-white hover:underline">Privacy Policy</Link>
+                        <Link to="/feedback" className="hover:text-white hover:underline">Feedback</Link>
                     </div>
 
                     <div className="flex items-center gap-4 mt-4 md:mt-0">

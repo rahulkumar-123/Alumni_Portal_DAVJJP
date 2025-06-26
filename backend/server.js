@@ -8,7 +8,7 @@ const { Server } = require('socket.io');
 
 // Import the Message model to save chats to the database
 const Message = require('./models/Message');
-const User = require('./models/User');
+// const User = require('./models/User');
 
 
 // --- INITIAL SETUP ---
@@ -21,7 +21,8 @@ const app = express();
 const allowedOrigins = [
     "https://davjjp-alumni-crhfw.ondigitalocean.app", 
     "https://alumni-portal-davjjp.vercel.app",
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "http://192.168.9.35:3000",
 ];
 const corsOptions = {
     origin: function (origin, callback) {

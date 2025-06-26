@@ -102,6 +102,47 @@ exports.deletePost = async (req, res) => {
     }
 };
 
+// @access  Private
+exports.toggleLike = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if (!post) {
+            return res.status(404).json({ success: false, message: 'Post not found' });
+        }
+
+        const alreadyLiked = post.likes.some(like => like.user.toString() === req.user.id);
+
+        if (alreadyLiked) {
+            // Unlike the post
+            post.likes = post.likes.filter(like => like.user.toString() !== req.user.id);
+        } else {
+            // Like the post
+            post.likes.push({ user: req.user.id });
+        }
+
+        await post.save();
+
+        res.status(200).json({ success: true, data: post.likes });
+
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
+};
+
+exports.myLikeStatus = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ success: false, message: 'Post not found' });
+        }
+        const liked = post.likes.some(like => like.user.toString() === req.user.id);
+        res.status(200).json({ success: true, liked });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
+};
+
 
 // --- Admin specific post controllers ---
 

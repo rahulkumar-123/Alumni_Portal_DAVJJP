@@ -16,7 +16,9 @@ const {
     getPendingPosts,
     addComment,
     deleteComment,
-    approvePost
+    approvePost,
+    toggleLike,
+    myLikeStatus
 } = require('../controllers/postController');
 const { protect } = require('../middleware/authMiddleware');
 const { admin } = require('../middleware/adminMiddleware');
@@ -29,6 +31,7 @@ router.route('/')
     .post(createPost);
 
 router.route('/:id/comment').post(addComment);
+router.route('/:id/like').post(toggleLike).get(myLikeStatus);
 router.route('/:id/comment/:comment_id').delete(deleteComment);
 
 router.route('/pending')
