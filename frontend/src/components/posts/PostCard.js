@@ -11,7 +11,7 @@ import AlumniDetailModal from '../directory/AlumniDetailModal';
 const API_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 
 export default function PostCard({ post, refreshFeed }) {
-    const { isAdmin } = useAuth();
+    const { user: loggedInUser, isAdmin } = useAuth();
     const [showComments, setShowComments] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -22,6 +22,7 @@ export default function PostCard({ post, refreshFeed }) {
 
     const toggleExpanded = () => setIsExpanded(!isExpanded);
 
+    const canDelete = isAdmin || (loggedInUser && loggedInUser._id === post.user?._id);
     const handleDelete = async () => {
         if (window.confirm("Are you sure you want to delete this post?")) {
             try {
@@ -62,7 +63,7 @@ export default function PostCard({ post, refreshFeed }) {
                         </div>
                     </button>
                     <span className="ml-auto bg-primary-light/20 text-primary-dark text-xs font-semibold px-2.5 py-1 rounded-full">{post.category}</span>
-                    {isAdmin && (
+                    {canDelete && (
                         <button onClick={handleDelete} className="ml-auto p-2 text-muted hover:text-red-500 rounded-full hover:bg-red-50 transition">
                             <TrashIcon className="w-5 h-5" />
                         </button>

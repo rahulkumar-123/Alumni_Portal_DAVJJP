@@ -25,7 +25,7 @@ const approvePost = (id) => {
     return api.put(`/posts/approve/${id}`);
 };
 const addComment = (postId, commentData) => api.post(`/posts/${postId}/comment`, commentData);
-const deleteComment = (postId, commentId) => api.delete(`/posts/${postId}/comment/${commentId}`);
+//const deleteComment = (postId, commentId) => api.delete(`/posts/${postId}/comment/${commentId}`);
 
 
 const postService = {
