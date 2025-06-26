@@ -10,7 +10,7 @@ exports.getPosts = async (req, res) => {
     try {
         const total = await Post.countDocuments();
         const posts = await Post.find()
-            .populate('user', 'fullName profilePicture role')
+            .populate('user')
             .sort({ createdAt: -1 })
             .skip(startIndex)
             .limit(limit);
@@ -116,31 +116,28 @@ exports.addComment = async (req, res) => {
         res.status(400).json({ success: false, message: error.message });
     }
 };
-
-// @access  Private
 exports.deleteComment = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
         if (!post) {
             return res.status(404).json({ success: false, message: 'Post not found' });
         }
-
+        
         const comment = post.comments.find(c => c.id === req.params.comment_id);
-
         if (!comment) {
             return res.status(404).json({ success: false, message: 'Comment not found' });
         }
-
+        
         // Check if user is the comment owner or an admin
         if (comment.user.toString() !== req.user.id && req.user.role !== 'admin') {
-            return res.status(401).json({ success: false, message: 'Not authorized' });
+             return res.status(401).json({ success: false, message: 'Not authorized' });
         }
 
         post.comments = post.comments.filter(c => c.id !== req.params.comment_id);
         await post.save();
-
-        res.status(200).json({ success: true, data: {} });
-
+        
+        // Return the updated list of comments for the frontend to re-render
+        res.status(200).json({ success: true, data: post.comments });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Server Error' });
     }

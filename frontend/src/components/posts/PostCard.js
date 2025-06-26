@@ -6,6 +6,7 @@ import CommentSection from './CommentSection';
 import useAuth from '../../hooks/useAuth';
 import postService from '../../services/postService';
 import Linkify from 'react-linkify';
+import AlumniDetailModal from '../directory/AlumniDetailModal';
 
 const API_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 
@@ -13,6 +14,7 @@ export default function PostCard({ post, refreshFeed }) {
     const { isAdmin } = useAuth();
     const [showComments, setShowComments] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     // character limit for collapsing post
     const MAX_LENGTH = 300;
@@ -47,16 +49,18 @@ export default function PostCard({ post, refreshFeed }) {
         <div className="bg-surface rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl">
             <div className="p-5">
                 <div className="flex items-center mb-4">
-                    <img className="h-12 w-12 rounded-full mr-4 object-cover" src={profileImageUrl} alt={post.user.fullName} />
-                    <div className="flex-1">
-                        <p className="font-bold text-on-surface">{post.user?.fullName}</p>
-                        <div className="flex items-center">
-                            <p className="text-sm text-muted">{formatDistanceToNow(new Date(post.createdAt))} ago</p>
-                            {post.user.role === 'admin' && (
-                                <span className="ml-2 bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded-full">Admin</span>
-                            )}
+                    <button onClick={() => setSelectedUser(post.user)} className="flex items-center text-left hover:opacity-80 transition-opacity">
+                        <img className="h-12 w-12 rounded-full mr-4 object-cover" src={profileImageUrl} alt={post.user.fullName} />
+                        <div className="flex-1">
+                            <p className="font-bold text-on-surface">{post.user?.fullName}</p>
+                            <div className="flex items-center">
+                                <p className="text-sm text-muted">{formatDistanceToNow(new Date(post.createdAt))} ago</p>
+                                {post.user.role === 'admin' && (
+                                    <span className="ml-2 bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded-full">Admin</span>
+                                )}
+                            </div>
                         </div>
-                    </div>
+                    </button>
                     <span className="ml-auto bg-primary-light/20 text-primary-dark text-xs font-semibold px-2.5 py-1 rounded-full">{post.category}</span>
                     {isAdmin && (
                         <button onClick={handleDelete} className="ml-auto p-2 text-muted hover:text-red-500 rounded-full hover:bg-red-50 transition">
@@ -92,6 +96,7 @@ export default function PostCard({ post, refreshFeed }) {
             </div>
 
             {showComments && <CommentSection postId={post._id} comments={post.comments} onCommentPosted={refreshFeed} />}
+            {selectedUser && <AlumniDetailModal user={selectedUser} onClose={() => setSelectedUser(null)} />}
         </div>
     );
 }
