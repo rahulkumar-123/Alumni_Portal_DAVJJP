@@ -18,7 +18,6 @@ export default function Dashboard() {
     const [hasMore, setHasMore] = useState(true);
     const observer = useRef();
 
-    // This function fetches posts for a specific page
     const fetchPosts = useCallback(async (pageNum, shouldRefresh = false) => {
         setLoading(true);
         try {
@@ -56,8 +55,12 @@ export default function Dashboard() {
     }, [loading, hasMore]);
 
     const handleDataRefresh = () => {
-        setPosts([]);
-        setPage(1);
+        if (page === 1) {
+            fetchPosts(1, true);
+        } else {
+            setPosts([]);
+            setPage(1);
+        }
     };
 
     const dismissBirthday = (userId) => {
