@@ -35,8 +35,7 @@ const postService = {
     deletePost,
     getPendingPosts,
     approvePost,
-    addComment,
-    deleteComment
+    addComment
 };
 
 export default postService;

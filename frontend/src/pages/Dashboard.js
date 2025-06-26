@@ -14,7 +14,6 @@ export default function Dashboard() {
     const [birthdays, setBirthdays] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // State specifically for infinite scroll
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const observer = useRef();
@@ -64,10 +63,10 @@ export default function Dashboard() {
     const dismissBirthday = (userId) => {
         setBirthdays(birthdays.filter(b => b._id !== userId));
     };
+
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row gap-8">
-                {/* Sidebar: Birthdays (Order 1 on mobile, Order 2 on desktop) */}
                 <div className="w-full lg:w-1/3 order-1 lg:order-2 space-y-6">
                     <div className="bg-surface p-6 rounded-xl shadow-lg sticky top-24">
                         <h2 className="text-2xl font-bold text-on-surface mb-4">Happy Birthday! 🎂</h2>
@@ -81,7 +80,6 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                {/* Main Content: Post Feed (Order 2 on mobile, Order 1 on desktop) */}
                 <div className="w-full lg:w-2/3 order-2 lg:order-1 space-y-6">
                     <div className="bg-surface p-6 rounded-xl shadow-lg">
                         <h2 className="text-2xl font-bold text-on-surface mb-4">Create a Post</h2>

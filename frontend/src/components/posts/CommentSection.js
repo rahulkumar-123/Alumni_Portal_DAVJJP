@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import postService from '../../services/postService';
 import toast from 'react-hot-toast';
-import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
+import { PaperAirplaneIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { formatDistanceToNowStrict } from 'date-fns';
+import useAuth from '../../hooks/useAuth';
 
 export default function CommentSection({ postId, comments: initialComments, onCommentPosted }) {
+    const { user, isAdmin } = useAuth();
     const [comments, setComments] = useState(initialComments || []);
     const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(false);
@@ -43,17 +45,24 @@ export default function CommentSection({ postId, comments: initialComments, onCo
                 {comments
                     .slice()
                     .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-                    .map(comment => (
-                        <div key={comment._id} className="bg-white p-3 rounded-lg shadow-sm">
-                            <div className="flex justify-between items-baseline">
-                                <p className="font-bold text-sm text-on-surface">{comment.name}</p>
-                                <p className="text-xs text-muted">{formatDistanceToNowStrict(new Date(comment.createdAt))} ago</p>
+                    .map(comment => {
+                        const canDelete = user?._id === comment.user || isAdmin;
+                        return (
+                            <div key={comment._id} className="bg-white p-3 rounded-lg shadow-sm group relative">
+                                <div className="flex justify-between items-baseline">
+                                    <p className="font-bold text-sm text-on-surface">{comment.name}</p>
+                                    <p className="text-xs text-muted">{formatDistanceToNowStrict(new Date(comment.createdAt))} ago</p>
+                                </div>
+                                <p className="text-on-surface mt-1">{comment.text}</p>
+                                {canDelete && (
+                                    <button onClick={() => { /* handleDeleteComment logic would go here */ }} className="absolute top-2 right-2 p-1 text-gray-400 rounded-full opacity-0 group-hover:opacity-100 hover:bg-red-50 hover:text-red-500 transition-opacity">
+                                        <TrashIcon className="w-4 h-4" />
+                                    </button>
+                                )}
                             </div>
-                            <p className="text-on-surface mt-1">{comment.text}</p>
-                        </div>
-                    ))}
+                        )
+                    })}
             </div>
         </div>
     );
 }
-
