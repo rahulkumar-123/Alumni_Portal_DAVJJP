@@ -7,12 +7,15 @@ import Spinner from '../components/common/Spinner';
 import { UsersIcon, ArrowRightIcon, PlusIcon } from '@heroicons/react/24/solid';
 import useAuth from '../hooks/useAuth';
 import CreateGroupModal from '../components/groups/CreateGroupModal';
+import GroupMembersModal from '../components/groups/GroupMembersModal'; // <-- NEW IMPORT
 
 export default function Groups() {
     const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(true);
     const [joiningGroupId, setJoiningGroupId] = useState(null); // To track which group is being joined
     const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+    const [viewingMembersOf, setViewingMembersOf] = useState(null); // <-- NEW STATE
+
     const { user } = useAuth();
 
     const fetchGroups = async () => {
@@ -36,11 +39,11 @@ export default function Groups() {
         try {
             await groupService.joinGroup(groupId);
             toast.success("Successfully joined group!");
-            fetchGroups(); 
+            fetchGroups();
         } catch (error) {
             toast.error("Failed to join group.");
         } finally {
-            setJoiningGroupId(null); 
+            setJoiningGroupId(null);
         }
     };
 
@@ -64,7 +67,7 @@ export default function Groups() {
             {groups.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {groups.map(group => {
-                    
+
                         const isMember = group.members.some(member => member._id === user._id);
                         const isJoining = joiningGroupId === group._id;
 
@@ -75,10 +78,10 @@ export default function Groups() {
                                     <p className="text-muted mt-2 flex-grow">{group.description}</p>
                                 </div>
                                 <div className="bg-gray-50 p-4 flex justify-between items-center rounded-b-xl">
-                                    <div className="flex items-center text-muted">
+                                    <button disabled={!isMember} onClick={() => isMember && setViewingMembersOf(group)} className="flex items-center text-muted disabled:cursor-default enabled:hover:text-primary transition-colors">
                                         <UsersIcon className="w-5 h-5 mr-2" />
                                         <span className="text-sm font-medium">{group.members.length} members</span>
-                                    </div>
+                                    </button>
                                     {isMember ? (
                                         <Link to={`/groups/${group._id}`} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-secondary hover:bg-opacity-80 transition">
                                             Open Chat <ArrowRightIcon className="w-4 h-4 ml-2" />
@@ -105,6 +108,8 @@ export default function Groups() {
             )}
 
             {isCreateModalOpen && <CreateGroupModal setIsOpen={setCreateModalOpen} onGroupCreated={fetchGroups} />}
+            {viewingMembersOf && <GroupMembersModal group={viewingMembersOf} onClose={() => setViewingMembersOf(null)} onLeaveGroup={fetchGroups} />}
+
         </div>
     );
 }
