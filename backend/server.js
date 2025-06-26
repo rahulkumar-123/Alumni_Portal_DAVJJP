@@ -22,7 +22,7 @@ const allowedOrigins = [
     "https://davjjp-alumni-crhfw.ondigitalocean.app", 
     "https://alumni-portal-davjjp.vercel.app",
     "http://localhost:3000",
-    "http://192.168.9.35:3000",
+    "https://alumni-davjjp.netlify.app"
 ];
 const corsOptions = {
     origin: function (origin, callback) {

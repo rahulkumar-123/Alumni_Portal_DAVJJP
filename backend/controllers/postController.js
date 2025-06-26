@@ -8,9 +8,9 @@ exports.getPosts = async (req, res) => {
     const startIndex = (page - 1) * limit;
 
     try {
-        const total = await Post.countDocuments({ isApproved: true });
+        const total = await Post.countDocuments();
         const posts = await Post.find({ isApproved: true })
-            .populate('user', 'fullName profilePicture role')
+            .populate('user')
             .sort({ createdAt: -1 })
             .skip(startIndex)
             .limit(limit);
@@ -33,14 +33,11 @@ exports.getPosts = async (req, res) => {
 exports.createPost = async (req, res) => {
     try {
         req.body.user = req.user.id;
-        // Admin posts are auto-approved
-        if (req.user.role === 'admin') {
-            req.body.isApproved = true;
-        }
+        req.body.isApproved = true;
 
         const post = await Post.create(req.body);
 
-        const message = req.user.role === 'admin' ? 'Post created successfully.' : 'Post submitted for approval.';
+        const message = req.user.role === 'Post created successfully.';
 
         res.status(201).json({ success: true, data: post, message });
     } catch (error) {
@@ -48,36 +45,6 @@ exports.createPost = async (req, res) => {
     }
 };
 
-// @access  Private
-exports.updatePost = async (req, res) => {
-    try {
-        let post = await Post.findById(req.params.id);
-
-        if (!post) {
-            return res.status(404).json({ success: false, message: 'Post not found' });
-        }
-
-        if (post.user.toString() !== req.user.id && req.user.role !== 'admin') {
-            return res.status(401).json({ success: false, message: 'Not authorized to update this post' });
-        }
-
-        // Admin auto approves on edit, user posts need re-approval
-        if (req.user.role !== 'admin') {
-            req.body.isApproved = false;
-        }
-
-        post = await Post.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true
-        });
-
-        const message = req.user.role === 'admin' ? 'Post updated successfully.' : 'Post updated and submitted for re-approval.';
-
-        res.status(200).json({ success: true, data: post, message });
-    } catch (error) {
-        res.status(400).json({ success: false, message: error.message });
-    }
-};
 
 
 // @access  Private
@@ -190,34 +157,29 @@ exports.addComment = async (req, res) => {
         res.status(400).json({ success: false, message: error.message });
     }
 };
+// exports.deleteComment = async (req, res) => {
+//     try {
+//         const post = await Post.findById(req.params.id);
+//         if (!post) {
+//             return res.status(404).json({ success: false, message: 'Post not found' });
+//         }
 
-// @access  Private
-exports.deleteComment = async (req, res) => {
-    try {
-        const post = await Post.findById(req.params.id);
-        if (!post) {
-            return res.status(404).json({ success: false, message: 'Post not found' });
-        }
+//         const comment = post.comments.find(c => c.id === req.params.comment_id);
+//         if (!comment) {
+//             return res.status(404).json({ success: false, message: 'Comment not found' });
+//         }
 
-        const comment = post.comments.find(c => c.id === req.params.comment_id);
+//         // Check if user is the comment owner or an admin
+//         if (comment.user.toString() !== req.user.id && req.user.role !== 'admin') {
+//             return res.status(401).json({ success: false, message: 'Not authorized' });
+//         }
 
-        if (!comment) {
-            return res.status(404).json({ success: false, message: 'Comment not found' });
-        }
+//         post.comments = post.comments.filter(c => c.id !== req.params.comment_id);
+//         await post.save();
 
-        // Check if user is the comment owner or an admin
-        if (comment.user.toString() !== req.user.id && req.user.role !== 'admin') {
-            return res.status(401).json({ success: false, message: 'Not authorized' });
-        }
-
-        post.comments = post.comments.filter(c => c.id !== req.params.comment_id);
-        await post.save();
-
-        res.status(200).json({ success: true, data: {} });
-
-    } catch (error) {
-        res.status(500).json({ success: false, message: 'Server Error' });
-    }
-};
-
-
+//         // Return the updated list of comments for the frontend to re-render
+//         res.status(200).json({ success: true, data: post.comments });
+//     } catch (error) {
+//         res.status(500).json({ success: false, message: 'Server Error' });
+//     }
+// };

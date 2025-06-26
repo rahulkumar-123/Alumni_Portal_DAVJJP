@@ -43,6 +43,9 @@ router.route('/approve/:id')
 router.route('/:id')
     .put(updatePost)
     .delete(deletePost);
+    
+// router.route('/:id/comment/:comment_id')
+//     .delete(protect, deleteComment);
 
 module.exports = router;
 

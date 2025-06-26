@@ -58,9 +58,13 @@ exports.login = async (req, res) => {
 
 
 exports.getMe = async (req, res) => {
-    const userId = req.user._id;
-    const user = await User.findById(userId).select('+phoneNumber');
-    res.status(200).json({ success: true, data: user});
+    try {
+        const userId = req.user._id;
+        const user = await User.findById(userId).select('+phoneNumber +instagramProfile');
+        res.status(200).json({ success: true, data: user });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
 };
 
 // Helper to send token response

@@ -23,13 +23,31 @@ exports.createGroup = async (req, res) => {
 // Gets all groups
 exports.getGroups = async (req, res) => {
     try {
-        const groups = await Group.find().populate('creator', 'fullName').populate('members', 'fullName');
+        const groups = await Group.find()
+            .populate('creator', 'fullName')
+            .populate('members', '_id fullName profilePicture');
         res.status(200).json({ success: true, data: groups });
     } catch (error) {
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };
+// Leave a group
+exports.leaveGroup = async (req, res) => {
+    try {
+        const group = await Group.findById(req.params.id);
+        if (!group) {
+            return res.status(404).json({ success: false, message: 'Group not found.' });
+        }
 
+        // Remove the user from the members array
+        group.members = group.members.filter(memberId => memberId.toString() !== req.user.id.toString());
+
+        await group.save();
+        res.status(200).json({ success: true, data: group, message: 'Successfully left the group.' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+};
 // Joins the current user to a group
 exports.joinGroup = async (req, res) => {
     try {
