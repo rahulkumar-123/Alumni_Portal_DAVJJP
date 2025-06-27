@@ -12,57 +12,39 @@ export default function Dashboard() {
     const { user } = useAuth();
     const [posts, setPosts] = useState([]);
     const [birthdays, setBirthdays] = useState([]);
-    const [loadingPosts, setLoadingPosts] = useState(true);
-    const [loadingBirthdays, setLoadingBirthdays] = useState(true);
+    const [loading, setLoading] = useState(true);
 
-    // State for infinite scroll
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const observer = useRef();
 
-    const fetchInitialData = useCallback(async () => {
-        setLoadingPosts(true);
-        setLoadingBirthdays(true);
+    const fetchPosts = useCallback(async (pageNum, shouldRefresh = false) => {
+        setLoading(true);
         try {
-            // Fetch birthdays only once on initial load
-            const birthdaysRes = await userService.getTodaysBirthdays();
-            setBirthdays(birthdaysRes.data.data);
+            const res = await postService.getPosts(pageNum);
+            setPosts(prev => shouldRefresh ? res.data.data : [...prev, ...res.data.data]);
+            setHasMore(res.data.pagination.currentPage < res.data.pagination.totalPages);
         } catch (error) {
-            toast.error('Could not load birthday information.');
+            toast.error('Could not load posts.');
         } finally {
-            setLoadingBirthdays(false);
+            setLoading(false);
         }
     }, []);
 
-    const fetchPosts = useCallback(async () => {
-        setLoadingPosts(true);
-        try {
-            const res = await postService.getPosts(page);
-            setPosts(prevPosts => [...prevPosts, ...res.data.data]);
-            setHasMore(res.data.pagination.currentPage < res.data.pagination.totalPages);
-        } catch (error) {
-            toast.error('Could not load new posts.');
-        } finally {
-            setLoadingPosts(false);
-        }
-    }, [page]);
+    useEffect(() => {
+        userService.getTodaysBirthdays()
+            .then(res => setBirthdays(res.data.data))
+            .catch(() => toast.error('Could not load birthday information.'));
+    }, []);
 
-    // Fetch initial data on component mount
     useEffect(() => {
         if (user) {
-            fetchInitialData();
+            fetchPosts(page);
         }
-    }, [user, fetchInitialData]);
-
-    // Fetch posts when page number changes
-    useEffect(() => {
-        if (user) {
-            fetchPosts();
-        }
-    }, [user, fetchPosts]);
+    }, [user, page, fetchPosts]);
 
     const lastPostElementRef = useCallback(node => {
-        if (loadingPosts) return;
+        if (loading) return;
         if (observer.current) observer.current.disconnect();
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting && hasMore) {
@@ -70,61 +52,59 @@ export default function Dashboard() {
             }
         });
         if (node) observer.current.observe(node);
-    }, [loadingPosts, hasMore]);
+    }, [loading, hasMore]);
 
-    const refreshAllData = () => {
-        setPosts([]);
-        setPage(1); // This will trigger the useEffect for fetching posts
-        fetchInitialData(); // Re-fetch birthdays too
+    const handleDataRefresh = () => {
+        if (page === 1) {
+            fetchPosts(1, true);
+        } else {
+            setPosts([]);
+            setPage(1);
+        }
     };
 
     const dismissBirthday = (userId) => {
         setBirthdays(birthdays.filter(b => b._id !== userId));
     };
 
-    if (loadingBirthdays && page === 1) {
-        return <Spinner />;
-    }
-
     return (
-        <div className="flex flex-col lg:flex-row gap-8">
-            {/* Sidebar: Birthdays (Order 1 on mobile) */}
-            <div className="w-full lg:w-1/3 order-1 lg:order-2 space-y-6">
-                <div className="bg-surface p-6 rounded-xl shadow-lg sticky top-24">
-                    <h2 className="text-2xl font-bold text-on-surface mb-4">Happy Birthday! 🎂</h2>
-                    {loadingBirthdays ? <Spinner /> : (
-                        birthdays.length > 0 ? (
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col lg:flex-row gap-8">
+                <div className="w-full lg:w-1/3 order-1 lg:order-2 space-y-6">
+                    <div className="bg-surface p-6 rounded-xl shadow-lg sticky top-24">
+                        <h2 className="text-2xl font-bold text-on-surface mb-4">Happy Birthday! 🎂</h2>
+                        {birthdays.length > 0 ? (
                             <div className="space-y-4">
                                 {birthdays.map(bdayUser => <BirthdayCard key={bdayUser._id} user={bdayUser} onDismiss={dismissBirthday} />)}
                             </div>
                         ) : (
                             <div className="text-center text-muted py-4">No birthdays today.</div>
-                        )
+                        )}
+                    </div>
+                </div>
+
+                <div className="w-full lg:w-2/3 order-2 lg:order-1 space-y-6">
+                    <div className="bg-surface p-6 rounded-xl shadow-lg">
+                        <h2 className="text-2xl font-bold text-on-surface mb-4">Create a Post</h2>
+                        <PostForm onPostCreated={handleDataRefresh} />
+                    </div>
+
+                    {posts.map((post, index) => {
+                        if (posts.length === index + 1) {
+                            return <div ref={lastPostElementRef} key={post._id}><PostCard post={post} refreshFeed={handleDataRefresh} /></div>;
+                        } else {
+                            return <PostCard key={post._id} post={post} refreshFeed={handleDataRefresh} />;
+                        }
+                    })}
+
+                    {loading && <Spinner />}
+                    {!hasMore && posts.length > 0 && <p className="text-center text-muted py-4">You've reached the end!</p>}
+                    {!loading && posts.length === 0 && (
+                        <div className="bg-surface p-6 rounded-xl shadow-lg text-center">
+                            <p className="text-muted">The community feed is empty. Be the first to share something!</p>
+                        </div>
                     )}
                 </div>
-            </div>
-
-            {/* Main Content: Post Feed (Order 2 on mobile) */}
-            <div className="w-full lg:w-2/3 order-2 lg:order-1 space-y-6">
-                <div className="bg-surface p-6 rounded-xl shadow-lg">
-                    <h2 className="text-2xl font-bold text-on-surface mb-4">Create a Post</h2>
-                    <PostForm onPostCreated={refreshAllData} />
-                </div>
-                {posts.map((post, index) => {
-                    // Attach the ref to the last post element
-                    if (posts.length === index + 1) {
-                        return <div ref={lastPostElementRef} key={post._id}><PostCard post={post} refreshFeed={refreshAllData} /></div>;
-                    } else {
-                        return <PostCard key={post._id} post={post} refreshFeed={refreshAllData} />;
-                    }
-                })}
-                {loadingPosts && <Spinner />}
-                {!hasMore && posts.length > 0 && <p className="text-center text-muted py-4">You've reached the end!</p>}
-                {!loadingPosts && posts.length === 0 && (
-                    <div className="bg-surface p-6 rounded-xl shadow-lg text-center">
-                        <p className="text-muted">The community feed is empty. Be the first to share something!</p>
-                    </div>
-                )}
             </div>
         </div>
     );
