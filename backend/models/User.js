@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
       default: 'no-photo.jpg',
     },
   bio: { type: String, maxlength: 500 },
-  batchYear: { type: Number, required: [true, 'Please add a batch year'] },
+  batchYear: { type: Number, required: [false, 'Please add a batch year'] },
   currentOrganization: { type: String },
   location: { type: String },
   linkedInProfile: { type: String },

@@ -1,7 +1,7 @@
 import api from './api';
 
-const getPosts = () => {
-    return api.get('/posts');
+const getPosts = (page = 1, limit = 10) => {
+    return api.get(`/posts?page=${page}&limit=${limit}`);
 };
 
 const createPost = (postData) => {
@@ -25,8 +25,14 @@ const approvePost = (id) => {
     return api.put(`/posts/approve/${id}`);
 };
 const addComment = (postId, commentData) => api.post(`/posts/${postId}/comment`, commentData);
-//const deleteComment = (postId, commentId) => api.delete(`/posts/${postId}/comment/${commentId}`);
 
+const deleteComment = (postId, commentId) => api.delete(`/posts/${postId}/comment/${commentId}`);
+
+const toggleLikePost = (postId) => api.post(`/posts/${postId}/like`);
+
+const myLikeStatus = (postId) => {
+    return api.get(`/posts/${postId}/like`);
+};
 
 const postService = {
     getPosts,
@@ -35,7 +41,10 @@ const postService = {
     deletePost,
     getPendingPosts,
     approvePost,
-    addComment
+    addComment,
+    deleteComment,
+    toggleLikePost,
+    myLikeStatus
 };
 
 export default postService;

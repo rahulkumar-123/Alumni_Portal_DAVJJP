@@ -14,6 +14,12 @@ const PostSchema = new mongoose.Schema({
             name: { type: String }, // To display name even if user is deleted
             createdAt: { type: Date, default: Date.now }
         }
+    ],
+    likes: [
+        {
+            user: { type: mongoose.Schema.ObjectId, ref: 'User'},
+            createdAt: { type: Date, default: Date.now }
+        }
     ]
 }, { timestamps: true });
 

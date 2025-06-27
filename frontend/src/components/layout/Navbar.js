@@ -36,7 +36,7 @@ export default function Navbar() {
         { name: 'Home', href: '/' },
         { name: 'Groups', href: '/groups' },
         { name: 'Directory', href: '/directory' },
-        { name: 'Feedback', href: '/feedback' },
+        // { name: 'Feedback', href: '/feedback' },
     ];
 
     const guestNavigation = [

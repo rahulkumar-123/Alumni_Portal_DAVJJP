@@ -8,7 +8,7 @@ const { Server } = require('socket.io');
 
 // Import the Message model to save chats to the database
 const Message = require('./models/Message');
-const User = require('./models/User');
+// const User = require('./models/User');
 
 
 // --- INITIAL SETUP ---
