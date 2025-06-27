@@ -32,7 +32,7 @@ router.route('/')
 
 router.route('/:id/comment').post(addComment);
 router.route('/:id/like').post(toggleLike).get(myLikeStatus);
-router.route('/:id/comment/:comment_id').delete(deleteComment);
+// router.route('/:id/comment/:comment_id').delete(deleteComment);
 
 router.route('/pending')
     .get(admin, getPendingPosts);
