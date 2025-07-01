@@ -5,6 +5,8 @@ import { PaperAirplaneIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { formatDistanceToNowStrict } from 'date-fns';
 import useAuth from '../../hooks/useAuth';
 import { MentionsInput, Mention } from 'react-mentions';
+import userService from '../../services/userService';
+
 // import './mentionStyles.css';
 
 export default function CommentSection({ postId, comments: initialComments, onCommentPosted }) {
