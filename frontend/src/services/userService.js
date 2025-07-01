@@ -8,6 +8,7 @@ const updateProfilePicture = (formData) => api.put('/users/profile/picture', for
 const getPendingUsers = () => api.get('/users/pending');
 const approveUser = (id) => api.put(`/users/approve/${id}`);
 const deleteUser = (id) => api.delete(`/users/${id}`);
+const searchUsers = (query) => api.get(`/users/search?q=${query}`);
 
-const userService = { getTodaysBirthdays, getAlumniDirectory, getUserProfile, updateProfile, updateProfilePicture, getPendingUsers, approveUser, deleteUser };
+const userService = { getTodaysBirthdays, getAlumniDirectory, getUserProfile, updateProfile, updateProfilePicture, getPendingUsers, approveUser, deleteUser, searchUsers };
 export default userService;

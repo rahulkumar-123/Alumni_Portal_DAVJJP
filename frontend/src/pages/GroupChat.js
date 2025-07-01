@@ -8,6 +8,8 @@ import toast from 'react-hot-toast';
 import Spinner from '../components/common/Spinner';
 import { PaperAirplaneIcon, ArrowLeftIcon } from '@heroicons/react/24/solid';
 import NotMemberModal from '../components/groups/NotMemberModal';
+import { MentionsInput, Mention } from 'react-mentions';
+import userService from '../services/userService';
 
 const API_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 
@@ -15,7 +17,7 @@ export default function GroupChat() {
     const { id: groupId } = useParams();
     const { user: authUser } = useAuth();
     const socket = useSocket();
-    
+
     const [group, setGroup] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
@@ -98,7 +100,7 @@ export default function GroupChat() {
         if (!newMessage.trim() || !authUser) {
             return;
         }
-        
+
         socket.emit('send_message', {
             groupId,
             senderId: authUser._id,
@@ -106,6 +108,13 @@ export default function GroupChat() {
         });
 
         setNewMessage('');
+    };
+
+    const fetchUsersForMention = (query, callback) => {
+        if (!query) return;
+        userService.searchUsers(query)
+            .then(res => callback(res.data.data))
+            .catch(() => callback([]));
     };
 
     if (loading) return <Spinner />;
@@ -130,9 +139,18 @@ export default function GroupChat() {
 
     return (
         <div className="h-[75vh] flex flex-col bg-surface rounded-2xl shadow-2xl">
+            <style>{`
+                .mentions { width: 100%; }
+                .mentions__control { background-color: white; border-radius: 9999px; padding: 0.75rem 1rem; border: 1px solid #d1d5db; }
+                .mentions__input { padding: 0; border: 0; outline: 0; font-size: 1rem; }
+                .mentions__suggestions__list { background-color: white; border: 1px solid #d1d5db; border-radius: 0.5rem; margin-top: 0.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
+                .mentions__suggestions__item { padding: 0.5rem 1rem; }
+                .mentions__suggestions__item--focused { background-color: #f3f4f6; }
+                .mentions__mention { background-color: #e0d4ec; padding: 2px 1px; border-radius: 4px; }
+            `}</style>
             <div className="p-4 border-b flex items-center space-x-4 sticky top-0 bg-surface rounded-t-2xl">
                 <Link to="/groups" className="text-primary hover:text-primary-dark p-2 rounded-full hover:bg-gray-100">
-                    <ArrowLeftIcon className="w-6 h-6"/>
+                    <ArrowLeftIcon className="w-6 h-6" />
                 </Link>
                 <h1 className="text-2xl font-bold text-on-surface">{group.name}</h1>
             </div>
@@ -141,27 +159,27 @@ export default function GroupChat() {
                 {messages.length > 0 ? (
                     messages.map(msg => {
                         const isMyMessage = msg.sender?._id === authUser?._id;
-                        const profileImageUrl = msg.sender?.profilePicture?.startsWith('http') 
-                            ? msg.sender.profilePicture 
-                            : msg.sender?.profilePicture && msg.sender.profilePicture !== 'no-photo.jpg' 
-                            ? `${API_URL}${msg.sender.profilePicture}` 
-                            : `https://ui-avatars.com/api/?name=${msg.sender?.fullName}&background=8344AD&color=fff`;
+                        const profileImageUrl = msg.sender?.profilePicture?.startsWith('http')
+                            ? msg.sender.profilePicture
+                            : msg.sender?.profilePicture && msg.sender.profilePicture !== 'no-photo.jpg'
+                                ? `${API_URL}${msg.sender.profilePicture}`
+                                : `https://ui-avatars.com/api/?name=${msg.sender?.fullName}&background=8344AD&color=fff`;
 
                         return (
                             <div key={msg._id} className={`flex my-2 items-end gap-2 ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
                                 {/* Profile Picture for other users */}
                                 {!isMyMessage && (
-                                    <img src={profileImageUrl} alt={msg.sender?.fullName} className="w-8 h-8 rounded-full object-cover self-start"/>
+                                    <img src={profileImageUrl} alt={msg.sender?.fullName} className="w-8 h-8 rounded-full object-cover self-start" />
                                 )}
 
                                 <div className={`p-3 rounded-2xl max-w-lg ${isMyMessage ? 'bg-primary text-white rounded-br-none' : 'bg-gray-200 text-on-surface rounded-bl-none'}`}>
-                                   {/* Sender's Name and Batch */}
-                                   {!isMyMessage && (
-                                       <p className="font-bold text-xs mb-1 text-primary-dark">
-                                           {msg.sender?.fullName}
-                                       </p>
-                                   )}
-                                   <p>{msg.text}</p>
+                                    {/* Sender's Name and Batch */}
+                                    {!isMyMessage && (
+                                        <p className="font-bold text-xs mb-1 text-primary-dark">
+                                            {msg.sender?.fullName}
+                                        </p>
+                                    )}
+                                    <p>{msg.text}</p>
                                 </div>
                             </div>
                         );
@@ -177,15 +195,23 @@ export default function GroupChat() {
 
             <div className="p-4 border-t bg-gray-50 rounded-b-2xl">
                 <form onSubmit={handleSendMessage} className="flex items-center space-x-3">
-                    <input
-                        type="text"
+                    <MentionsInput
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Type a message..."
-                        className="flex-1 px-4 py-3 border border-gray-300 rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
+                        placeholder="Type a message... use @ to mention someone."
+                        className="mentions"
+                        a11ySuggestionsListLabel={"Suggested users for mention"}
+                    >
+                        <Mention
+                            trigger="@"
+                            data={fetchUsersForMention}
+                            markup="@[__display__](__id__)" 
+                            displayTransform={(id, display) => `@${display}`}
+                            className="mentions__mention"
+                        />
+                    </MentionsInput>
                     <button type="submit" className="p-3 bg-primary rounded-full text-white hover:bg-primary-dark transition-colors disabled:opacity-50" disabled={!newMessage.trim()}>
-                        <PaperAirplaneIcon className="w-6 h-6"/>
+                        <PaperAirplaneIcon className="w-6 h-6" />
                     </button>
                 </form>
             </div>

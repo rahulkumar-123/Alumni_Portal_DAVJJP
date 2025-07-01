@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const multer = require('multer');
+const { searchUsers } = require('../controllers/userController');
 
 const {
     getUsers,
@@ -41,7 +42,7 @@ function checkFileType(file, cb) {
 
 const upload = multer({
     storage,
-    fileFilter: function(req, file, cb) {
+    fileFilter: function (req, file, cb) {
         checkFileType(file, cb);
     }
 });
@@ -70,6 +71,8 @@ router.route('/birthdays/today').get(getTodaysBirthdays);
 router.route('/:id')
     .get(getUser)
     .delete(admin, deleteUser);
+
+router.route('/search').get(searchUsers);
 
 module.exports = router;
 
