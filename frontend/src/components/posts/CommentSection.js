@@ -5,7 +5,7 @@ import { PaperAirplaneIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { formatDistanceToNowStrict } from 'date-fns';
 import useAuth from '../../hooks/useAuth';
 import { MentionsInput, Mention } from 'react-mentions';
-import './mentionStyles.css';
+// import './mentionStyles.css';
 
 export default function CommentSection({ postId, comments: initialComments, onCommentPosted }) {
     const { user, isAdmin } = useAuth();
@@ -37,6 +37,48 @@ export default function CommentSection({ postId, comments: initialComments, onCo
 
     return (
         <div className="p-5 bg-gray-50">
+            {/* The style tag is now included directly in the component */}
+            <style>{`
+                .mentions {
+                  width: 100%;
+                }
+                .mentions__control {
+                  background-color: white !important;
+                  border-radius: 9999px !important;
+                  padding: 0.5rem 1rem !important;
+                  border: 1px solid #d1d5db !important;
+                }
+                .mentions__input {
+                  padding: 0 !important;
+                  border: 0 !important;
+                  outline: 0 !important;
+                  width: 100% !important;
+                  font-size: 1rem !important;
+                  line-height: 1.5rem !important;
+                }
+                .mentions__suggestions__list {
+                  background-color: white;
+                  border: 1px solid #d1d5db;
+                  border-radius: 0.5rem;
+                  margin-top: 0.5rem;
+                  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+                  max-height: 15rem;
+                  overflow-y: auto;
+                  z-index: 10;
+                }
+                .mentions__suggestions__item {
+                  padding: 0.5rem 1rem;
+                }
+                .mentions__suggestions__item--focused {
+                  background-color: #f3f4f6;
+                }
+                .mentions__mention {
+                  background-color: #e0d4ec !important;
+                  padding: 2px 1px !important;
+                  border-radius: 4px !important;
+                  font-weight: 600 !important;
+                }
+            `}</style>
             <form onSubmit={handleSubmit} className="flex items-center space-x-3 mb-4">
                 <MentionsInput
                     value={newComment}

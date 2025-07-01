@@ -11,9 +11,8 @@ const express = require('express');
 const {
     getPosts,
     createPost,
-    updatePost,
+    // updatePost,
     deletePost,
-    getPendingPosts,
     addComment,
     approvePost
 } = require('../controllers/postController');
@@ -29,14 +28,14 @@ router.route('/')
 
 router.route('/:id/comment').post(addComment);
 
-router.route('/pending')
-    .get(admin, getPendingPosts);
+// router.route('/pending')
+//     .get(admin, getPendingPosts);
 
 router.route('/approve/:id')
     .put(admin, approvePost);
 
 router.route('/:id')
-    .put(updatePost)
+    // .put(updatePost)
     .delete(deletePost);
 
 
