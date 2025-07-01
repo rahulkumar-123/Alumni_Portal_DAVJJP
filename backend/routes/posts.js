@@ -15,7 +15,6 @@ const {
     deletePost,
     getPendingPosts,
     addComment,
-    deleteComment,
     approvePost
 } = require('../controllers/postController');
 const { protect } = require('../middleware/authMiddleware');
@@ -29,7 +28,6 @@ router.route('/')
     .post(createPost);
 
 router.route('/:id/comment').post(addComment);
-router.route('/:id/comment/:comment_id').delete(deleteComment);
 
 router.route('/pending')
     .get(admin, getPendingPosts);
@@ -40,9 +38,7 @@ router.route('/approve/:id')
 router.route('/:id')
     .put(updatePost)
     .delete(deletePost);
-    
-// router.route('/:id/comment/:comment_id')
-//     .delete(protect, deleteComment);
+
 
 module.exports = router;
 
