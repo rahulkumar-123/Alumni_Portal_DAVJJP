@@ -14,7 +14,7 @@ const {
     // updatePost,
     deletePost,
     addComment,
-    approvePost
+    // approvePost
 } = require('../controllers/postController');
 const { protect } = require('../middleware/authMiddleware');
 const { admin } = require('../middleware/adminMiddleware');
@@ -31,8 +31,8 @@ router.route('/:id/comment').post(addComment);
 // router.route('/pending')
 //     .get(admin, getPendingPosts);
 
-router.route('/approve/:id')
-    .put(admin, approvePost);
+// router.route('/approve/:id')
+//     .put(admin, approvePost);
 
 router.route('/:id')
     // .put(updatePost)
