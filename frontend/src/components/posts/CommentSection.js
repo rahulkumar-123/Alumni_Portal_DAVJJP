@@ -6,8 +6,7 @@ import toast from 'react-hot-toast';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 import { formatDistanceToNowStrict } from 'date-fns';
 import useAuth from '../../hooks/useAuth';
-import './mentionStyles.css';
-
+import './mentionStyle.css';
 export default function CommentSection({ postId, comments: initialComments, onCommentPosted }) {
     const { user, isAdmin } = useAuth();
     const [comments, setComments] = useState(initialComments || []);
