@@ -26,23 +26,23 @@ exports.register = async (req, res) => {
 // @access  Public
 exports.login = async (req, res) => {
     try {
-        console.log("🧪 Login hit");
+       // console.log("🧪 Login hit");
         const { email, password } = req.body;
-        console.log("📥 Body:", req.body);
+        //console.log("📥 Body:", req.body);
 
         if (!email || !password) {
             return res.status(400).json({ success: false, message: 'Missing credentials' });
         }
 
         const user = await User.findOne({ email }).select('+password');
-        console.log("👤 Found user:", user);
+        //console.log("👤 Found user:", user);
 
         if (!user) {
             return res.status(401).json({ success: false, message: 'Invalid credentials' });
         }
 
         const isMatch = await user.matchPassword(password);
-        console.log("🔑 Password matched:", isMatch);
+        //console.log("🔑 Password matched:", isMatch);
 
         if (!isMatch) {
             return res.status(401).json({ success: false, message: 'Invalid credentials' });
@@ -52,8 +52,8 @@ exports.login = async (req, res) => {
             return res.status(403).json({ success: false, message: 'Your account has not been approved by an admin yet.' });
         }
 
-        console.log("🎉 Login success");
-        return sendTokenResponse(user, 200, res); // ✅ Added this call
+       // console.log("🎉 Login success");
+        return sendTokenResponse(user, 200, res); 
 
     } catch (error) {
         console.error("❌ Login error:", error);
@@ -72,7 +72,6 @@ exports.getMe = async (req, res) => {
     }
 };
 
-// ✅ Helper to generate and send token
 const sendTokenResponse = (user, statusCode, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: '30d'
