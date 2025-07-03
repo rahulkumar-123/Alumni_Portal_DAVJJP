@@ -4,38 +4,6 @@ const User = require('../models/User');
 const Notification = require('../models/Notification');
 const { parseMentions, sendNotification } = require('../utils/notificationManager');
 
-// --- HELPER FUNCTIONS ---
-
-// Function to parse @mentions from text
-// const parseMentions = (text) => {
-//     if (!text) return [];
-//     const mentionRegex = /@(\w+)/g;
-//     const mentions = text.match(mentionRegex);
-//     if (!mentions) return [];
-//     // Return array of usernames without '@'
-//     return mentions.map(mention => mention.substring(1));
-// };
-
-// // Function to create and push notifications in real-time
-// const sendNotification = async (req, notificationData) => {
-//     const { io, userSockets } = req;
-//     try {
-//         const notification = await Notification.create(notificationData);
-//         const recipientSocketId = userSockets.get(notification.recipient.toString());
-
-//         if (recipientSocketId) {
-//             const populatedNotification = await notification.populate([
-//                 { path: 'sender', select: 'fullName profilePicture' },
-//                 { path: 'post', select: 'title' }
-//             ]);
-//             io.to(recipientSocketId).emit('new_notification', populatedNotification);
-//         }
-//     } catch (error) {
-//         console.error("Error sending notification:", error);
-//     }
-// };
-
-
 // --- CONTROLLER EXPORTS ---
 
 // @route   GET /api/posts
@@ -79,7 +47,19 @@ exports.createPost = async (req, res) => {
             user: req.user.id,
             isApproved: true, // All posts are auto-approved
         });
+        const allOtherUsers = await User.find({ _id: { $ne: req.user.id } });
 
+        console.log(`New post created. Notifying ${allOtherUsers.length} other users.`);
+
+        // Create a notification for each of them
+        allOtherUsers.forEach(user => {
+            sendNotification(req, {
+                recipient: user._id,
+                sender: req.user.id,
+                type: 'new_post',
+                post: post._id,
+            });
+        });
         res.status(201).json({ success: true, data: post, message: 'Post created successfully!' });
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });

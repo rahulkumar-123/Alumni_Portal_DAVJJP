@@ -23,23 +23,26 @@ exports.register = async (req, res) => {
     }
 };
 
-
 // @access  Public
 exports.login = async (req, res) => {
     try {
+        console.log("🧪 Login hit");
         const { email, password } = req.body;
+        console.log("📥 Body:", req.body);
 
         if (!email || !password) {
-            return res.status(400).json({ success: false, message: 'Please provide email and password' });
+            return res.status(400).json({ success: false, message: 'Missing credentials' });
         }
 
         const user = await User.findOne({ email }).select('+password');
+        console.log("👤 Found user:", user);
 
         if (!user) {
             return res.status(401).json({ success: false, message: 'Invalid credentials' });
         }
 
         const isMatch = await user.matchPassword(password);
+        console.log("🔑 Password matched:", isMatch);
 
         if (!isMatch) {
             return res.status(401).json({ success: false, message: 'Invalid credentials' });
@@ -49,14 +52,16 @@ exports.login = async (req, res) => {
             return res.status(403).json({ success: false, message: 'Your account has not been approved by an admin yet.' });
         }
 
-        sendTokenResponse(user, 200, res);
+        console.log("🎉 Login success");
+        return sendTokenResponse(user, 200, res); // ✅ Added this call
 
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Server Error' });
+        console.error("❌ Login error:", error);
+        return res.status(500).json({ success: false, message: 'Server error' });
     }
 };
 
-
+// @access  Private
 exports.getMe = async (req, res) => {
     try {
         const userId = req.user._id;
@@ -67,7 +72,7 @@ exports.getMe = async (req, res) => {
     }
 };
 
-// Helper to send token response
+// ✅ Helper to generate and send token
 const sendTokenResponse = (user, statusCode, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: '30d'
@@ -80,7 +85,7 @@ const sendTokenResponse = (user, statusCode, res) => {
             id: user._id,
             fullName: user.fullName,
             email: user.email,
-            role: user.role,
+            role: user.role
         }
     });
 };

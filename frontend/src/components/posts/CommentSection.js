@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // <-- THIS IMPORT WAS MISSING
+import React, { useState } from 'react';
 import { MentionsInput, Mention } from 'react-mentions';
 import userService from '../../services/userService';
 import postService from '../../services/postService';
@@ -7,6 +7,8 @@ import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 import { formatDistanceToNowStrict } from 'date-fns';
 import useAuth from '../../hooks/useAuth';
 import './mentionStyle.css';
+import StyledText from '../common/StyledText';
+
 export default function CommentSection({ postId, comments: initialComments, onCommentPosted }) {
     const { user, isAdmin } = useAuth();
     const [comments, setComments] = useState(initialComments || []);
@@ -46,7 +48,7 @@ export default function CommentSection({ postId, comments: initialComments, onCo
                 <MentionsInput
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
-                    placeholder="Write a comment... use @ to mention."
+                    placeholder="Write a comment..."
                     className="mentions"
                     a11ySuggestionsListLabel={"Suggested users for mention"}
                 >
@@ -73,7 +75,7 @@ export default function CommentSection({ postId, comments: initialComments, onCo
                                 <p className="font-bold text-sm text-on-surface">{comment.name}</p>
                                 <p className="text-xs text-muted">{formatDistanceToNowStrict(new Date(comment.createdAt))} ago</p>
                             </div>
-                            <p className="text-on-surface mt-1">{comment.text}</p>
+                            <StyledText text={comment.text} />
                         </div>
                     ))}
             </div>

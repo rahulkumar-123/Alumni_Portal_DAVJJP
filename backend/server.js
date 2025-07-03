@@ -8,8 +8,7 @@ const connectDB = require('./config/db');
 const { parseMentions, sendNotification } = require('./utils/notificationManager');
 const Message = require('./models/Message');
 const Group = require('./models/Group');
-const User = require('../models/User');
-
+const User = require('./models/User');
 // --- INITIAL SETUP ---
 dotenv.config();
 connectDB();

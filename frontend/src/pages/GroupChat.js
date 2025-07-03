@@ -10,6 +10,8 @@ import { PaperAirplaneIcon, ArrowLeftIcon } from '@heroicons/react/24/solid';
 import NotMemberModal from '../components/groups/NotMemberModal';
 import { MentionsInput, Mention } from 'react-mentions';
 import userService from '../services/userService';
+import StyledText from '../components/common/StyledText';
+import '../components/posts/mentionStyle.css';
 
 const API_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 
@@ -108,13 +110,7 @@ export default function GroupChat() {
     const fetchUsersForMention = (query, callback) => {
         if (!query) return;
         userService.searchUsers(query)
-            .then(res => {
-                const mentions = res.data.data.map(user => ({
-                    id: user._id,
-                    display: user.fullName
-                }));
-                callback(mentions);
-            })
+            .then(res => callback(res.data.data))
             .catch(() => callback([]));
     };
 
@@ -140,15 +136,6 @@ export default function GroupChat() {
 
     return (
         <div className="h-[75vh] flex flex-col bg-surface rounded-2xl shadow-2xl">
-            <style>{`
-                .mentions { width: 100%; }
-                .mentions__control { background-color: white; border-radius: 9999px; padding: 0.75rem 1rem; border: 1px solid #d1d5db; }
-                .mentions__input { padding: 0; border: 0; outline: 0; font-size: 1rem; }
-                .mentions__suggestions__list { background-color: white; border: 1px solid #d1d5db; border-radius: 0.5rem; margin-top: 0.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
-                .mentions__suggestions__item { padding: 0.5rem 1rem; }
-                .mentions__suggestions__item--focused { background-color: #f3f4f6; }
-                .mentions__mention { background-color: #e0d4ec; padding: 2px 1px; border-radius: 4px; }
-            `}</style>
             <div className="p-4 border-b flex items-center space-x-4 sticky top-0 bg-surface rounded-t-2xl">
                 <Link to="/groups" className="text-primary hover:text-primary-dark p-2 rounded-full hover:bg-gray-100">
                     <ArrowLeftIcon className="w-6 h-6" />
@@ -178,8 +165,7 @@ export default function GroupChat() {
                                             {msg.sender?.fullName}
                                         </p>
                                     )}
-                                    <p>{msg.text}</p>
-                                </div>
+                                    <StyledText text={msg.text} />                                </div>
                             </div>
                         );
                     })
@@ -197,14 +183,14 @@ export default function GroupChat() {
                     <MentionsInput
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Type a message... use @ to mention someone."
+                        placeholder="Type a message..."
                         className="mentions"
                         a11ySuggestionsListLabel={"Suggested users for mention"}
                     >
                         <Mention
                             trigger="@"
                             data={fetchUsersForMention}
-                            markup="@[__display__](__id__)"
+                            markup="@[__display__]"
                             displayTransform={(id, display) => `@${display}`}
                             className="mentions__mention"
                         />
