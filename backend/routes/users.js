@@ -19,33 +19,29 @@ const router = express.Router();
 
 
 // --- Multer Storage Configuration ---
-const storage = multer.diskStorage({
-    destination(req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename(req, file, cb) {
-        cb(null, `user-${req.user.id}-${Date.now()}${path.extname(file.originalname)}`);
-    }
-});
+// const storage = multer.diskStorage({
+//     destination(req, file, cb) {
+//         cb(null, 'uploads/');
+//     },
+//     filename(req, file, cb) {
+//         cb(null, `user-${req.user.id}-${Date.now()}${path.extname(file.originalname)}`);
+//     }
+// });
 
-function checkFileType(file, cb) {
-    const filetypes = /jpg|jpeg|png/;
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = filetypes.test(file.mimetype);
+// function checkFileType(file, cb) {
+//     const filetypes = /jpg|jpeg|png/;
+//     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+//     const mimetype = filetypes.test(file.mimetype);
 
-    if (extname && mimetype) {
-        return cb(null, true);
-    } else {
-        cb('Error: Images Only!');
-    }
-}
+//     if (extname && mimetype) {
+//         return cb(null, true);
+//     } else {
+//         cb('Error: Images Only!');
+//     }
+// }
 
-const upload = multer({
-    storage,
-    fileFilter: function (req, file, cb) {
-        checkFileType(file, cb);
-    }
-});
+const upload = multer({ dest: 'uploads/' });
+
 
 // important routes
 // All routes below are protected by default
