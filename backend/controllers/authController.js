@@ -26,23 +26,19 @@ exports.register = async (req, res) => {
 // @access  Public
 exports.login = async (req, res) => {
     try {
-       // console.log("🧪 Login hit");
         const { email, password } = req.body;
-        //console.log("📥 Body:", req.body);
 
         if (!email || !password) {
             return res.status(400).json({ success: false, message: 'Missing credentials' });
         }
 
         const user = await User.findOne({ email }).select('+password');
-        //console.log("👤 Found user:", user);
 
         if (!user) {
             return res.status(401).json({ success: false, message: 'Invalid credentials' });
         }
 
         const isMatch = await user.matchPassword(password);
-        //console.log("🔑 Password matched:", isMatch);
 
         if (!isMatch) {
             return res.status(401).json({ success: false, message: 'Invalid credentials' });
@@ -52,11 +48,10 @@ exports.login = async (req, res) => {
             return res.status(403).json({ success: false, message: 'Your account has not been approved by an admin yet.' });
         }
 
-       // console.log("🎉 Login success");
         return sendTokenResponse(user, 200, res); 
 
     } catch (error) {
-        console.error("❌ Login error:", error);
+        console.error("Login error:", error);
         return res.status(500).json({ success: false, message: 'Server error' });
     }
 };

@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
     destination(req, file, cb) { cb(null, 'uploads/'); },
     filename(req, file, cb) { cb(null, `post-${Date.now()}${path.extname(file.originalname)}`); }
 });
-const upload = multer({ storage /*, fileFilter can be added here */ });
+const upload = multer({ storage });
 
 const {
     getPosts,

@@ -18,7 +18,7 @@ const userStorage = new CloudinaryStorage({
   },
 });
 
-// Configuration for post images (if you add this feature later)
+// Configuration for post images (For later features)
 const postStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {

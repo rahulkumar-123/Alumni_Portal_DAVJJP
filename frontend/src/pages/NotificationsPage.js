@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import { BellIcon } from '@heroicons/react/24/solid';
 
+const API_URL = process.env.REACT_APP_API_URL.replace("/api", "");
+
 export default function NotificationsPage() {
     const { notifications } = useNotifications();
 
@@ -13,25 +15,29 @@ export default function NotificationsPage() {
         switch (n.type) {
             case 'new_like':
                 text = <><strong>{n.sender.fullName}</strong> liked your post: <strong>"{n.post?.title}"</strong></>;
-                link = `/posts/${n.post?._id || ''}`; 
+                link = `/posts/${n.post?._id || ''}`;
                 break;
 
             case 'new_comment':
                 text = <><strong>{n.sender.fullName}</strong> commented on your post.</>;
                 link = `/posts/${n.post?._id || ''}`;
                 break;
+
             case 'new_post':
                 text = <><strong>{n.sender.fullName}</strong> created a new post: "{n.post?.title}"</>;
                 link = `/posts/${n.post?._id || ''}`;
                 break;
+
             case 'mention_comment':
                 text = <><strong>{n.sender.fullName}</strong> mentioned you in a comment.</>;
                 link = `/posts/${n.post?._id || ''}`;
                 break;
+
             case 'mention_chat':
                 text = <><strong>{n.sender.fullName}</strong> mentioned you in a group chat.</>;
                 link = `/groups/${n.group?._id || ''}`;
                 break;
+
             default:
                 text = "You have a new notification.";
         }
@@ -45,19 +51,32 @@ export default function NotificationsPage() {
                 <ul className="divide-y divide-gray-200">
                     {notifications.length > 0 ? notifications.map(n => {
                         const { text, link } = getNotificationInfo(n);
+
+                        const profileImageUrl = n.sender.profilePicture?.startsWith('http')
+                            ? n.sender.profilePicture
+                            : n.sender.profilePicture && n.sender.profilePicture !== 'no-photo.jpg'
+                                ? `${API_URL}${n.sender.profilePicture}`
+                                : `https://ui-avatars.com/api/?name=${n.sender.fullName}&background=8344AD&color=fff`;
+
                         return (
                             <li key={n._id}>
                                 <Link to={link} className={`block p-4 hover:bg-gray-50 ${!n.read ? 'bg-primary-light/10' : ''}`}>
                                     <div className="flex items-center">
-                                        <img className="h-10 w-10 rounded-full object-cover" src={n.sender.profilePicture} alt={n.sender.fullName} />
+                                        <img
+                                            className="h-10 w-10 rounded-full object-cover"
+                                            src={profileImageUrl}
+                                            alt={n.sender.fullName}
+                                        />
                                         <div className="ml-4">
                                             <p className="text-sm text-on-surface">{text}</p>
-                                            <p className="text-xs text-muted mt-1">{formatDistanceToNow(new Date(n.createdAt))} ago</p>
+                                            <p className="text-xs text-muted mt-1">
+                                                {formatDistanceToNow(new Date(n.createdAt))} ago
+                                            </p>
                                         </div>
                                     </div>
                                 </Link>
                             </li>
-                        )
+                        );
                     }) : (
                         <div className="text-center p-10 text-muted">
                             <BellIcon className="w-12 h-12 mx-auto mb-2" />

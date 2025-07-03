@@ -56,7 +56,12 @@ export default function NotificationsPanel({ onClose }) {
                 </div>
                 <div className="max-h-96 overflow-y-auto">
                     {notifications.length > 0 ? notifications.map(n => {
-                        const profileImageUrl = n.sender.profilePicture?.startsWith('http') ? n.sender.profilePicture : `${API_URL}${n.sender.profilePicture}`;
+                        const profileImageUrl = n.sender.profilePicture?.startsWith('http')
+                            ? n.sender.profilePicture
+                            : n.sender.profilePicture && n.sender.profilePicture !== 'no-photo.jpg'
+                                ? `${API_URL}${n.sender.profilePicture}`
+                                : `https://ui-avatars.com/api/?name=${n.sender.fullName}&background=8344AD&color=fff`;
+
                         return (
                             <div key={n._id} onClick={() => handleNotificationClick(n)} className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer hover:bg-gray-100 ${!n.read ? 'bg-primary-light/10' : ''}`}>
                                 <img src={profileImageUrl} alt={n.sender.fullName} className="w-10 h-10 rounded-full object-cover" />
