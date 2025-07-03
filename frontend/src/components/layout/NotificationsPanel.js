@@ -37,6 +37,7 @@ export default function NotificationsPanel({ onClose }) {
     const getNotificationText = (n) => {
         let content = '';
         switch (n.type) {
+            case 'new_like': content = `liked your post: "${n.post?.title}"`; break;
             case 'new_comment': content = `commented on your post: "${n.post?.title}"`; break;
             case 'new_post': content = `created a new post: "${n.post?.title}"`; break;
             case 'mention_comment': content = `mentioned you in a comment on "${n.post?.title}"`; break;

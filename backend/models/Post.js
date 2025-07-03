@@ -7,6 +7,7 @@ const PostSchema = new mongoose.Schema({
     //images: [{ type: String }],
     category: { type: String, required: true, enum: ['Job Opening', 'Article', 'Event', 'News Update'] },
     isApproved: { type: Boolean, default: false },
+    likes: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
     comments: [
         {
             user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },

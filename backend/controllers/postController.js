@@ -34,6 +34,52 @@ exports.getPosts = async (req, res) => {
     }
 };
 
+exports.getPostById = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id).populate('user').populate('comments.user', 'fullName profilePicture');
+        if (!post) return res.status(404).json({ success: false, message: 'Post not found' });
+        res.status(200).json({ success: true, data: post });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
+};
+
+exports.likePost = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id).populate('user');
+        if (!post) return res.status(404).json({ success: false, message: 'Post not found' });
+
+        const userId = req.user.id;
+        const postAuthorId = post.user._id.toString();
+
+        // Check if the post has already been liked by this user
+        if (post.likes.includes(userId)) {
+            // Unlike the post - no notification needed for unliking
+            post.likes.pull(userId);
+        } else {
+            // Like the post
+            post.likes.push(userId);
+
+            // Send a notification only if the liker is not the post author
+            if (postAuthorId !== userId) {
+                sendNotification(req, {
+                    recipient: postAuthorId,
+                    sender: userId,
+                    type: 'new_like',
+                    post: post._id,
+                });
+            }
+        }
+
+        await post.save();
+        res.status(200).json({ success: true, data: post.likes });
+    } catch (error) {
+        console.error("Error liking post:", error);
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
+};
+
+
 // @desc    Create a new post
 // @route   POST /api/posts
 // @access  Private

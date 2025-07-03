@@ -1,12 +1,12 @@
 const express = require('express');
-// const multer = require('multer');
-// const path = require('path');
+const multer = require('multer');
+const path = require('path');
 
-// const storage = multer.diskStorage({
-//     destination(req, file, cb) { cb(null, 'uploads/'); },
-//     filename(req, file, cb) { cb(null, `post-${Date.now()}${path.extname(file.originalname)}`); }
-// });
-// const upload = multer({ storage /*, fileFilter can be added here */ });
+const storage = multer.diskStorage({
+    destination(req, file, cb) { cb(null, 'uploads/'); },
+    filename(req, file, cb) { cb(null, `post-${Date.now()}${path.extname(file.originalname)}`); }
+});
+const upload = multer({ storage /*, fileFilter can be added here */ });
 
 const {
     getPosts,
@@ -14,6 +14,8 @@ const {
     // updatePost,
     deletePost,
     addComment,
+    getPostById,
+    likePost
     // approvePost
 } = require('../controllers/postController');
 const { protect } = require('../middleware/authMiddleware');
@@ -33,10 +35,9 @@ router.route('/:id/comment').post(addComment);
 
 // router.route('/approve/:id')
 //     .put(admin, approvePost);
+router.route('/:id/like').put(protect, likePost);
 
-router.route('/:id')
-    // .put(updatePost)
-    .delete(deletePost);
+router.route('/:id').get(protect, getPostById).delete(protect, deletePost);
 
 
 module.exports = router;

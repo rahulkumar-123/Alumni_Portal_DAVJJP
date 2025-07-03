@@ -11,6 +11,11 @@ export default function NotificationsPage() {
         let text = '';
         let link = '/';
         switch (n.type) {
+            case 'new_like':
+                text = <><strong>{n.sender.fullName}</strong> liked your post: <strong>"{n.post?.title}"</strong></>;
+                link = `/posts/${n.post?._id || ''}`; 
+                break;
+
             case 'new_comment':
                 text = <><strong>{n.sender.fullName}</strong> commented on your post.</>;
                 link = `/posts/${n.post?._id || ''}`;

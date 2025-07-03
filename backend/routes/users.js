@@ -89,4 +89,3 @@ router.route('/:id')
     .delete(admin, deleteUser);
 
 module.exports = router;
-
