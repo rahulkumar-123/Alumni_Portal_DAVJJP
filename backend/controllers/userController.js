@@ -160,7 +160,7 @@ exports.searchUsers = async (req, res) => {
         }).select('fullName').limit(10);
 
         const formattedUsers = users.map(user => ({
-            id: user._id,
+            id: user.fullName,
             display: user.fullName
         }));
 

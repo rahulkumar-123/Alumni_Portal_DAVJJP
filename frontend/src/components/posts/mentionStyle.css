@@ -1,4 +1,3 @@
-
 .mentions {
     width: 100%;
 }
@@ -33,6 +32,9 @@
     font-size: 1rem !important;
     line-height: 1.5rem !important;
     background-color: transparent !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* This is the dropdown suggestion box */
@@ -64,9 +66,10 @@
 
 /* This is the highlighted @mention text in the input */
 .mentions__mention {
-    background-color: #e0d4ec !important;
+    background-color: #e9d5ff !important;
     /* light purple */
-    padding: 2px 1px !important;
+    padding: 1px 3px !important;
     border-radius: 4px !important;
     font-weight: 600 !important;
+    color: #5F307E;
 }

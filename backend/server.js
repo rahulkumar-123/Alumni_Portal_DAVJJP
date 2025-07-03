@@ -5,6 +5,10 @@ const cors = require('cors');
 const path = require('path');
 const { Server } = require('socket.io');
 const connectDB = require('./config/db');
+const { parseMentions, sendNotification } = require('./utils/notificationManager');
+const Message = require('./models/Message');
+const Group = require('./models/Group');
+const User = require('../models/User');
 
 // --- INITIAL SETUP ---
 dotenv.config();
@@ -51,17 +55,62 @@ io.on('connection', (socket) => {
     console.log(`User Connected: ${socket.id}`);
 
     // When a user logs in, the frontend will send their ID to be mapped
-    socket.on('user_connected', (userId) => {
+    socket.on('user_connected', async (userId) => {
         if (userId) {
             userSockets.set(userId.toString(), socket.id);
+            socket.user = await User.findById(userId); // Attach user to socket
             console.log(`Mapped user ${userId} to socket ${socket.id}`);
         }
     });
 
     // When a user joins a specific group chat
-    socket.on('join_group', (groupId) => {
-        socket.join(groupId);
-        console.log(`User with ID: ${socket.id} joined group: ${groupId}`);
+    socket.on('join_group', (groupId) => { socket.join(groupId); });
+
+    //    // When a user sends a message
+    socket.on('send_message', async (data) => {
+        // Ensure the user is authenticated on this socket connection
+        if (!socket.user) {
+            return console.error("Unauthorized message attempt from socket:", socket.id);
+        }
+
+        const { groupId, text } = data;
+        const senderId = socket.user._id;
+
+        if (!groupId || !senderId || !text) {
+            return console.log("Missing data for send_message event");
+        }
+
+        try {
+            const messageToSave = new Message({ group: groupId, sender: senderId, text });
+            let savedMessage = await messageToSave.save();
+            savedMessage = await savedMessage.populate('sender', 'fullName profilePicture');
+
+            // Broadcast the new message to all clients in the group room
+            io.to(groupId).emit('receive_message', savedMessage);
+
+            // --- Handle Notifications from within the socket handler ---
+            const req = { io, userSockets }; // Create a mock `req` object for sendNotification
+            const group = await Group.findById(groupId);
+
+            // Notify mentioned users
+            const mentionedUsernames = parseMentions(text);
+            if (mentionedUsernames.length > 0) {
+                const mentionedUsers = await User.find({ fullName: { $in: mentionedUsernames } });
+                mentionedUsers.forEach(mentionedUser => {
+                    if (mentionedUser._id.toString() !== senderId.toString() && group.members.includes(mentionedUser._id)) {
+                        sendNotification(req, {
+                            recipient: mentionedUser._id,
+                            sender: senderId,
+                            type: 'mention_chat',
+                            group: groupId,
+                            contentSnippet: text.substring(0, 50) + '...'
+                        });
+                    }
+                });
+            }
+        } catch (error) {
+            console.error("Error handling message:", error);
+        }
     });
 
     // When a user disconnects

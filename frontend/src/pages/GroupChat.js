@@ -36,7 +36,6 @@ export default function GroupChat() {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
-    // Effect for fetching initial data
     useEffect(() => {
         const fetchGroupData = async () => {
             setLoading(true);
@@ -58,7 +57,6 @@ export default function GroupChat() {
         fetchGroupData();
     }, [groupId]);
 
-    // Effect for handling socket events
     useEffect(() => {
         if (socket) {
             socket.emit('join_group', groupId);
@@ -79,41 +77,44 @@ export default function GroupChat() {
             try {
                 const res = await groupService.isGroupMember(groupId);
                 setIsGroupMember(res.data.isMember);
-                setNotMemberModalOpen(true);
+                if (!res.data.isMember) {
+                    setNotMemberModalOpen(true);
+                }
             } catch (error) {
                 console.error("Error checking group membership:", error);
                 setIsGroupMember(false);
             }
-        }
+        };
         checkGroupMembership();
     }, [groupId]);
-
 
     useEffect(scrollToBottom, [messages]);
 
     const handleSendMessage = (e) => {
         e.preventDefault();
         if (!socket || !socket.connected) {
-            toast.error("You are not connected to the chat. Please refresh and try again.");
+            toast.error("You are not connected to the chat. Please refresh.");
             return;
         }
-        if (!newMessage.trim() || !authUser) {
-            return;
-        }
+        if (!newMessage.trim() || !authUser) return;
 
         socket.emit('send_message', {
             groupId,
-            senderId: authUser._id,
             text: newMessage,
         });
-
         setNewMessage('');
     };
 
     const fetchUsersForMention = (query, callback) => {
         if (!query) return;
         userService.searchUsers(query)
-            .then(res => callback(res.data.data))
+            .then(res => {
+                const mentions = res.data.data.map(user => ({
+                    id: user._id,
+                    display: user.fullName
+                }));
+                callback(mentions);
+            })
             .catch(() => callback([]));
     };
 
@@ -167,13 +168,11 @@ export default function GroupChat() {
 
                         return (
                             <div key={msg._id} className={`flex my-2 items-end gap-2 ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
-                                {/* Profile Picture for other users */}
                                 {!isMyMessage && (
                                     <img src={profileImageUrl} alt={msg.sender?.fullName} className="w-8 h-8 rounded-full object-cover self-start" />
                                 )}
 
                                 <div className={`p-3 rounded-2xl max-w-lg ${isMyMessage ? 'bg-primary text-white rounded-br-none' : 'bg-gray-200 text-on-surface rounded-bl-none'}`}>
-                                    {/* Sender's Name and Batch */}
                                     {!isMyMessage && (
                                         <p className="font-bold text-xs mb-1 text-primary-dark">
                                             {msg.sender?.fullName}

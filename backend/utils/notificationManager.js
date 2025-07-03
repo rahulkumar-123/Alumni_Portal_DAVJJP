@@ -4,10 +4,10 @@ const sendEmail = require('./sendEmail');
 
 const parseMentions = (text) => {
     if (!text) return [];
-    const mentionRegex = /@\[(.+?)\]\(\w+\)/g;
+    const mentionRegex = /@\[([^\]]+)\]/g;
     const matches = text.match(mentionRegex);
     if (!matches) return [];
-    return matches.map(match => match.substring(2, match.indexOf(']')));
+    return matches.map(match => match.substring(2, match.length - 1));
 };
 
 const sendNotification = async (req, notificationData) => {

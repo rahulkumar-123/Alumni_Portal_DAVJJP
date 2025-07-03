@@ -53,6 +53,8 @@ export default function CommentSection({ postId, comments: initialComments, onCo
                     <Mention
                         trigger="@"
                         data={fetchUsersForMention}
+                        markup="@[__display__]" // <-- Simplified markup
+                        displayTransform={(id, display) => `@${display}`}
                         className="mentions__mention"
                     />
                 </MentionsInput>
