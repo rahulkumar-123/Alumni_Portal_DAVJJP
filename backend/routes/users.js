@@ -1,6 +1,6 @@
 const express = require('express');
-// const path = require('path');
-// const multer = require('multer');
+const path = require('path');
+const multer = require('multer');
 
 const {
     getUsers,
@@ -19,33 +19,33 @@ const router = express.Router();
 
 
 // --- Multer Storage Configuration ---
-// const storage = multer.diskStorage({
-//     destination(req, file, cb) {
-//         cb(null, 'uploads/');
-//     },
-//     filename(req, file, cb) {
-//         cb(null, `user-${req.user.id}-${Date.now()}${path.extname(file.originalname)}`);
-//     }
-// });
+const storage = multer.diskStorage({
+    destination(req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename(req, file, cb) {
+        cb(null, `user-${req.user.id}-${Date.now()}${path.extname(file.originalname)}`);
+    }
+});
 
-// function checkFileType(file, cb) {
-//     const filetypes = /jpg|jpeg|png/;
-//     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-//     const mimetype = filetypes.test(file.mimetype);
+function checkFileType(file, cb) {
+    const filetypes = /jpg|jpeg|png/;
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = filetypes.test(file.mimetype);
 
-//     if (extname && mimetype) {
-//         return cb(null, true);
-//     } else {
-//         cb('Error: Images Only!');
-//     }
-// }
+    if (extname && mimetype) {
+        return cb(null, true);
+    } else {
+        cb('Error: Images Only!');
+    }
+}
 
-// const upload = multer({
-//     storage,
-//     fileFilter: function (req, file, cb) {
-//         checkFileType(file, cb);
-//     }
-// });
+const upload = multer({
+    storage,
+    fileFilter: function (req, file, cb) {
+        checkFileType(file, cb);
+    }
+});
 
 // important routes
 // All routes below are protected by default
@@ -66,7 +66,7 @@ router.route('/profile')
 
 // Route to update the logged-in user's profile picture using Cloudinary
 router.route('/profile/picture')
-    .put(uploadUser.single('profileImage'), updateProfilePicture);
+    .put(upload.single('profileImage'), updateProfilePicture);
 
 // Route to get today's birthdays
 router.route('/birthdays/today')
@@ -89,3 +89,4 @@ router.route('/:id')
     .delete(admin, deleteUser);
 
 module.exports = router;
+
