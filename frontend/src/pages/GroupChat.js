@@ -205,7 +205,7 @@ export default function GroupChat() {
                         <Mention
                             trigger="@"
                             data={fetchUsersForMention}
-                            markup="@[__display__](__id__)" 
+                            markup="@[__display__](__id__)"
                             displayTransform={(id, display) => `@${display}`}
                             className="mentions__mention"
                         />

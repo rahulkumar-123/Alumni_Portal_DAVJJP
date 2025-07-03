@@ -2,37 +2,38 @@
 const Post = require('../models/Post');
 const User = require('../models/User');
 const Notification = require('../models/Notification');
+const { parseMentions, sendNotification } = require('../utils/notificationManager');
 
 // --- HELPER FUNCTIONS ---
 
 // Function to parse @mentions from text
-const parseMentions = (text) => {
-    if (!text) return [];
-    const mentionRegex = /@(\w+)/g;
-    const mentions = text.match(mentionRegex);
-    if (!mentions) return [];
-    // Return array of usernames without '@'
-    return mentions.map(mention => mention.substring(1));
-};
+// const parseMentions = (text) => {
+//     if (!text) return [];
+//     const mentionRegex = /@(\w+)/g;
+//     const mentions = text.match(mentionRegex);
+//     if (!mentions) return [];
+//     // Return array of usernames without '@'
+//     return mentions.map(mention => mention.substring(1));
+// };
 
-// Function to create and push notifications in real-time
-const sendNotification = async (req, notificationData) => {
-    const { io, userSockets } = req;
-    try {
-        const notification = await Notification.create(notificationData);
-        const recipientSocketId = userSockets.get(notification.recipient.toString());
+// // Function to create and push notifications in real-time
+// const sendNotification = async (req, notificationData) => {
+//     const { io, userSockets } = req;
+//     try {
+//         const notification = await Notification.create(notificationData);
+//         const recipientSocketId = userSockets.get(notification.recipient.toString());
 
-        if (recipientSocketId) {
-            const populatedNotification = await notification.populate([
-                { path: 'sender', select: 'fullName profilePicture' },
-                { path: 'post', select: 'title' }
-            ]);
-            io.to(recipientSocketId).emit('new_notification', populatedNotification);
-        }
-    } catch (error) {
-        console.error("Error sending notification:", error);
-    }
-};
+//         if (recipientSocketId) {
+//             const populatedNotification = await notification.populate([
+//                 { path: 'sender', select: 'fullName profilePicture' },
+//                 { path: 'post', select: 'title' }
+//             ]);
+//             io.to(recipientSocketId).emit('new_notification', populatedNotification);
+//         }
+//     } catch (error) {
+//         console.error("Error sending notification:", error);
+//     }
+// };
 
 
 // --- CONTROLLER EXPORTS ---

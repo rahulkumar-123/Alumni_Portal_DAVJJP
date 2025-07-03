@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const multer = require('multer');
-const { searchUsers } = require('../controllers/userController');
 
 const {
     getUsers,
@@ -11,7 +10,8 @@ const {
     approveRegistration,
     deleteUser,
     updateProfilePicture,
-    getTodaysBirthdays
+    getTodaysBirthdays,
+    searchUsers
 } = require('../controllers/userController');
 const { protect } = require('../middleware/authMiddleware');
 const { admin } = require('../middleware/adminMiddleware');

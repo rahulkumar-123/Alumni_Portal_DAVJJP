@@ -4,15 +4,15 @@ import useAuth from '../hooks/useAuth';
 
 const SocketContext = createContext();
 export const useSocket = () => useContext(SocketContext);
-
 const SOCKET_URL = process.env.REACT_APP_API_URL.replace("/api", "");
+
 
 export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
     const { user } = useAuth();
 
     useEffect(() => {
-        if (user) {
+        if (user?._id) {
             const newSocket = io(SOCKET_URL, {
                 transports: ['websocket'],
                 reconnection: true,
@@ -20,10 +20,7 @@ export const SocketProvider = ({ children }) => {
                 reconnectionDelay: 1000,
             });
             setSocket(newSocket);
-
-            newSocket.on('connect', () => console.log('%cSocket Connected!', 'color: green; font-weight: bold;'));
-            newSocket.on('disconnect', () => console.log('%cSocket Disconnected.', 'color: orange; font-weight: bold;'));
-            newSocket.on('connect_error', (err) => console.error('Socket Connection Error:', err));
+            newSocket.emit('user_connected', user._id);
 
             return () => newSocket.close();
         } else {

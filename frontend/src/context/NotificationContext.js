@@ -22,9 +22,7 @@ export const NotificationProvider = ({ children }) => {
         }
     }, [user]);
 
-    useEffect(() => {
-        fetchNotifications();
-    }, [fetchNotifications]);
+    useEffect(() => { fetchNotifications(); }, [fetchNotifications]);
 
     useEffect(() => {
         if (socket) {
@@ -37,6 +35,7 @@ export const NotificationProvider = ({ children }) => {
     }, [socket]);
 
     const markAllAsRead = async () => {
+        if (unreadCount === 0) return;
         try {
             await notificationService.markAsRead();
             setNotifications(notifications.map(n => ({ ...n, read: true })));

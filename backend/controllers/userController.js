@@ -149,26 +149,13 @@ exports.getTodaysBirthdays = async (req, res) => {
 exports.searchUsers = async (req, res) => {
     try {
         const query = req.query.q;
-        if (!query) {
-            return res.status(200).json({ success: true, data: [] });
-        }
-        // Find users whose name starts with the query, case-insensitive
-        const users = await User.find({
-            fullName: { $regex: `^${query}`, $options: 'i' },
-            _id: { $ne: req.user.id } // Exclude the current user
-        }).select('fullName').limit(10);
-
-        // Format for react-mentions: { id: userId, display: fullName }
-        const formattedUsers = users.map(user => ({
-            id: user._id,
-            display: user.fullName
-        }));
-
+        if (!query) return res.status(200).json({ success: true, data: [] });
+        const users = await User.find({ fullName: { $regex: `^${query}`, $options: 'i' }, _id: { $ne: req.user.id } }).select('fullName').limit(10);
+        const formattedUsers = users.map(user => ({ id: user.fullName, display: user.fullName }));
         res.status(200).json({ success: true, data: formattedUsers });
-    } catch (error) {
-        res.status(500).json({ success: false, message: 'Server Error' });
-    }
+    } catch (error) { res.status(500).json({ success: false, message: 'Server Error' }); }
 };
+
 // --- Admin specific controllers ---
 
 // @access  Private/Admin

@@ -10,7 +10,7 @@ import userService from '../../services/userService';
 // import './mentionStyles.css';
 
 export default function CommentSection({ postId, comments: initialComments, onCommentPosted }) {
-    const { user, isAdmin } = useAuth();
+   // const { user, isAdmin } = useAuth();
     const [comments, setComments] = useState(initialComments || []);
     const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(false);
