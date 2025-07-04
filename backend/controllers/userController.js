@@ -9,10 +9,10 @@ exports.getUsers = async (req, res) => {
     const startIndex = (page - 1) * limit;
 
     try {
-        const { batchYear, currentOrganization, location } = req.query;
+        const { name, batchYear, currentOrganization, location } = req.query;
         const filter = { isApproved: true };
 
-        if (name) filter.fullName = { $regex: name, $options: 'i' }; // <-- NEW
+        if (name) filter.fullName = { $regex: name, $options: 'i' };
         if (batchYear && !isNaN(parseInt(batchYear))) filter.batchYear = parseInt(batchYear);
         if (currentOrganization) filter.currentOrganization = { $regex: currentOrganization, $options: 'i' };
         if (location) filter.location = { $regex: location, $options: 'i' };

@@ -11,11 +11,15 @@ const login = (credentials) => {
 const getMe = () => {
     return api.get('/auth/me');
 };
+const forgotPassword = (email) => api.post('/auth/forgot-password', { email });
+const resetPassword = (token, password) => api.put(`/auth/reset-password/${token}`, { password });
 
 const authService = {
     register,
     login,
     getMe,
+    forgotPassword,
+    resetPassword
 };
 
 export default authService;

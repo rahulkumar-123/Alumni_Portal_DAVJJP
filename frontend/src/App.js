@@ -21,6 +21,7 @@ import Preloader from './components/layout/Preloader';
 import { NotificationProvider } from './context/NotificationContext';
 import NotificationsPage from './pages/NotificationsPage';
 import PostPage from './pages/PostPage';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   const [showPreloader, setShowPreloader] = useState(true);
@@ -85,6 +86,7 @@ const MainContent = () => {
         <Route path="/admin" element={<PrivateRoute adminOnly={true}><AdminDashboard /></PrivateRoute>} />
         <Route path="/notifications" element={<PrivateRoute><NotificationsPage /></PrivateRoute>} />
         <Route path="/posts/:id" element={<PrivateRoute><PostPage /></PrivateRoute>} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </main>
   )
