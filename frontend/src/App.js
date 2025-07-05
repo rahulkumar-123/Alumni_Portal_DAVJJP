@@ -22,7 +22,7 @@ import { NotificationProvider } from './context/NotificationContext';
 import NotificationsPage from './pages/NotificationsPage';
 import PostPage from './pages/PostPage';
 import ResetPassword from './pages/ResetPassword';
-
+import { Analytics } from "@vercel/analytics/react"
 function App() {
   const [showPreloader, setShowPreloader] = useState(true);
 
@@ -62,6 +62,7 @@ function App() {
         className: 'bg-on-surface text-white rounded-lg shadow-lg',
         duration: 4000,
       }} />
+      <Analytics />
     </AuthProvider>
   );
 }

@@ -128,6 +128,7 @@ exports.resetPassword = async (req, res) => {
 
     } catch (error) {
         // Catches expired tokens or other JWT errors
+        console.log(error)
         res.status(400).json({ success: false, message: 'Invalid or expired token' });
     }
 };
