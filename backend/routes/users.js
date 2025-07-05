@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const multer = require('multer');
+const rateLimit = require('express-rate-limit');
 
 const {
     getUsers,
@@ -42,7 +43,16 @@ const router = express.Router();
 
 const upload = multer({ dest: 'uploads/' });
 
-
+const birthdaysRateLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per `windowMs`
+    message: 'Too many requests from this IP, please try again later.',
+});
+const getUserRateLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: "Too many requests from this IP, please try again after 15 minutes.",
+});
 // important routes
 // All routes below are protected by default
 router.use(protect);
@@ -66,7 +76,7 @@ router.route('/profile/picture')
 
 // Route to get today's birthdays
 router.route('/birthdays/today')
-    .get(getTodaysBirthdays);
+    .get(birthdaysRateLimiter, getTodaysBirthdays);
 
 
 // --- Admin Only Routes ---
@@ -81,7 +91,7 @@ router.route('/approve/:id')
 
 // Route for admin to get or delete a specific user. This MUST be last.
 router.route('/:id')
-    .get(admin, getUser)
+    .get(admin, getUserRateLimiter, getUser)
     .delete(admin, deleteUser);
 
 module.exports = router;

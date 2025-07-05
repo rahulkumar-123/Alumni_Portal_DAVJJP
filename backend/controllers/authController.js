@@ -58,7 +58,7 @@ exports.login = async (req, res) => {
 };
 exports.forgotPassword = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email });
+        const user = await User.findOne({ email: { $eq: req.body.email } });
 
         if (!user) {
             // Send a success response even if user not found to prevent email enumeration
