@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChatBubbleOvalLeftIcon, ShareIcon, TrashIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 import { formatDistanceToNow } from 'date-fns';
@@ -7,7 +7,9 @@ import useAuth from '../../hooks/useAuth';
 import postService from '../../services/postService';
 import Linkify from 'react-linkify';
 import AlumniDetailModal from '../directory/AlumniDetailModal';
-
+import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
+import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline';
+//import { useState, useEffect } from 'react';
 const API_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 
 export default function PostCard({ post, refreshFeed }) {
@@ -15,9 +17,29 @@ export default function PostCard({ post, refreshFeed }) {
     const [showComments, setShowComments] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [likes, setLikes] = useState(post.likes || []);
+    const [isLiked, setIsLiked] = useState(false);
 
+    useEffect(() => {
+        setIsLiked(likes.includes(loggedInUser?._id));
+    }, [likes, loggedInUser]);
+
+    const handleLike = async () => {
+        // Optimistic UI update
+        const originalLikes = [...likes];
+        const newLikes = isLiked ? likes.filter(id => id !== loggedInUser._id) : [...likes, loggedInUser._id];
+        setLikes(newLikes);
+
+        try {
+            const res = await postService.likePost(post._id);
+            setLikes(res.data.data);
+        } catch (error) {
+            toast.error("Failed to update like.");
+            setLikes(originalLikes); // Revert on error
+        }
+    };
     // character limit for collapsing post
-    const MAX_LENGTH = 300;
+    const MAX_LENGTH = 400;
     const isLongPost = post.content.length > MAX_LENGTH;
 
     const toggleExpanded = () => setIsExpanded(!isExpanded);
@@ -86,6 +108,10 @@ export default function PostCard({ post, refreshFeed }) {
             </div>
 
             <div className="border-t border-gray-200 px-5 py-3 flex justify-around">
+                <button onClick={handleLike} className={`flex items-center space-x-2 font-semibold transition-colors ${isLiked ? 'text-red-500' : 'text-muted hover:text-red-500'}`}>
+                    {isLiked ? <HeartIconSolid className="w-6 h-6" /> : <HeartIconOutline className="w-6 h-6" />}
+                    <span>{likes.length} Like{likes.length !== 1 && 's'}</span>
+                </button>
                 <button onClick={() => setShowComments(!showComments)} className="flex items-center space-x-2 text-muted hover:text-primary transition-colors font-semibold">
                     <ChatBubbleOvalLeftIcon className="w-6 h-6" />
                     <span>Comment ({post.comments.length})</span>

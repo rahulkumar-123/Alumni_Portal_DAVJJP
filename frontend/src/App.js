@@ -17,8 +17,12 @@ import Groups from './pages/Groups';
 import GroupChat from './pages/GroupChat';
 import AdminDashboard from './pages/AdminDashboard';
 import Feedback from './pages/Feedback';
-import Preloader from './components/layout/Preloader'; // This import is correct
-
+import Preloader from './components/layout/Preloader';
+import { NotificationProvider } from './context/NotificationContext';
+import NotificationsPage from './pages/NotificationsPage';
+import PostPage from './pages/PostPage';
+import ResetPassword from './pages/ResetPassword';
+import { Analytics } from "@vercel/analytics/react"
 function App() {
   const [showPreloader, setShowPreloader] = useState(true);
 
@@ -44,18 +48,21 @@ function App() {
   return (
     <AuthProvider>
       <SocketProvider>
-        <Router>
-          <div className="flex flex-col min-h-screen bg-background">
-            <Navbar />
-            <MainContent />
-            <Footer />
-          </div>
-        </Router>
+        <NotificationProvider>
+          <Router>
+            <div className="flex flex-col min-h-screen bg-background">
+              <Navbar />
+              <MainContent />
+              <Footer />
+            </div>
+          </Router>
+        </NotificationProvider>
       </SocketProvider>
       <Toaster position="bottom-right" toastOptions={{
-          className: 'bg-on-surface text-white rounded-lg shadow-lg',
-          duration: 4000,
-      }}/>
+        className: 'bg-on-surface text-white rounded-lg shadow-lg',
+        duration: 4000,
+      }} />
+      <Analytics />
     </AuthProvider>
   );
 }
@@ -78,6 +85,9 @@ const MainContent = () => {
         <Route path="/groups" element={<PrivateRoute><Groups /></PrivateRoute>} />
         <Route path="/groups/:id" element={<PrivateRoute><GroupChat /></PrivateRoute>} />
         <Route path="/admin" element={<PrivateRoute adminOnly={true}><AdminDashboard /></PrivateRoute>} />
+        <Route path="/notifications" element={<PrivateRoute><NotificationsPage /></PrivateRoute>} />
+        <Route path="/posts/:id" element={<PrivateRoute><PostPage /></PrivateRoute>} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </main>
   )

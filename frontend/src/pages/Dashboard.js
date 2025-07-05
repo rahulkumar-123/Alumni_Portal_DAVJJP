@@ -58,7 +58,7 @@ export default function Dashboard() {
         if (page === 1) {
             fetchPosts(1, true);
         } else {
-            setPosts([]);
+            // setPosts([]);
             setPage(1);
         }
     };
@@ -66,6 +66,11 @@ export default function Dashboard() {
     const dismissBirthday = (userId) => {
         setBirthdays(birthdays.filter(b => b._id !== userId));
     };
+    useEffect(() => {
+        userService.getTodaysBirthdays()
+            .then(res => setBirthdays(res.data.data))
+            .catch(() => toast.error('Could not load birthday information.'));
+    }, []);
 
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

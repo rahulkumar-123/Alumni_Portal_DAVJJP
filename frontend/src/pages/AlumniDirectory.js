@@ -54,6 +54,7 @@ export default function AlumniDirectory() {
             </div>
 
             <form onSubmit={handleFilterSubmit} className="bg-surface p-6 rounded-xl shadow-lg mb-8 grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                <input name="name" placeholder="Filter by Name" value={filters.name} onChange={handleFilterChange} className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />
                 <input name="batchYear" type="number" placeholder="Filter by Batch Year" value={filters.batchYear} onChange={handleFilterChange} className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />
                 <input name="currentOrganization" placeholder="Filter by Company/Institute" value={filters.currentOrganization} onChange={handleFilterChange} className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />
                 <input name="location" placeholder="Filter by Location" value={filters.location} onChange={handleFilterChange} className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />

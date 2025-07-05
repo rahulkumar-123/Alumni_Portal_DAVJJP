@@ -9,9 +9,10 @@ exports.getUsers = async (req, res) => {
     const startIndex = (page - 1) * limit;
 
     try {
-        const { batchYear, currentOrganization, location } = req.query;
+        const { name, batchYear, currentOrganization, location } = req.query;
         const filter = { isApproved: true };
 
+        if (name) filter.fullName = { $regex: name, $options: 'i' };
         if (batchYear && !isNaN(parseInt(batchYear))) filter.batchYear = parseInt(batchYear);
         if (currentOrganization) filter.currentOrganization = { $regex: currentOrganization, $options: 'i' };
         if (location) filter.location = { $regex: location, $options: 'i' };
@@ -145,6 +146,31 @@ exports.getTodaysBirthdays = async (req, res) => {
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };
+// --- FUNCTION for @mention suggestions ---
+exports.searchUsers = async (req, res) => {
+    try {
+        const query = req.query.q;
+        if (!query) {
+            return res.status(200).json({ success: true, data: [] });
+        }
+
+
+        const users = await User.find({
+            fullName: { $regex: `^${query}`, $options: 'i' },
+            _id: { $ne: req.user._id }
+        }).select('fullName').limit(10);
+
+        const formattedUsers = users.map(user => ({
+            id: user.fullName,
+            display: user.fullName
+        }));
+
+        res.status(200).json({ success: true, data: formattedUsers });
+    } catch (error) {
+        console.error("User search error:", error);
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
+};
 
 // --- Admin specific controllers ---
 
@@ -176,9 +202,9 @@ exports.approveRegistration = async (req, res) => {
 
         try {
             await sendEmail({
-  email: user.email,
-  subject: `${user.fullName}, Welcome Home! Your MNJ DAV Alumni Account is Now Active 🎉`,
-  message: `
+                email: user.email,
+                subject: `${user.fullName}, Welcome Home! Your MNJ DAV Alumni Account is Now Active 🎉`,
+                message: `
     <div style="font-family:Segoe UI, Roboto, sans-serif; max-width:600px; margin:auto; padding:20px; border-radius:8px; background:#f9f9f9; color:#333;">
       
       <h2 style="color:#007bff;">Dear ${user.fullName},</h2>
@@ -225,7 +251,7 @@ exports.approveRegistration = async (req, res) => {
       If this wasn’t you, just ignore it – no dant, no detention.</p>
     </div>
   `
-});
+            });
         } catch (emailError) {
             console.error("Failed to send approval email:", emailError);
         }

@@ -1,0 +1,76 @@
+.mentions {
+    width: 100%;
+}
+
+/* This is the main container for the input field */
+.mentions__control {
+    background-color: white !important;
+    border-radius: 9999px !important;
+    /* full rounded corners */
+    padding: 0.75rem 1rem !important;
+    /* 12px 16px */
+    border: 1px solid #d1d5db !important;
+    /* gray-300 */
+    font-size: 1rem;
+}
+
+.mentions__control:focus-within {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    --tw-ring-color: #8344AD;
+    /* primary color */
+    /*box-shadow: 0 0 0 2px var(--tw-ring-color);*/
+}
+
+
+/* This is the actual text input area */
+.mentions__input {
+    padding: 0 !important;
+    border: 0 !important;
+    outline: 0 !important;
+    width: 100% !important;
+    font-size: 1rem !important;
+    line-height: 1.5rem !important;
+    background-color: transparent !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* This is the dropdown suggestion box */
+.mentions__suggestions {
+    position: absolute;
+    z-index: 10;
+    margin-top: 0.5rem;
+    width: 250px;
+}
+
+.mentions__suggestions__list {
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    max-height: 15rem;
+    overflow-y: auto;
+}
+
+.mentions__suggestions__item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.mentions__suggestions__item--focused {
+    background-color: #f3f4f6;
+    /* gray-100 */
+}
+
+/* This is the highlighted @mention text in the input */
+.mentions__mention {
+    background-color: transparent !important;
+    font-weight: 600 !important;
+    /* light purple */
+    padding: 1px 3px !important;
+    border-radius: 4px !important;
+    font-weight: 600 !important;
+    color: #2563EB !important;
+}

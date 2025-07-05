@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import jwt_decode from 'jwt-decode';
+//import jwt_decode from 'jwt-decode';
 import api from '../services/api';
 import authService from '../services/authService';
 
@@ -9,23 +9,23 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(true);
+    const fetchUser = async () => {
+        try {
+            const res = await authService.getMe();
+            setUser(res.data.data);
+            setIsAdmin(res.data.data.role === 'admin');
+        } catch (error) {
+            logout();
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            authService.getMe()
-                .then(res => {
-                    setUser(res.data.data);
-                    if (res.data.data.role === 'admin') {
-                        setIsAdmin(true);
-                    }
-                })
-                .catch(() => {
-                    // Token is invalid, log out
-                    logout();
-                })
-                .finally(() => setLoading(false));
+            fetchUser();
         } else {
             setLoading(false);
         }
@@ -34,12 +34,7 @@ export const AuthProvider = ({ children }) => {
     const login = (token) => {
         localStorage.setItem('token', token);
         api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        return authService.getMe().then(res => {
-            setUser(res.data.data);
-            if (res.data.data.role === 'admin') {
-                setIsAdmin(true);
-            }
-        });
+        return fetchUser();
     };
 
     const logout = () => {

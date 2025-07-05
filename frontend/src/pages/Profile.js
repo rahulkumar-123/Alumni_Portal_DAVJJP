@@ -72,7 +72,7 @@ export default function Profile() {
       setLoading(false);
     }
   };
-  // Add this function to handle profile picture upload
+  // unction to handle profile picture upload
   const handleProfilePictureChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -256,7 +256,7 @@ export default function Profile() {
       <div className="bg-white shadow-md rounded-lg p-6 sm:p-8">
         <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start">
           <div className="flex flex-col sm:flex-row items-center sm:items-start w-full">
-            
+
             {/* <div className="relative group">
               <img
                 className="h-24 w-24 rounded-full object-cover"
@@ -288,43 +288,43 @@ export default function Profile() {
 
 
 
-                <div className="relative group w-24 h-24">
-  <img
-    className="h-24 w-24 rounded-full object-cover border border-gray-300"
-    src={
-      profile.profilePicture?.startsWith("http")
-        ? profile.profilePicture
-        : profile.profilePicture !== "no-photo.jpg"
-        ? `${API_URL}${profile.profilePicture}`
-        : `https://ui-avatars.com/api/?name=${profile.fullName}&background=8344AD&color=fff`
-    }
-    alt={profile.fullName}
-  />
+            <div className="relative group w-24 h-24">
+              <img
+                className="h-24 w-24 rounded-full object-cover border border-gray-300"
+                src={
+                  profile.profilePicture?.startsWith("http")
+                    ? profile.profilePicture
+                    : profile.profilePicture !== "no-photo.jpg"
+                      ? `${API_URL}${profile.profilePicture}`
+                      : `https://ui-avatars.com/api/?name=${profile.fullName}&background=8344AD&color=fff`
+                }
+                alt={profile.fullName}
+              />
 
-  {/* Upload Button (Camera Icon) */}
-  <label className="absolute bottom-1 right-2  text-secondary rounded-full p-2 cursor-pointer transition">
-    <CameraIcon className="h-4 w-4" />
-    <input
-      type="file"
-      className="hidden"
-      accept="image/*"
-      onChange={handleProfilePictureChange}
-      disabled={uploading}
-    />
-  </label>
+              {/* Upload Button (Camera Icon) */}
+              <label className="absolute bottom-1 right-2  text-secondary rounded-full p-2 cursor-pointer transition">
+                <CameraIcon className="h-4 w-4" />
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={handleProfilePictureChange}
+                  disabled={uploading}
+                />
+              </label>
 
-  {/* Uploading Spinner Overlay */}
-  {uploading && (
-    <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center z-10">
-      <div className="animate-spin h-6 w-6 border-2 border-white border-t-transparent rounded-full"></div>
-    </div>
-  )}
-</div>
-
-
+              {/* Uploading Spinner Overlay */}
+              {uploading && (
+                <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center z-10">
+                  <div className="animate-spin h-6 w-6 border-2 border-white border-t-transparent rounded-full"></div>
+                </div>
+              )}
+            </div>
 
 
-            
+
+
+
             <div className="mt-4 sm:mt-0 sm:ml-6 text-center sm:text-left">
               <h1 className="text-2xl sm:text-3xl font-bold">
                 {profile.fullName}

@@ -1,22 +1,22 @@
 const express = require('express');
-// const multer = require('multer');
-// const path = require('path');
+const multer = require('multer');
+const path = require('path');
 
-// const storage = multer.diskStorage({
-//     destination(req, file, cb) { cb(null, 'uploads/'); },
-//     filename(req, file, cb) { cb(null, `post-${Date.now()}${path.extname(file.originalname)}`); }
-// });
-// const upload = multer({ storage /*, fileFilter can be added here */ });
+const storage = multer.diskStorage({
+    destination(req, file, cb) { cb(null, 'uploads/'); },
+    filename(req, file, cb) { cb(null, `post-${Date.now()}${path.extname(file.originalname)}`); }
+});
+const upload = multer({ storage });
 
 const {
     getPosts,
     createPost,
-    updatePost,
+    // updatePost,
     deletePost,
-    getPendingPosts,
     addComment,
-    deleteComment,
-    approvePost
+    getPostById,
+    likePost
+    // approvePost
 } = require('../controllers/postController');
 const { protect } = require('../middleware/authMiddleware');
 const { admin } = require('../middleware/adminMiddleware');
@@ -29,20 +29,16 @@ router.route('/')
     .post(createPost);
 
 router.route('/:id/comment').post(addComment);
-router.route('/:id/comment/:comment_id').delete(deleteComment);
 
-router.route('/pending')
-    .get(admin, getPendingPosts);
+// router.route('/pending')
+//     .get(admin, getPendingPosts);
 
-router.route('/approve/:id')
-    .put(admin, approvePost);
+// router.route('/approve/:id')
+//     .put(admin, approvePost);
+router.route('/:id/like').put(protect, likePost);
 
-router.route('/:id')
-    .put(updatePost)
-    .delete(deletePost);
-    
-// router.route('/:id/comment/:comment_id')
-//     .delete(protect, deleteComment);
+router.route('/:id').get(protect, getPostById).delete(protect, deletePost);
+
 
 module.exports = router;
 
