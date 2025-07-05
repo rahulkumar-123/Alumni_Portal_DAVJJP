@@ -1,4 +1,6 @@
 const Group = require('../models/Group');
+const User = require('../models/User');
+const { sendPushNotification } = require('../utils/pushNotification');
 
 // Creates a new group
 exports.createGroup = async (req, res) => {
@@ -52,15 +54,55 @@ exports.leaveGroup = async (req, res) => {
 exports.joinGroup = async (req, res) => {
     try {
         const group = await Group.findById(req.params.id);
+        
         if (!group) {
             return res.status(404).json({ success: false, message: 'Group not found.' });
         }
-        if (!group.members.includes(req.user.id)) {
-            group.members.push(req.user.id);
-            await group.save();
+
+        const existingGroupMembersIds = group.members.map((member) =>
+            member.toString()
+        );
+        console.log("Existing Group Members IDs:", existingGroupMembersIds);
+
+        // Check if user is already a member
+        if (group.members.includes(req.user.id)) {
+            return res.status(400).json({
+                success: false,
+                message: "You are already a member of this group."
+            });
         }
-        res.status(200).json({ success: true, data: group, message: 'Successfully joined group!' });
+
+        // Add user to group
+        group.members.push(req.user.id);
+        await group.save();
+
+        // Send notifications to existing members (excluding the new member)
+        if (existingGroupMembersIds.length > 0) {
+            for (const memberId of existingGroupMembersIds) {
+                const user = await User.findById(memberId).select("+fcmToken +email");
+                if (user && user.fcmToken) {
+                    const notificationSent = await sendPushNotification(
+                        memberId,
+                        "New Member Joined",
+                        `${req.user.fullName} has joined the group ${group.name}`
+                    );
+                    
+                    if (notificationSent) {
+                        console.log(
+                            `Push notification sent to ${memberId} with email ${user.email} for joining group ${group.name}`
+                        );
+                    }
+                }
+            }
+        }
+
+        res.status(200).json({
+            success: true,
+            data: group,
+            message: 'Successfully joined group!'
+        });
     } catch (error) {
+        console.error("Error in joinGroup:", error);
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };

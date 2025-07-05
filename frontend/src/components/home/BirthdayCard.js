@@ -13,20 +13,25 @@ export default function BirthdayCard({ user, onDismiss }) {
             : `https://ui-avatars.com/api/?name=${user.fullName}&background=A066CB&color=fff`;
 
     return (
-        <div className="bg-surface rounded-xl shadow-lg p-4 flex items-center space-x-4 relative transition transform hover:-translate-y-1">
+        <div className="bg-primary/10 border border-purple-200 rounded-xl shadow-lg p-4 flex items-center space-x-4 relative transition-all duration-300 hover:shadow-xl hover:scale-105">
             <button
                 onClick={() => onDismiss(user._id)}
-                className="absolute top-2 right-2 p-1 text-muted hover:text-on-surface hover:bg-gray-100 rounded-full transition-colors"
+                className="absolute top-2 right-2 p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
                 aria-label="Dismiss"
             >
-                <XMarkIcon className="w-5 h-5" />
+                <XMarkIcon className="w-4 h-4" />
             </button>
-            <img src={profileImageUrl} alt={user.fullName} className="w-16 h-16 rounded-full object-cover" />
-            <div className="flex-1">
-                <p className="font-bold text-on-surface">{user.fullName}</p>
-                <p className="text-sm text-muted">Batch of {user.batchYear}</p>
+            <div className="relative">
+                <img src={profileImageUrl} alt={user.fullName} className="w-16 h-16 rounded-full object-cover ring-2 ring-purple-200" />
+                <div className="absolute -top-1 -right-1 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full p-1">
+                    <CakeIcon className="w-4 h-4 text-white" />
+                </div>
             </div>
-            <CakeIcon className="w-8 h-8 text-primary-light" />
+            <div className="flex-1">
+                <p className="font-bold text-gray-800 text-lg">{user.fullName}</p>
+                <p className="text-sm text-purple-600 font-medium">Batch of {user.batchYear}</p>
+                <p className="text-xs text-gray-500 mt-1">🎉 Happy Birthday!</p>
+            </div>
         </div>
     );
 }
