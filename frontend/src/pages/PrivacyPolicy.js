@@ -6,49 +6,67 @@ export default function PrivacyPolicy() {
         <div className="max-w-4xl mx-auto py-12 px-4 bg-surface rounded-xl shadow-lg">
             <h1 className="text-4xl font-bold mb-6 text-on-surface">Privacy Policy</h1>
             <div className="space-y-6 text-muted prose lg:prose-lg">
-                <p><strong>Last Updated:</strong> June 13, 2025</p>
+                <p><strong>Effective Date:</strong> June 13, 2025</p>
 
-                <p>Welcome to the MNJ DAV Alumni Portal. We are committed to protecting your privacy and handling your data in an open and transparent manner. This policy outlines how we collect, use, and protect your personal information.</p>
+                <p>
+                    At MNJ DAV Alumni Portal, we are committed to protecting your privacy and handling your personal information with transparency and care. This Privacy Policy describes the types of data we collect, how we use it, and the measures we take to safeguard it.
+                </p>
 
-                <h2 className="text-2xl font-bold text-on-surface">1. What Information Do We Collect?</h2>
-                <p>We collect the following information when you register on the portal:</p>
+                <h2 className="text-2xl font-bold text-on-surface">1. Information We Collect</h2>
+                <p>We collect information to provide, maintain, and improve our services. This includes:</p>
                 <ul>
-                    <li><strong>Personal Identification Information:</strong> Full Name, Email Address, Date of Birth.</li>
-                    <li><strong>Academic Information:</strong> Batch Year, Admission Number.</li>
-                    <li><strong>Contact Information:</strong> Phone Number (optional).</li>
-                    <li><strong>Professional Information:</strong> Current Company/Institute, Location, LinkedIn Profile (optional).</li>
-                    <li><strong>User-Generated Content:</strong> Posts, comments, group chat messages, and profile information you voluntarily add.</li>
+                    <li><strong>Identity Data:</strong> Full name, email address, date of birth</li>
+                    <li><strong>Educational Data:</strong> Batch year, admission number</li>
+                    <li><strong>Contact Data:</strong> Phone number (optional)</li>
+                    <li><strong>Professional Data:</strong> Current organization or institution, location, LinkedIn profile (optional)</li>
+                    <li><strong>User-Generated Content:</strong> Profile details, posts, comments, and group chat messages</li>
                 </ul>
 
-                <h2 className="text-2xl font-bold text-on-surface">2. How Do We Use Your Information?</h2>
-                <p>Your data is used solely for the purpose of running and enhancing the Alumni Portal. This includes:</p>
+                <h2 className="text-2xl font-bold text-on-surface">2. How We Use Your Information</h2>
+                <p>Your information is used strictly for purposes that enhance your experience and support the alumni network. These include:</p>
                 <ul>
-                    <li><strong>Authentication:</strong> To securely log you into your account.</li>
-                    <li><strong>Alumni Directory:</strong> To display your profile to other approved alumni members, fostering connections. Your contact details are part of this private directory.</li>
-                    <li><strong>Communication:</strong> To send important notifications, such as account approval emails.</li>
-                    <li><strong>Community Features:</strong> To attribute your posts, comments, and group messages to your profile.</li>
-                    <li><strong>Homepage Features:</strong> To feature you on the portal on your birthday, celebrating with the community.</li>
+                    <li><strong>Authentication and Access:</strong> To verify your identity and grant secure access to your account</li>
+                    <li><strong>Directory Services:</strong> To display verified profiles within the alumni directory and facilitate networking</li>
+                    <li><strong>Communication:</strong> To deliver important updates, including account approvals, policy changes, and relevant notifications</li>
+                    <li><strong>Engagement:</strong> To associate content (posts, chats, comments) with your identity within the platform</li>
+                    <li><strong>Community Recognition:</strong> To highlight members on special occasions, such as birthdays</li>
                 </ul>
 
-                <h2 className="text-2xl font-bold text-on-surface">3. Data Handling and Security</h2>
-                <p><strong>We do not share, sell, or rent your personal data to any third-party companies or for marketing purposes.</strong></p>
+                <h2 className="text-2xl font-bold text-on-surface">3. Data Security</h2>
+                <p>We implement robust technical and organizational measures to protect your personal data against unauthorized access, disclosure, or loss. These include:</p>
                 <ul>
-                    <li>All data is stored securely in a MongoDB database.</li>
-                    <li>Passwords are encrypted using industry-standard hashing algorithms (bcrypt). No one, not even administrators, can see your plain-text password.</li>
-                    <li>The Alumni Directory is a private feature, accessible only to logged-in and approved alumni. It is not visible to the public.</li>
+                    <li>Encrypted storage using a secure, cloud-hosted MongoDB database</li>
+                    <li>Industry-standard password hashing using bcrypt; passwords are never stored in plain text</li>
+                    <li>Strict access controls and privacy protections for the Alumni Directory, limited to authenticated and approved users only</li>
                 </ul>
 
-                <h2 className="text-2xl font-bold text-on-surface">4. Your Control Over Your Data</h2>
-                <p>You have full control over the optional information in your profile. You can edit or remove your Bio, Company/Institute, Location, and other optional fields at any time via your Profile page.</p>
+                <h2 className="text-2xl font-bold text-on-surface">4. Data Sharing and Disclosure</h2>
+                <p>
+                    We do <strong>not</strong> sell, rent, or otherwise disclose your personal information to advertisers or third-party marketing entities. Information may only be shared:
+                </p>
+                <ul>
+                    <li>With your explicit consent</li>
+                    <li>As required by law, regulation, or legal process</li>
+                    <li>To protect the rights, property, or safety of users or the platform</li>
+                </ul>
 
-                <h2 className="text-2xl font-bold text-on-surface">5. Contact</h2>
-                <p>If you have any questions or concerns about our privacy practices, please feel free to reach out to the portal administrator.</p>
+                <h2 className="text-2xl font-bold text-on-surface">5. Your Rights and Choices</h2>
+                <p>
+                    You maintain control over your personal information. Optional fields such as professional details, bio, and location can be updated or removed at any time via the Profile page. You may also request correction or deletion of your data by contacting the portal administrator.
+                </p>
+
+                <h2 className="text-2xl font-bold text-on-surface">6. Contact Us</h2>
+                <p>
+                    If you have questions, concerns, or requests related to your data or this policy, please contact the platform administrator through the official communication channels provided on the portal.
+                </p>
             </div>
+
             <div className="text-center mt-8">
                 <Link to="/" className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark">
                     Back to Home
                 </Link>
             </div>
         </div>
+
     );
 }

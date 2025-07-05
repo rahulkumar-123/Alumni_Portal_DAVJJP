@@ -58,7 +58,7 @@ exports.login = async (req, res) => {
 };
 exports.forgotPassword = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email });
+        const user = await User.findOne({ email: { $eq: req.body.email } });
 
         if (!user) {
             // Send a success response even if user not found to prevent email enumeration
@@ -66,7 +66,7 @@ exports.forgotPassword = async (req, res) => {
         }
 
         // Create reset token that expires in 15 minutes
-        const resetToken = jwt.sign({ id: user._id }, process.env.JWT_RESET_SECRET, { expiresIn: '15m' });
+        const resetToken = jwt.sign({ id: user._id }, process.env.JWT_RESET_SECRET, { expiresIn: '10m' });
 
         // Create reset url
         const resetUrl = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
@@ -83,7 +83,7 @@ exports.forgotPassword = async (req, res) => {
             </a>
         </div>
         <p style="font-size: 14px; color: #888;">
-            This link will expire in <strong>15 minutes</strong>. If you did not request a password reset, you can safely ignore this email.
+            This link will expire in <strong>10 minutes</strong>. If you did not request a password reset, you can safely ignore this email.
         </p>
         <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
         <p style="font-size: 12px; color: #aaa; text-align: center;">
@@ -128,6 +128,7 @@ exports.resetPassword = async (req, res) => {
 
     } catch (error) {
         // Catches expired tokens or other JWT errors
+        console.log(error)
         res.status(400).json({ success: false, message: 'Invalid or expired token' });
     }
 };

@@ -6,6 +6,7 @@
     "@cloudinary/url-gen": "^1.21.0",
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.17",
+    "@vercel/analytics": "^1.5.0",
     "axios": "^1.3.5",
     "cloudinary-react": "^1.8.1",
     "clsx": "^1.2.1",

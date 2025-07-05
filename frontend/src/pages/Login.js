@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import authService from '../services/authService';
 import toast from 'react-hot-toast';
-import ForgotPasswordModal from '../components/auth/ForgotPasswordModal'; // <-- NEW IMPORT
+import ForgotPasswordModal from '../components/auth/ForgotPasswordModal';
 
 export default function Login() {
     const [formData, setFormData] = useState({ email: '', password: '' });
