@@ -32,7 +32,7 @@ export default function PostCard({ post, refreshFeed }) {
 
         try {
             const res = await postService.likePost(post._id);
-            setLikes(res.data.data); // Sync with server state
+            setLikes(res.data.data);
         } catch (error) {
             toast.error("Failed to update like.");
             setLikes(originalLikes); // Revert on error

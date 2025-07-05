@@ -208,13 +208,13 @@ export default function Navbar() {
                                                 <div className="text-sm font-medium text-muted">{user.email}</div>
                                             </div>
                                         </div>
-                                        <div className="relative">
+                                        {/* <div className="relative">
                                             <button onClick={() => setNotificationsOpen(!isNotificationsOpen)} className="p-2 rounded-full text-muted hover:text-on-surface hover:bg-gray-100">
                                                 <BellIcon className="h-6 w-6" />
                                                 {unreadCount > 0 && <span className="absolute top-1 right-1 block h-3 w-3 rounded-full bg-red-500 border-2 border-surface"></span>}
                                             </button>
                                             {isNotificationsOpen && <NotificationsPanel onClose={() => { setNotificationsOpen(false); close(); }} />}
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <Link to="/profile" onClick={close}
                                         className="block w-full text-left rounded-md py-2 px-3 text-base font-medium text-muted hover:bg-gray-100 hover:text-on-surface">
