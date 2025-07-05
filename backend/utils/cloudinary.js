@@ -3,17 +3,25 @@ const fs = require('fs');
 
 const uploadToCloudinary = async (file) => {
   try {
-    const result = await cloudinary.uploader.upload(file.path, {
+    // For express-fileupload
+    const filePath = file.tempFilePath || file.path;
+    
+    const result = await cloudinary.uploader.upload(filePath, {
       folder: "alumni_portal_profiles",
       use_filename: true,
+      unique_filename: true,
+      overwrite: true,
     });
-    // Delete the temporary file from the server after successful upload
-    fs.unlinkSync(file.path);
+    
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+    
     return result.secure_url;
   } catch (error) {
-    // Ensure temporary file is deleted even if upload fails
-    if (file && file.path) {
-      fs.unlinkSync(file.path);
+    const filePath = file.tempFilePath || file.path;
+    if (filePath && fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
     }
     throw new Error("Error uploading to Cloudinary: " + error.message);
   }

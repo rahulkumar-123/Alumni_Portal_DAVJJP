@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const multer = require('multer');
 
 const {
     getUsers,
@@ -16,32 +15,6 @@ const {
 const { protect } = require('../middleware/authMiddleware');
 const { admin } = require('../middleware/adminMiddleware');
 const router = express.Router();
-
-
-// --- Multer Storage Configuration ---
-// const storage = multer.diskStorage({
-//     destination(req, file, cb) {
-//         cb(null, 'uploads/');
-//     },
-//     filename(req, file, cb) {
-//         cb(null, `user-${req.user.id}-${Date.now()}${path.extname(file.originalname)}`);
-//     }
-// });
-
-// function checkFileType(file, cb) {
-//     const filetypes = /jpg|jpeg|png/;
-//     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-//     const mimetype = filetypes.test(file.mimetype);
-
-//     if (extname && mimetype) {
-//         return cb(null, true);
-//     } else {
-//         cb('Error: Images Only!');
-//     }
-// }
-
-const upload = multer({ dest: 'uploads/' });
-
 
 // important routes
 // All routes below are protected by default
@@ -62,7 +35,8 @@ router.route('/profile')
 
 // Route to update the logged-in user's profile picture using Cloudinary
 router.route('/profile/picture')
-    .put(upload.single('profileImage'), updateProfilePicture);
+    .put(updateProfilePicture)
+    .post(updateProfilePicture);  // post method bhi hona chahiye @raajesh ke hisab se
 
 // Route to get today's birthdays
 router.route('/birthdays/today')
