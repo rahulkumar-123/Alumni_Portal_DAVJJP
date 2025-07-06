@@ -5,7 +5,7 @@
 /* This is the main container for the input field */
 .mentions__control {
     background-color: white !important;
-    border-radius: 9999px !important;
+    border-radius: 24px !important;
     /* full rounded corners */
     padding: 0.75rem 1rem !important;
     /* 12px 16px */
@@ -32,9 +32,10 @@
     font-size: 1rem !important;
     line-height: 1.5rem !important;
     background-color: transparent !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+/*     overflow: hidden; */
+/*     text-overflow: ellipsis; */
+    white-space: pre-wrap !important;
+    word-break: break-word;
 }
 
 /* This is the dropdown suggestion box */
