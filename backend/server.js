@@ -2,7 +2,8 @@ const express = require('express');
 const http = require('http');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const path = require('path');
+const fileUpload = require('express-fileupload');
+// const path = require('path');  // currently not using path in this file, but might be needed for static files later
 const { Server } = require('socket.io');
 const connectDB = require('./config/db');
 const { parseMentions, sendNotification } = require('./utils/notificationManager');
@@ -21,7 +22,8 @@ const allowedOrigins = [
     "https://davjjp-alumni-crhfw.ondigitalocean.app",
     "https://alumni-portal-davjjp.vercel.app",
     "http://localhost:3000",
-    "https://alumni-davjjp.netlify.app"
+    "https://alumni-davjjp.netlify.app",
+    "http://192.168.9.39:3000",
 ];
 const corsOptions = {
     origin: function (origin, callback) {
@@ -36,6 +38,13 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/',
+    limits: { fileSize: 50 * 1024 * 1024 }, // 50MB limit
+    abortOnLimit: true,
+    responseOnLimit: "File size limit has been reached",
+}));
 
 // --- SOCKET.IO SETUP ---
 const io = new Server(server, { cors: corsOptions });

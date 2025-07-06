@@ -7,7 +7,7 @@ export default function AdminDashboard() {
     const [activeTab, setActiveTab] = useState('users');
     const tabs = [
         { id: 'users', name: 'Pending Registrations' },
-        { id: 'posts', name: 'Pending Posts' },
+        // { id: 'posts', name: 'Pending Posts' },
         { id: 'feedback', name: 'View Feedback' }
     ];
 

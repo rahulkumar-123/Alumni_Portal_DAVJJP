@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema({
   phoneNumber: { type: String, select: false },
   role: { type: String, enum: ['alumni', 'admin'], default: 'alumni' },
   isApproved: { type: Boolean, default: false },
+  fcmToken: { type: String, select: false },
 }, { timestamps: true });
 
 UserSchema.pre("save", async function (next) {
