@@ -155,9 +155,9 @@ export default function Dashboard() {
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Birthday Section */}
-        <div className="w-full lg:w-1/3 order-1 lg:order-2 space-y-6">
-          <div className="bg-gradient-to-br from-primary/10 via-primary/10 to-primary/10 border border-primary p-6 rounded-xl shadow-lg sticky top-24">
-            <h2 className="text-2xl font-bold text-purple-800 mb-4 flex items-center gap-2">
+        <div className="w-full lg:w-1/3 order-1 lg:order-2 space-y-4">
+          <div className="bg-gradient-to-br from-primary/10 via-primary/10 to-primary/10 border border-primary p-4 rounded-lg shadow sticky top-24">
+            <h2 className="text-2xl font-bold text-purple-800 mb-3 flex items-center gap-2">
               <span className="text-2xl">🎂</span>
               Happy Birthday!
             </h2>
