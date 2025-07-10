@@ -89,44 +89,43 @@
             }
         ]
     },
-    "aboutInstitution": {
-        "title": "DAV public School Jhanjharpur",
-        "fullName": "DAV School Jhanjharpur",
-        "description": "DAV public School Jhanjharpur stands as a beacon of educational excellence in Punjab, India. Established with the vision of providing quality education and nurturing future leaders, our institution has been a cornerstone of academic achievement and personal development for decades.",
-        "history": "Founded in 2002, DAV public School Jhanjharpur has been committed to the principles of Arya Samaj and the educational philosophy of Maharishi Dayanand Saraswati. Over the years, the college has evolved into a premier educational institution, consistently ranked among the top colleges in the region.",
-        "vision": "To be a leading institution of higher education that empowers students with knowledge, skills, and values necessary for success in an increasingly complex and interconnected world.",
-        "mission": "To provide high-quality education that combines academic excellence with practical learning, fostering critical thinking, innovation, and ethical leadership among our students.",
-        "values": [
-            {
-                "title": "Excellence",
-                "description": "Striving for the highest standards in education and research"
-            },
-            {
-                "title": "Innovation",
-                "description": "Embracing new ideas and technologies to enhance learning"
-            },
-            {
-                "title": "Integrity",
-                "description": "Maintaining honesty and ethical principles in all our endeavors"
-            },
-            {
-                "title": "Inclusivity",
-                "description": "Creating an environment where everyone feels valued and respected"
-            },
-            {
-                "title": "Service",
-                "description": "Contributing to society through education and community engagement"
-            }
-        ],
-        "achievements": [
-            "NAAC A+ Grade accreditation",
-            "UGC recognized autonomous college",
-            "Top 10 colleges in Punjab",
-            "Excellence in academics and research",
-            "Strong industry partnerships",
-            "Active placement cell with 95% placement rate"
-        ]
+"aboutInstitution": {
+  "title": "M.N. Jha DAV Public School, Jhanjharpur",
+  "fullName": "M.N. Jha DAV Public School, Behat, Jhanjharpur",
+  "description": "M.N. Jha DAV Public School, located in Behat, Jhanjharpur (Madhubani), Bihar, is a premier co-educational CBSE-affiliated school. Established in 2003 and managed by DAV College Trust and Management Society, the school is known for blending modern education with traditional Vedic values.",
+  "history": "Founded on July 1, 2003, the school was established to provide quality education in the region under the DAV College Managing Committee, New Delhi. It upholds the ideals of Maharishi Dayanand Saraswati and follows the principles of Arya Samaj. From modest beginnings, it has grown into one of the most respected schools in North Bihar.",
+  "vision": "To develop responsible citizens with a strong sense of ethics, academic brilliance, and a global outlook through value-based education.",
+  "mission": "To provide a nurturing and inclusive environment where students are encouraged to think critically, act with integrity, and grow into lifelong learners and responsible citizens.",
+  "values": [
+    {
+      "title": "Excellence",
+      "description": "Pursuing the highest standards in academics and personal conduct"
     },
+    {
+      "title": "Discipline",
+      "description": "Cultivating a structured and focused learning atmosphere"
+    },
+    {
+      "title": "Integrity",
+      "description": "Upholding truthfulness and moral values in every action"
+    },
+    {
+      "title": "Respect",
+      "description": "Encouraging mutual respect among students, teachers, and society"
+    },
+    {
+      "title": "Service",
+      "description": "Contributing positively to the community and nation-building"
+    }
+  ],
+  "achievements": [
+    "Affiliated to CBSE (Affiliation No. 330269), valid till 2027",
+    "Excellent performance in CBSE Class X & XII board exams with 95%+ pass rate",
+    "Well-equipped science, computer, and mathematics laboratories",
+    "Participation and accolades in inter-school competitions (sports, debates, quizzes)",
+    "Strong focus on holistic development, including yoga, art, and moral education"
+  ]
+},
     "aboutDevelopers": {
         "title": "Meet the Development Team",
         "description": "This alumni portal is crafted with passion and dedication by a team of talented developers who believe in the power of technology to connect people and create meaningful experiences.",
@@ -145,15 +144,15 @@
                 "avatar": "https://picsum.photos/id/236/200/300",
                 "social": {
                     "github": "https://github.com/rahulkumar-123/",
-                    "linkedin": "#",
+                    "linkedin": "https://www.linkedin.com/in/rahul-kumar-690370202/",
                     "website": "https://rahulkumar-123.github.io/"
                 },
                 "quote": "one man army behind this project."
             },
             {
-                "name": "Rohit Kumar",
-                "role": "Backend Developer",
-                "description": "Expert in backend development, database management, and API integration, ensuring the portal runs smoothly and efficiently.",
+                "name": "Raajesh Jha",
+                "role": "Full Stack Developer",
+                "description": "UI/UX design, database management, and API integration, ensuring the portal runs smoothly and efficiently.",
                 "expertise": [
                     "Node.js",
                     "Express",
@@ -163,50 +162,12 @@
                 ],
                 "avatar": "https://picsum.photos/id/238/200/300",
                 "social": {
-                    "github": "",
+                    "github": "https://github.com/Rajs2001",
                     "linkedin": "#",
-                    "website": "https://rohitkumar-123.github.io/"
+                    "website": "https://Rajs2001.github.io/"
                 },
                 "quote": "Ensuring the portal runs smoothly and efficiently."
             },
-            {
-                "name": "Sahil Kumar",
-                "role": "Frontend Developer",
-                "description": "Specializes in creating responsive and interactive user interfaces, enhancing the user experience of the portal.",
-                "expertise": [
-                    "React",
-                    "Tailwind CSS",
-                    "Framer Motion",
-                    "Responsive Design",
-                    "UI Development"
-                ],
-                "avatar": "https://picsum.photos/id/239/200/300",
-                "social": {
-                    "github": "",
-                    "linkedin": "#",
-                    "website": "https://sahilkumar-123.github.io/"
-                },
-                "quote": "Creating responsive and interactive user interfaces."
-            },
-            {
-                "name": "Aman Kumar",
-                "role": "UI/UX Designer",
-                "description": "Responsible for the overall look and feel of the portal, ensuring a user-friendly and visually appealing design.",
-                "expertise": [
-                    "UI/UX Design",
-                    "Wireframing",
-                    "Prototyping",
-                    "User Research",
-                    "Visual Design"
-                ],
-                "avatar": "https://picsum.photos/id/240/200/300",
-                "social": {
-                    "github": "#",
-                    "linkedin": "#",
-                    "website": "https://amankumar-123.github.io/"
-                },
-                "quote": "Ensuring a user-friendly and visually appealing design."
-            }
         ],
         "technologies": {
             "frontend": [
@@ -283,9 +244,9 @@
     "contactInfo": {
         "title": "Get in Touch",
         "description": "Have questions about the portal or want to contribute? We'd love to hear from you!",
-        "email": "alumni@davjhanjharpur.org",
+        "email": "mnjhadavalumni@gmail.com",
         "phone": "+91-181-2222222",
-        "address": "DAV Public School, Jhanjharpur, Punjab, India - 144008",
+        "address": "DAV Public School, Jhanjharpur, Bihar, India - 847403",
         "socialMedia": {
             "facebook": "https://facebook.com/davjhanjharpur",
             "twitter": "https://twitter.com/davjhanjharpur",
