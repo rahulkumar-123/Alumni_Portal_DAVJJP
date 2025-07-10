@@ -1,0 +1,296 @@
+{
+    "heroSection": {
+        "title": "About Alumni Portal",
+        "subtitle": "Connecting Alumni, Building Networks, Creating Opportunities",
+        "description": "A comprehensive platform designed to strengthen the bond between our institution and its alumni, fostering lifelong connections and professional growth.",
+        "stats": [
+            {
+                "label": "Active Alumni",
+                "value": "140+",
+                "icon": "users"
+            },
+            {
+                "label": "Success Stories",
+                "value": "100+",
+                "icon": "trophy"
+            },
+            {
+                "label": "Events Hosted",
+                "value": "10+",
+                "icon": "calendar"
+            },
+            {
+                "label": "Years of Excellence",
+                "value": "20+",
+                "icon": "star"
+            }
+        ]
+    },
+    "aboutProject": {
+        "title": "About the Project",
+        "description": "The Alumni Portal is a modern, comprehensive platform designed to bridge the gap between our institution and its distinguished alumni community. This project aims to create a vibrant ecosystem where former students can reconnect, share experiences, and contribute to the growth of current students.",
+        "features": [
+            {
+                "title": "Alumni Directory",
+                "description": "Comprehensive search and filter system to find and connect with fellow alumni",
+                "icon": "users"
+            },
+            {
+                "title": "Interactive Dashboard",
+                "description": "Personalized dashboard with news, events, and networking opportunities",
+                "icon": "chart"
+            },
+            {
+                "title": "Real-time Communication",
+                "description": "Chat system and notifications to keep the community connected",
+                "icon": "message"
+            },
+            {
+                "title": "Career Opportunities",
+                "description": "Job postings and mentorship programs for career advancement",
+                "icon": "briefcase"
+            },
+            {
+                "title": "Success Stories",
+                "description": "Platform to share achievements and inspire fellow alumni",
+                "icon": "trophy"
+            }
+        ],
+        "technologies": [
+            {
+                "name": "React",
+                "description": "Modern frontend framework",
+                "color": "#61DAFB"
+            },
+            {
+                "name": "Node.js",
+                "description": "Backend runtime environment",
+                "color": "#339933"
+            },
+            {
+                "name": "MongoDB",
+                "description": "NoSQL database",
+                "color": "#47A248"
+            },
+            {
+                "name": "Socket.io",
+                "description": "Real-time communication",
+                "color": "#010101"
+            },
+            {
+                "name": "Tailwind CSS",
+                "description": "Utility-first CSS framework",
+                "color": "#06B6D4"
+            },
+            {
+                "name": "Framer Motion",
+                "description": "Animation library",
+                "color": "#FF0080"
+            }
+        ]
+    },
+    "aboutInstitution": {
+        "title": "DAV public School Jhanjharpur",
+        "fullName": "DAV School Jhanjharpur",
+        "description": "DAV public School Jhanjharpur stands as a beacon of educational excellence in Punjab, India. Established with the vision of providing quality education and nurturing future leaders, our institution has been a cornerstone of academic achievement and personal development for decades.",
+        "history": "Founded in 2002, DAV public School Jhanjharpur has been committed to the principles of Arya Samaj and the educational philosophy of Maharishi Dayanand Saraswati. Over the years, the college has evolved into a premier educational institution, consistently ranked among the top colleges in the region.",
+        "vision": "To be a leading institution of higher education that empowers students with knowledge, skills, and values necessary for success in an increasingly complex and interconnected world.",
+        "mission": "To provide high-quality education that combines academic excellence with practical learning, fostering critical thinking, innovation, and ethical leadership among our students.",
+        "values": [
+            {
+                "title": "Excellence",
+                "description": "Striving for the highest standards in education and research"
+            },
+            {
+                "title": "Innovation",
+                "description": "Embracing new ideas and technologies to enhance learning"
+            },
+            {
+                "title": "Integrity",
+                "description": "Maintaining honesty and ethical principles in all our endeavors"
+            },
+            {
+                "title": "Inclusivity",
+                "description": "Creating an environment where everyone feels valued and respected"
+            },
+            {
+                "title": "Service",
+                "description": "Contributing to society through education and community engagement"
+            }
+        ],
+        "achievements": [
+            "NAAC A+ Grade accreditation",
+            "UGC recognized autonomous college",
+            "Top 10 colleges in Punjab",
+            "Excellence in academics and research",
+            "Strong industry partnerships",
+            "Active placement cell with 95% placement rate"
+        ]
+    },
+    "aboutDevelopers": {
+        "title": "Meet the Development Team",
+        "description": "This alumni portal is crafted with passion and dedication by a team of talented developers who believe in the power of technology to connect people and create meaningful experiences.",
+        "team": [
+            {
+                "name": "Rauhl kumar",
+                "role": "Lead Developer",
+                "description": "Man behind the project, specializing in full-stack development, UI/UX design, and the createion of innovative web applications which we are using here.",
+                "expertise": [
+                    "React",
+                    "Node.js",
+                    "UI/UX Design",
+                    "Full-Stack Development",
+                    "AI/ML Integration"
+                ],
+                "avatar": "https://picsum.photos/id/236/200/300",
+                "social": {
+                    "github": "https://github.com/rahulkumar-123/",
+                    "linkedin": "#",
+                    "website": "https://rahulkumar-123.github.io/"
+                },
+                "quote": "one man army behind this project."
+            },
+            {
+                "name": "Rohit Kumar",
+                "role": "Backend Developer",
+                "description": "Expert in backend development, database management, and API integration, ensuring the portal runs smoothly and efficiently.",
+                "expertise": [
+                    "Node.js",
+                    "Express",
+                    "MongoDB",
+                    "API Development",
+                    "Server Management"
+                ],
+                "avatar": "https://picsum.photos/id/238/200/300",
+                "social": {
+                    "github": "",
+                    "linkedin": "#",
+                    "website": "https://rohitkumar-123.github.io/"
+                },
+                "quote": "Ensuring the portal runs smoothly and efficiently."
+            },
+            {
+                "name": "Sahil Kumar",
+                "role": "Frontend Developer",
+                "description": "Specializes in creating responsive and interactive user interfaces, enhancing the user experience of the portal.",
+                "expertise": [
+                    "React",
+                    "Tailwind CSS",
+                    "Framer Motion",
+                    "Responsive Design",
+                    "UI Development"
+                ],
+                "avatar": "https://picsum.photos/id/239/200/300",
+                "social": {
+                    "github": "",
+                    "linkedin": "#",
+                    "website": "https://sahilkumar-123.github.io/"
+                },
+                "quote": "Creating responsive and interactive user interfaces."
+            },
+            {
+                "name": "Aman Kumar",
+                "role": "UI/UX Designer",
+                "description": "Responsible for the overall look and feel of the portal, ensuring a user-friendly and visually appealing design.",
+                "expertise": [
+                    "UI/UX Design",
+                    "Wireframing",
+                    "Prototyping",
+                    "User Research",
+                    "Visual Design"
+                ],
+                "avatar": "https://picsum.photos/id/240/200/300",
+                "social": {
+                    "github": "#",
+                    "linkedin": "#",
+                    "website": "https://amankumar-123.github.io/"
+                },
+                "quote": "Ensuring a user-friendly and visually appealing design."
+            }
+        ],
+        "technologies": {
+            "frontend": [
+                "React",
+                "Tailwind CSS",
+                "Framer Motion",
+                "Heroicons"
+            ],
+            "backend": [
+                "Node.js",
+                "Express",
+                "MongoDB",
+                "Socket.io"
+            ],
+            "tools": [
+                "VS Code",
+                "Git",
+                "Postman"
+            ],
+            "deployment": [
+                "Vercel",
+                "MongoDB Atlas",
+                "Cloudinary"
+            ]
+        },
+        "developmentProcess": [
+            {
+                "phase": "Planning & Design",
+                "description": "Comprehensive requirement analysis and UI/UX design",
+                "duration": "2 weeks"
+            },
+            {
+                "phase": "Frontend Development",
+                "description": "Building responsive and interactive user interfaces",
+                "duration": "4 weeks"
+            },
+            {
+                "phase": "Backend Development",
+                "description": "Creating robust APIs and database architecture",
+                "duration": "3 weeks"
+            },
+            {
+                "phase": "Integration & Testing",
+                "description": "Connecting all components and thorough testing",
+                "duration": "2 weeks"
+            },
+            {
+                "phase": "Deployment & Launch",
+                "description": "Production deployment and launch preparations",
+                "duration": "1 week"
+            }
+        ]
+    },
+    "testimonials": [
+        {
+            "name": "Dr. Rahul Kumar",
+            "role": "Principal, DAV Public School JJP",
+            "message": "This alumni portal has revolutionized how we connect with our former students. It's a testament to modern technology serving educational excellence.",
+            "avatar": "https://picsum.photos/id/238/200/300"
+        },
+        {
+            "name": "Priya Sharma",
+            "role": "Alumni Relations Officer",
+            "message": "The platform has made alumni engagement seamless and effective. We've seen a 300% increase in alumni participation since its launch.",
+            "avatar": "https://picsum.photos/id/239/200/300"
+        },
+        {
+            "name": "Amit Singh",
+            "role": "Alumni (Batch 2015)",
+            "message": "Finally, a platform that keeps me connected with my alma mater and fellow alumni. The user experience is exceptional!",
+            "avatar": "https://picsum.photos/id/240/200/300"
+        }
+    ],
+    "contactInfo": {
+        "title": "Get in Touch",
+        "description": "Have questions about the portal or want to contribute? We'd love to hear from you!",
+        "email": "alumni@davjhanjharpur.org",
+        "phone": "+91-181-2222222",
+        "address": "DAV Public School, Jhanjharpur, Punjab, India - 144008",
+        "socialMedia": {
+            "facebook": "https://facebook.com/davjhanjharpur",
+            "twitter": "https://twitter.com/davjhanjharpur",
+            "linkedin": "https://linkedin.com/school/davjhanjharpur",
+            "instagram": "https://instagram.com/davjhanjharpur"
+        }
+    }
+}
