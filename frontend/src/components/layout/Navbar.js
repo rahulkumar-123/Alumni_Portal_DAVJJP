@@ -47,7 +47,7 @@ export default function Navbar() {
     ];
 
     const guestNavigation = [
-        { name: 'About', href: '#about', onClick: (e) => handleNavClick(e, '#about') },
+        { name: 'About', href: '/about'},
         { name: 'Alumni', href: '#notable-alumni', onClick: (e) => handleNavClick(e, '#notable-alumni') },
         { name: 'Developer', href: '#developer', onClick: (e) => handleNavClick(e, '#developer') },
         { name: 'Privacy Policy', href: '/privacy-policy' },

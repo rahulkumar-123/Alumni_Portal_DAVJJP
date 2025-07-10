@@ -7,6 +7,7 @@ const fileUpload = require('express-fileupload');
 const { Server } = require('socket.io');
 const connectDB = require('./config/db');
 const { parseMentions, sendNotification } = require('./utils/notificationManager');
+const { startBirthdayCronJob } = require('./utils/cronScheduler');
 const Message = require('./models/Message');
 const Group = require('./models/Group');
 const User = require('./models/User');
@@ -25,6 +26,7 @@ const allowedOrigins = [
     "https://alumni-davjjp.netlify.app",
     "http://192.168.9.39:3000",
 ];
+
 const corsOptions = {
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
@@ -144,7 +146,19 @@ app.use('/api/feedback', require('./routes/feedback'));
 app.use('/api/groups', require('./routes/groups'));
 app.use('/api/messages', require('./routes/messages'));
 app.use('/api/notifications', require('./routes/notifications'));
+app.use('/api/birthday', require('./routes/birthday'));
 
 // --- START THE SERVER ---
 const PORT = process.env.PORT || 8080;
-server.listen(PORT, () => console.log(`Server with real-time chat running on port ${PORT}`));
+server.listen(PORT, () => {
+    console.log(`Server with real-time chat running on port ${PORT}`);
+    
+    // Start the birthday email cron job
+    console.log('\n Initializing birthday email automation...');
+    try {
+        startBirthdayCronJob();
+        console.log('Birthday email cron job started successfully!\n');
+    } catch (error) {
+        console.error('Failed to start birthday email cron job:', error);
+    }
+});
