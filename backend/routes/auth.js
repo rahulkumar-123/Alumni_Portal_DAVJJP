@@ -9,6 +9,8 @@ const forgotPasswordLimiter = RateLimit({
     max: 5, // limit each IP to 5 requests per windowMs
     message: 'Too many requests from this IP, please try again after a minute.'
 });
+
+
 const resetPasswordLimiter = RateLimit({
     windowMs: 10 * 60 * 1000, // 10 minutes
     max: 5, // Limit each IP to 5 requests per windowMs
