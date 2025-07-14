@@ -132,4 +132,32 @@ exports.isGroupMember = async (req, res) => {
     } catch (error) {
         res.status(500).json({ success: false, message: "Server Error" });
     }
-}
+};
+
+// Delete a group (admin only)
+exports.deleteGroup = async (req, res) => {
+    try {
+        const group = await Group.findById(req.params.id);
+        if (!group) {
+            return res.status(404).json({ success: false, message: 'Group not found.' });
+        }
+        
+        // Only admin can delete groups
+        if (req.user.role !== 'admin') {
+            return res.status(401).json({ success: false, message: 'Not authorized to delete groups.' });
+        }
+        
+        // Clean up notifications related to this group
+        const Notification = require('../models/Notification');
+        await Notification.deleteMany({ group: group._id });
+        
+        // Clean up messages related to this group
+        const Message = require('../models/Message');
+        await Message.deleteMany({ group: group._id });
+        
+        await group.deleteOne();
+        res.status(200).json({ success: true, message: 'Group deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+};

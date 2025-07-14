@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import groupService from '../services/groupService';
 import toast from 'react-hot-toast';
 import Spinner from '../components/common/Spinner';
-import { UsersIcon, ArrowRightIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { UsersIcon, ArrowRightIcon, PlusIcon, UserGroupIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
 import useAuth from '../hooks/useAuth';
 import CreateGroupModal from '../components/groups/CreateGroupModal';
 import GroupMembersModal from '../components/groups/GroupMembersModal'; 

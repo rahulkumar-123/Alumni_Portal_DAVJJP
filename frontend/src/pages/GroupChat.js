@@ -135,15 +135,15 @@ export default function GroupChat() {
     }
 
     return (
-        <div className="h-[75vh] flex flex-col bg-surface rounded-2xl shadow-2xl">
-            <div className="p-4 border-b flex items-center space-x-4 sticky top-0 bg-surface rounded-t-2xl">
-                <Link to="/groups" className="text-primary hover:text-primary-dark p-2 rounded-full hover:bg-gray-100">
-                    <ArrowLeftIcon className="w-6 h-6" />
+        <div className="h-[75vh] sm:h-[80vh] flex flex-col bg-surface rounded-xl sm:rounded-2xl shadow-2xl">
+            <div className="p-3 sm:p-4 border-b flex items-center space-x-3 sm:space-x-4 sticky top-0 bg-surface rounded-t-xl sm:rounded-t-2xl">
+                <Link to="/groups" className="text-primary hover:text-primary-dark p-1.5 sm:p-2 rounded-full hover:bg-gray-100">
+                    <ArrowLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </Link>
-                <h1 className="text-2xl font-bold text-on-surface">{group.name}</h1>
+                <h1 className="text-lg sm:text-2xl font-bold text-on-surface truncate">{group.name}</h1>
             </div>
 
-            <div className="flex-1 p-6 overflow-y-auto">
+            <div className="flex-1 p-3 sm:p-6 overflow-y-auto">
                 {messages.length > 0 ? (
                     messages.map(msg => {
                         const isMyMessage = msg.sender?._id === authUser?._id;
@@ -156,47 +156,56 @@ export default function GroupChat() {
                         return (
                             <div key={msg._id} className={`flex my-2 items-end gap-2 ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
                                 {!isMyMessage && (
-                                    <img src={profileImageUrl} alt={msg.sender?.fullName} className="w-8 h-8 rounded-full object-cover self-start" />
+                                    <img src={profileImageUrl} alt={msg.sender?.fullName} className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover self-start flex-shrink-0" />
                                 )}
 
-                                <div className={`p-3 rounded-2xl max-w-lg ${isMyMessage ? 'bg-primary text-white rounded-br-none' : 'bg-gray-200 text-on-surface rounded-bl-none'}`}>
+                                <div className={`p-2.5 sm:p-3 rounded-2xl max-w-[75%] sm:max-w-lg ${isMyMessage ? 'bg-primary text-white rounded-br-none' : 'bg-gray-200 text-on-surface rounded-bl-none'}`}>
                                     {!isMyMessage && (
-                                        <p className="font-bold text-xs mb-1 text-primary-dark">
+                                        <p className="font-bold text-xs mb-1 text-primary-dark truncate">
                                             {msg.sender?.fullName}
                                         </p>
                                     )}
-                                    <StyledText text={msg.text} />                                </div>
+                                    <StyledText text={msg.text} />
+                                </div>
                             </div>
                         );
                     })
                 ) : (
-                    <div className="text-center text-muted py-10">
-                        <p>No messages yet.</p>
-                        <p className="text-sm">Be the first to start the conversation!</p>
+                    <div className="text-center text-muted py-8 sm:py-10">
+                        <p className="text-sm sm:text-base">No messages yet.</p>
+                        <p className="text-xs sm:text-sm">Be the first to start the conversation!</p>
                     </div>
                 )}
                 <div ref={messagesEndRef} />
             </div>
 
-            <div className="p-4 border-t bg-gray-50 rounded-b-2xl">
-                <form onSubmit={handleSendMessage} className="flex items-center space-x-3">
-                    <MentionsInput
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Type a message..."
-                        className="mentions"
-                        a11ySuggestionsListLabel={"Suggested users for mention"}
+            <div className="p-3 sm:p-4 border-t bg-gray-50 rounded-b-xl sm:rounded-b-2xl">
+                <form onSubmit={handleSendMessage} className="grid grid-cols-[1fr_auto] gap-3 sm:gap-4 w-full max-w-full">
+                    <div className="w-full max-w-full overflow-hidden pr-1">
+                        <MentionsInput
+                            value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)}
+                            placeholder="Type a message..."
+                            className="mentions"
+                            a11ySuggestionsListLabel={"Suggested users for mention"}
+                            style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}
+                        >
+                            <Mention
+                                trigger="@"
+                                data={fetchUsersForMention}
+                                markup="@[__display__]"
+                                displayTransform={(id, display) => `@${display}`}
+                                className="mentions__mention"
+                            />
+                        </MentionsInput>
+                    </div>
+                    <button 
+                        type="submit" 
+                        className="p-2.5 sm:p-3 bg-primary rounded-full text-white hover:bg-primary-dark transition-colors disabled:opacity-50" 
+                        disabled={!newMessage.trim()}
+                        style={{ minWidth: '44px', width: '44px', height: '44px', flexShrink: 0 }}
                     >
-                        <Mention
-                            trigger="@"
-                            data={fetchUsersForMention}
-                            markup="@[__display__]"
-                            displayTransform={(id, display) => `@${display}`}
-                            className="mentions__mention"
-                        />
-                    </MentionsInput>
-                    <button type="submit" className="p-3 bg-primary rounded-full text-white hover:bg-primary-dark transition-colors disabled:opacity-50" disabled={!newMessage.trim()}>
-                        <PaperAirplaneIcon className="w-6 h-6" />
+                        <PaperAirplaneIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                     </button>
                 </form>
             </div>

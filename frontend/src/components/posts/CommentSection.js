@@ -44,14 +44,15 @@ export default function CommentSection({ postId, comments: initialComments, onCo
 
     return (
         <div className="p-4 sm:p-6 bg-gradient-to-b from-gray-50 to-gray-100">
-            <form onSubmit={handleSubmit} className="flex items-center space-x-3 mb-4">
-                <div className="flex-1">
+            <form onSubmit={handleSubmit} className="grid grid-cols-[1fr_auto] gap-3 sm:gap-4 mb-4 w-full max-w-full">
+                <div className="w-full max-w-full overflow-hidden pr-1">
                     <MentionsInput
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
                         placeholder="Write a comment..."
                         className="mentions"
                         a11ySuggestionsListLabel={"Suggested users for mention"}
+                        style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}
                     >
                         <Mention
                             trigger="@"
@@ -66,6 +67,7 @@ export default function CommentSection({ postId, comments: initialComments, onCo
                     type="submit" 
                     disabled={loading || !newComment.trim()} 
                     className="p-2.5 bg-blue-600 rounded-full text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg"
+                    style={{ minWidth: '44px', width: '44px', height: '44px', flexShrink: 0 }}
                 >
                     <PaperAirplaneIcon className="w-5 h-5" />
                 </button>

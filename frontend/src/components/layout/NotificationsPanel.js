@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNotifications } from "../../context/NotificationContext";
 import { Link, useNavigate } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import notificationService from "../../services/notificationService";
+import Spinner from "../common/Spinner";
 import {
   BellIcon,
   ChatBubbleLeftIcon,
@@ -17,53 +18,75 @@ const API_URL = process.env.REACT_APP_API_URL.replace("/api", "");
 
 export default function NotificationsPanel({ onClose }) {
 
-const { notifications, unreadCount, markAllAsRead, refreshNotifications } =
+const { notifications, unreadCount, loading: contextLoading, error, markAllAsRead, refreshNotifications, clearError } =
 useNotifications();
 const navigate = useNavigate();
+const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (unreadCount > 0) {
-      const timer = setTimeout(() => {
-        markAllAsRead();
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [unreadCount, markAllAsRead]);
+  // Removed auto-mark as read timer - users should manually mark notifications as read
+  // This provides better UX and control over notification management
 
   const handleNotificationClick = async (notification) => {
-    if (!notification.read) {
-      try {
+    try {
+      setLoading(true);
+      // Mark as read if not already read
+      if (!notification.read) {
         await notificationService.markOneAsRead(notification._id);
         refreshNotifications();
-      } catch (error) {
-        console.error("Failed to mark notification as read");
       }
-    }
-    onClose();
-    if (notification.post) {
-      navigate(`/posts/${notification.post._id}`);
-    } else if (notification.group) {
-      navigate(`/groups/${notification.group._id}`);
+      
+      // Close the notification panel
+      onClose();
+      
+      // Navigate based on notification type
+      if (notification.post && notification.post._id) {
+        navigate(`/posts/${notification.post._id}`);
+      } else if (notification.group && notification.group._id) {
+        navigate(`/groups/${notification.group._id}`);
+      } else {
+        // Fallback: navigate to notifications page
+        navigate('/notifications');
+      }
+    } catch (error) {
+      console.error('Error handling notification click:', error);
+      // Fallback: navigate to notifications page
+      onClose();
+      navigate('/notifications');
+    } finally {
+      setLoading(false);
     }
   };
 
   const getNotificationText = (n) => {
+    // Validate notification data
+    if (!n || !n.type) {
+      return (
+        <>
+          <strong className="font-semibold text-gray-900">System</strong>{" "}
+          <span className="text-gray-600">sent you a notification</span>
+        </>
+      );
+    }
+
     let content = "";
     switch (n.type) {
       case "new_like":
-        content = `liked your post: "${n.post?.title}"`;
+        content = `liked your post${n.post?.title ? `: "${n.post.title}"` : ""}`;
         break;
       case "new_comment":
-        content = `commented on your post: "${n.post?.title}"`;
+        content = `commented on your post${n.post?.title ? `: "${n.post.title}"` : ""}`;
         break;
       case "new_post":
-        content = `created a new post: "${n.post?.title}"`;
+        content = `created a new post${n.post?.title ? `: "${n.post.title}"` : ""}`;
         break;
       case "mention_comment":
-        content = `mentioned you in a comment on "${n.post?.title}"`;
+        content = `mentioned you in a comment${n.post?.title ? ` on "${n.post.title}"` : ""}`;
         break;
       case "mention_chat":
-        content = `mentioned you in the group: "${n.group?.name}"`;
+        content = `mentioned you in the group${n.group?.name ? `: "${n.group.name}"` : ""}`;
+        break;
+      case "new_group_message":
+        content = `sent a message in the group${n.group?.name ? `: "${n.group.name}"` : ""}`;
         break;
       default:
         content = "sent you a new notification.";
@@ -71,7 +94,7 @@ const navigate = useNavigate();
     return (
       <>
         <strong className="font-semibold text-gray-900">
-          {n.sender.fullName}
+          {n.sender?.fullName || "Someone"}
         </strong>{" "}
         <span className="text-gray-600">{content}</span>
       </>
@@ -93,114 +116,138 @@ const navigate = useNavigate();
         );
       case "mention_chat":
         return <UserGroupIcon className={`${iconClass} text-indigo-500`} />;
+      case "new_group_message":
+        return <ChatBubbleLeftIcon className={`${iconClass} text-blue-600`} />;
       default:
         return <BellIcon className={`${iconClass} text-gray-500`} />;
     }
   };
 
   return (
-    <div className="absolute right-0 z-20 mt-2 w-80 sm:w-96 origin-top-right rounded-xl bg-white shadow-2xl border border-gray-100 focus:outline-none overflow-hidden mr-[-100%]">
+    <div className="absolute right-0 z-20 mt-2 w-72 sm:w-80 lg:w-96 origin-top-right rounded-xl bg-white shadow-2xl border border-gray-100 focus:outline-none overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-4">
+      <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-3 sm:p-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <BellIcon className="w-5 h-5 text-white" />
-            <h3 className="font-bold text-lg text-white">Notifications</h3>
+            <BellIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            <h3 className="font-bold text-base sm:text-lg text-white">Notifications</h3>
             {unreadCount > 0 && (
-              <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[20px] text-center">
+              <span className="bg-red-500 text-white text-xs font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full min-w-[18px] sm:min-w-[20px] text-center">
                 {unreadCount}
               </span>
             )}
           </div>
-          <Link
-            to="/notifications"
-            onClick={onClose}
-            className="text-white/90 hover:text-white text-sm font-medium hover:underline transition-colors duration-200"
-          >
-            View All
-          </Link>
+          <div className="flex items-center gap-2">
+            {unreadCount > 0 && (
+              <button
+                onClick={async () => {
+                  try {
+                    await markAllAsRead();
+                  } catch (error) {
+                    console.error('Failed to mark all as read:', error);
+                  }
+                }}
+                className="text-white/90 hover:text-white text-xs sm:text-sm font-medium hover:underline transition-colors duration-200"
+              >
+                Mark All Read
+              </button>
+            )}
+            <Link
+              to="/notifications"
+              onClick={onClose}
+              className="text-white/90 hover:text-white text-xs sm:text-sm font-medium hover:underline transition-colors duration-200"
+            >
+              <span className="hidden sm:inline">View All</span>
+              <span className="sm:hidden">All</span>
+            </Link>
+          </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="max-h-80 sm:max-h-96 overflow-y-auto">
-        {notifications.length > 0 ? (
+      <div className="max-h-96 overflow-y-auto">
+        {contextLoading ? (
+          <div className="flex justify-center py-6 sm:py-8">
+            <Spinner />
+          </div>
+        ) : error ? (
+          <div className="p-4 text-center">
+            <div className="text-red-500 text-sm mb-2">{error}</div>
+            <button
+              onClick={() => {
+                clearError();
+                refreshNotifications();
+              }}
+              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+            >
+              Try Again
+            </button>
+          </div>
+        ) : notifications.length > 0 ? (
           <div className="divide-y divide-gray-100">
-            {notifications.map((n) => {
-              const profileImageUrl = n.sender.profilePicture?.startsWith(
-                "http"
-              )
-                ? n.sender.profilePicture
-                : n.sender.profilePicture &&
-                  n.sender.profilePicture !== "no-photo.jpg"
-                ? `${API_URL}${n.sender.profilePicture}`
-                : `https://ui-avatars.com/api/?name=${n.sender.fullName}&background=8344AD&color=fff`;
-
-              return (
-                <div
-                  key={n._id}
-                  onClick={() => handleNotificationClick(n)}
-                  className={`flex items-start gap-3 p-3 sm:p-4 cursor-pointer hover:bg-gray-50 transition-all duration-200 ${
-                    !n.read ? "bg-blue-50 border-l-4 border-blue-500" : ""
-                  }`}
-                >
-                  {/* Profile Image */}
-                  <div className="relative flex-shrink-0">
+            {notifications.slice(0, 5).map((notification) => (
+              <div
+                key={notification._id}
+                className={`p-3 sm:p-4 hover:bg-gray-50 transition-colors cursor-pointer ${
+                  !notification.read ? 'bg-blue-50/50' : ''
+                }`}
+                onClick={() => handleNotificationClick(notification)}
+              >
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0">
                     <img
-                      src={profileImageUrl}
-                      alt={n.sender.fullName}
-                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-white shadow-sm"
+                      src={
+                        notification.sender?.profilePicture?.startsWith("http")
+                          ? notification.sender.profilePicture
+                          : notification.sender?.profilePicture && notification.sender.profilePicture !== "no-photo.jpg"
+                          ? `${API_URL}${notification.sender.profilePicture}`
+                          : `https://ui-avatars.com/api/?name=${notification.sender?.fullName || 'User'}&background=8344AD&color=fff`
+                      }
+                      alt={notification.sender?.fullName || 'User'}
+                      className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover ring-2 ring-gray-200"
                     />
-                    {/* Notification Type Icon */}
-                    <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-lg">
-                      {getNotificationIcon(n.type)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start gap-2">
+                      {getNotificationIcon(notification.type)}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm sm:text-base text-gray-900 font-medium line-clamp-2">
+                          {getNotificationText(notification)}
+                        </p>
+                        <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                          {formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}
+                        </p>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between">
-                      <p className="text-sm leading-relaxed flex-1 pr-2">
-                        {getNotificationText(n)}
-                      </p>
-                      {!n.read && (
-                        <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0 mt-2"></div>
-                      )}
-                    </div>
-                    <div className="flex items-center justify-between mt-2">
-                      <p className="text-xs text-gray-500">
-                        {formatDistanceToNow(new Date(n.createdAt))} ago
-                      </p>
-                      {n.read && (
-                        <CheckCircleIcon className="w-3 h-3 text-green-500" />
-                      )}
-                    </div>
+                  <div className="flex-shrink-0">
+                    <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${
+                      notification.read ? 'bg-gray-300' : 'bg-blue-500'
+                    }`}></div>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         ) : (
-          <div className="p-6 sm:p-8 text-center">
-            <BellIcon className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-500 font-medium">No notifications</p>
-            <p className="text-xs text-gray-400 mt-1">You're all caught up!</p>
+          <div className="text-center py-6 sm:py-8">
+            <div className="text-3xl sm:text-4xl mb-2">🔔</div>
+            <p className="text-gray-500 text-sm sm:text-base">No notifications yet</p>
+            <p className="text-gray-400 text-xs sm:text-sm mt-1">We'll notify you when something happens</p>
           </div>
         )}
       </div>
 
       {/* Footer */}
-      {notifications.length > 0 && unreadCount > 0 && (
-        <div className="p-3 bg-gray-50 border-t border-gray-100">
-          <button
-            onClick={() => {
-              markAllAsRead();
-              setTimeout(onClose, 300);
-            }}
-            className="w-full text-center text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200 py-2 rounded-lg hover:bg-blue-50"
+      {notifications.length > 5 && (
+        <div className="border-t border-gray-100 p-3 sm:p-4">
+          <Link
+            to="/notifications"
+            onClick={onClose}
+            className="block text-center text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors"
           >
-            Mark all as read
-          </button>
+            View all {notifications.length} notifications
+          </Link>
         </div>
       )}
     </div>

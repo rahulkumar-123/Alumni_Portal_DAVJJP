@@ -1,5 +1,9 @@
 .mentions {
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    position: relative !important;
 }
 
 /* This is the main container for the input field */
@@ -7,11 +11,20 @@
     background-color: white !important;
     border-radius: 9999px !important;
     /* full rounded corners */
-    padding: 0.75rem 1rem !important;
-    /* 12px 16px */
+    padding: 0.75rem 1.25rem !important;
+    /* 12px 20px - increased right padding */
     border: 1px solid #d1d5db !important;
     /* gray-300 */
-    font-size: 1rem;
+    font-size: 1rem !important;
+    min-height: 3rem !important;
+    max-height: 8rem !important;
+    overflow-y: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
 }
 
 .mentions__control:focus-within {
@@ -22,19 +35,31 @@
     /*box-shadow: 0 0 0 2px var(--tw-ring-color);*/
 }
 
-
 /* This is the actual text input area */
 .mentions__input {
     padding: 0 !important;
     border: 0 !important;
     outline: 0 !important;
     width: 100% !important;
+    max-width: 100% !important;
     font-size: 1rem !important;
     line-height: 1.5rem !important;
     background-color: transparent !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    white-space: pre-wrap !important;
+    resize: none !important;
+    min-height: 1.5rem !important;
+    max-height: 6rem !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    text-indent: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
 }
 
 /* This is the dropdown suggestion box */
@@ -43,6 +68,7 @@
     z-index: 10;
     margin-top: 0.5rem;
     width: 250px;
+    max-width: 90vw;
 }
 
 .mentions__suggestions__list {
@@ -73,4 +99,5 @@
     border-radius: 4px !important;
     font-weight: 600 !important;
     color: #2563EB !important;
+    margin: 0 1px !important;
 }

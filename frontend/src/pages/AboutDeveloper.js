@@ -297,6 +297,11 @@ const getSocialIcon = (platform, className = "w-5 h-5") => {
         />
       </svg>
     ),
+    instagram: (
+      <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.012 3.584-.07 4.85c-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.85s.012-3.584.07-4.85c.149-3.252 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.947s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.44-1.441-1.44z"/>
+      </svg>
+    ),
     website: <GlobeAltIcon className={className} />,
   };
 
@@ -833,17 +838,18 @@ export default function AboutDeveloper() {
                   {/* Social Links */}
                   {member.social && (
                     <motion.div 
-                      className="flex justify-center gap-3 mb-4 sm:mb-6"
+                      className="flex justify-center gap-3 mb-4 sm:mb-6 relative z-10"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: index * 0.3 + 0.8, duration: 0.5 }}
+                      style={{ pointerEvents: 'auto' }}
                     >
                       {member.social.github && member.social.github !== "" && (
                         <motion.a
                           href={member.social.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center justify-center w-10 h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-full transition-colors duration-300"
+                          className="flex items-center justify-center w-10 h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-full transition-colors duration-300 cursor-pointer z-20"
                           custom={0}
                           variants={socialVariants}
                           initial="hidden"
@@ -855,6 +861,12 @@ export default function AboutDeveloper() {
                             boxShadow: "0 8px 20px rgba(0,0,0,0.3)" 
                           }}
                           whileTap={{ scale: 0.9 }}
+                          onClick={(e) => {
+                            console.log('GitHub link clicked:', member.social.github);
+                            // Ensure the link opens
+                            window.open(member.social.github, '_blank', 'noopener,noreferrer');
+                          }}
+                          style={{ pointerEvents: 'auto' }}
                         >
                           {getSocialIcon("github", "w-5 h-5")}
                         </motion.a>
@@ -865,7 +877,7 @@ export default function AboutDeveloper() {
                             href={member.social.linkedin}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors duration-300"
+                            className="flex items-center justify-center w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors duration-300 cursor-pointer z-20"
                             custom={1}
                             variants={socialVariants}
                             initial="hidden"
@@ -877,8 +889,42 @@ export default function AboutDeveloper() {
                               boxShadow: "0 8px 20px rgba(59, 130, 246, 0.4)" 
                             }}
                             whileTap={{ scale: 0.9 }}
+                            onClick={(e) => {
+                              console.log('LinkedIn link clicked:', member.social.linkedin);
+                              // Ensure the link opens
+                              window.open(member.social.linkedin, '_blank', 'noopener,noreferrer');
+                            }}
+                            style={{ pointerEvents: 'auto' }}
                           >
                             {getSocialIcon("linkedin", "w-5 h-5")}
+                          </motion.a>
+                        )}
+                      {member.social.instagram &&
+                        member.social.instagram !== "#" && (
+                          <motion.a
+                            href={member.social.instagram}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full transition-colors duration-300 cursor-pointer z-20"
+                            custom={2}
+                            variants={socialVariants}
+                            initial="hidden"
+                            animate="visible"
+                            whileHover={{ 
+                              scale: 1.2, 
+                              y: -4,
+                              rotate: 5,
+                              boxShadow: "0 8px 20px rgba(236, 72, 153, 0.4)" 
+                            }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={(e) => {
+                              console.log('Instagram link clicked:', member.social.instagram);
+                              // Ensure the link opens
+                              window.open(member.social.instagram, '_blank', 'noopener,noreferrer');
+                            }}
+                            style={{ pointerEvents: 'auto' }}
+                          >
+                            {getSocialIcon("instagram", "w-5 h-5")}
                           </motion.a>
                         )}
                       {member.social.website &&
@@ -887,8 +933,8 @@ export default function AboutDeveloper() {
                             href={member.social.website}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full transition-colors duration-300"
-                            custom={2}
+                            className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full transition-colors duration-300 cursor-pointer z-20"
+                            custom={3}
                             variants={socialVariants}
                             initial="hidden"
                             animate="visible"
@@ -899,6 +945,12 @@ export default function AboutDeveloper() {
                               boxShadow: "0 8px 20px rgba(168, 85, 247, 0.4)" 
                             }}
                             whileTap={{ scale: 0.9 }}
+                            onClick={(e) => {
+                              console.log('Website link clicked:', member.social.website);
+                              // Ensure the link opens
+                              window.open(member.social.website, '_blank', 'noopener,noreferrer');
+                            }}
+                            style={{ pointerEvents: 'auto' }}
                           >
                             {getSocialIcon("website", "w-5 h-5")}
                           </motion.a>

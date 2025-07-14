@@ -48,6 +48,7 @@ export default function Navbar() {
     { name: "Groups", href: "/groups" },
     { name: "Directory", href: "/directory" },
     { name: "Feedback", href: "/feedback" },
+    { name: "Developers", href: "/about" },
     ...(isAdmin ? [{ name: "Admin", href: "/admin" }] : []),
   ];
 
@@ -58,11 +59,7 @@ export default function Navbar() {
       href: "#notable-alumni",
       onClick: (e) => handleNavClick(e, "#notable-alumni"),
     },
-    {
-      name: "Developer",
-      href: "#developer",
-      onClick: (e) => handleNavClick(e, "#developer"),
-    },
+    { name: "Developer", href: "/about" },
     { name: "Privacy Policy", href: "/privacy-policy" },
   ];
 
@@ -206,7 +203,7 @@ export default function Navbar() {
                     </Menu>
 
                     {/* Mobile Notifications */}
-                    <div className="sm:hidden md:block relative">
+                    <div className="sm:hidden relative">
                       <button
                         onClick={() =>
                           setNotificationsOpen(!isNotificationsOpen)
@@ -224,22 +221,106 @@ export default function Navbar() {
                         />
                       )}
                     </div>
+
+                    {/* Desktop Notifications for Medium and Large Screens */}
+                    <div className="hidden sm:block relative">
+                      <button
+                        onClick={() =>
+                          setNotificationsOpen(!isNotificationsOpen)
+                        }
+                        className="p-2 rounded-full text-muted hover:text-on-surface hover:bg-gray-100 transition-colors relative"
+                      >
+                        <span className="sr-only">View notifications</span>
+                        <BellIcon className="h-5 w-5" />
+                        {unreadCount > 0 && (
+                          <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white font-medium">
+                            {unreadCount > 9 ? "9+" : unreadCount}
+                          </span>
+                        )}
+                      </button>
+                      {isNotificationsOpen && (
+                        <NotificationsPanel
+                          onClose={() => setNotificationsOpen(false)}
+                        />
+                      )}
+                    </div>
+
+                    {/* Desktop User Menu for Large Screens */}
+                    <Menu as="div" className="hidden md:block relative">
+                      <div>
+                        <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 hover:ring-2 hover:ring-primary/50 transition-all">
+                          <span className="sr-only">Open user menu</span>
+                          <img
+                            className="h-8 w-8 rounded-full object-cover"
+                            src={
+                              user.profilePicture?.startsWith("http")
+                                ? user.profilePicture
+                                : user.profilePicture !== "no-photo.jpg"
+                                ? `${API_URL}${user.profilePicture}`
+                                : `https://ui-avatars.com/api/?name=${user.fullName}&background=8344AD&color=fff`
+                            }
+                            alt={user.fullName}
+                          />
+                        </Menu.Button>
+                      </div>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-200"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-surface py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/profile"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-muted hover:text-on-surface"
+                                )}
+                              >
+                                Your Profile
+                              </Link>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                onClick={handleLogout}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block w-full text-left px-4 py-2 text-sm text-muted hover:text-on-surface"
+                                )}
+                              >
+                                Sign out
+                              </button>
+                            )}
+                          </Menu.Item>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
                   </>
                 ) : (
-                  <div className="hidden sm:flex md:hidden items-center space-x-2">
-                    <Link
-                      to="/login"
-                      className="text-sm font-semibold text-muted hover:text-primary transition-colors px-3 py-2 rounded-md hover:bg-gray-100"
-                    >
-                      Sign In
-                    </Link>
-                    <Link
-                      to="/register"
-                      className="inline-flex items-center rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white shadow-md hover:bg-primary-dark transition-colors"
-                    >
-                      Register
-                    </Link>
-                  </div>
+                  <>
+                    {/* Desktop Auth Buttons */}
+                    <div className="hidden sm:flex items-center space-x-2">
+                      <Link
+                        to="/login"
+                        className="text-sm font-semibold text-muted hover:text-primary transition-colors px-3 py-2 rounded-md hover:bg-gray-100"
+                      >
+                        Sign In
+                      </Link>
+                      <Link
+                        to="/register"
+                        className="inline-flex items-center rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white shadow-md hover:bg-primary-dark transition-colors"
+                      >
+                        Register
+                      </Link>
+                    </div>
+                  </>
                 )}
 
                 {/* Mobile Menu Button */}

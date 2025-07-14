@@ -152,21 +152,21 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Birthday Section */}
-        <div className="w-full lg:w-1/3 order-1 lg:order-2 space-y-4">
-          <div className="bg-gradient-to-br from-primary/10 via-primary/10 to-primary/10 border border-primary p-4 rounded-lg shadow sticky top-24">
-            <h2 className="text-2xl font-bold text-purple-800 mb-3 flex items-center gap-2">
-              <span className="text-2xl">🎂</span>
+    <div className="container mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6">
+      <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8">
+        {/* Birthday Section - Mobile: Full width, Desktop: Sidebar */}
+        <div className="w-full lg:w-1/3 order-1 lg:order-2 space-y-3 sm:space-y-4">
+          <div className="bg-gradient-to-br from-primary/5 via-secondary/5 to-primary/5 border border-secondary/20 p-3 sm:p-4 rounded-xl shadow-lg lg:sticky lg:top-24">
+            <h2 className="text-xl sm:text-2xl font-bold text-primary mb-2 sm:mb-3 flex items-center gap-2">
+              <span className="text-xl sm:text-2xl">🎂</span>
               Happy Birthday!
             </h2>
             {loadingBirthdays ? (
-              <div className="flex justify-center py-6">
+              <div className="flex justify-center py-4 sm:py-6">
                 <Spinner />
               </div>
             ) : birthdays.length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-2">
                 {birthdays.map((bdayUser) => (
                   <BirthdayCard
                     key={bdayUser._id}
@@ -176,20 +176,20 @@ export default function Dashboard() {
                 ))}
               </div>
             ) : (
-              <div className="text-center text-gray-500 py-6 flex flex-col items-center">
-                <span className="text-4xl mb-2">🎈</span>
-                <p>No birthdays today</p>
+              <div className="text-center text-gray-500 py-4 sm:py-6 flex flex-col items-center">
+                <span className="text-3xl sm:text-4xl mb-2">🎈</span>
+                <p className="text-sm sm:text-base">No birthdays today</p>
               </div>
             )}
           </div>
         </div>
 
-        {/* Posts Section */}
-        <div className="w-full lg:w-2/3 order-2 lg:order-1 space-y-6">
+        {/* Posts Section - Mobile: Full width, Desktop: Main content */}
+        <div className="w-full lg:w-2/3 order-2 lg:order-1 space-y-4 sm:space-y-6">
           {/* Post Creation Form */}
-          <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-lg">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <span className="text-2xl">✍️</span>
+          <div className="bg-white border border-primary/20 p-4 sm:p-6 rounded-xl shadow-lg">
+            <h2 className="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4 flex items-center gap-2">
+              <span className="text-xl sm:text-2xl">✍️</span>
               Create a Post
             </h2>
             <PostForm onPostCreated={handlePostCreated} />
@@ -200,7 +200,7 @@ export default function Dashboard() {
             <button
               onClick={handleDataRefresh}
               disabled={isRefreshing}
-              className={` float-right inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-full text-white transition-all duration-200 ${
+              className={`inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 border border-transparent text-sm font-medium rounded-full text-white transition-all duration-200 ${
                 isRefreshing
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-gradient-to-r from-primary/90 to-primary/70 hover:from-secondary/70 hover:to-secondary/70 hover:shadow-lg transform hover:scale-105 hover:text-gray-700"
@@ -209,14 +209,16 @@ export default function Dashboard() {
               {isRefreshing ? (
                 <>
                   <Spinner className="w-4 h-4 mr-2" />
-                  Refreshing...
+                  <span className="hidden sm:inline">Refreshing...</span>
+                  <span className="sm:hidden">Refresh...</span>
                 </>
               ) : (
                 <>
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
-                  Refresh Feed
+                  <span className="hidden sm:inline">Refresh Feed</span>
+                  <span className="sm:hidden">Refresh</span>
                 </>
               )}
             </button>
@@ -224,22 +226,22 @@ export default function Dashboard() {
 
           {/* Posts Feed */}
           {loading && posts.length === 0 ? (
-            <div className="flex justify-center py-12">
+            <div className="flex justify-center py-8 sm:py-12">
               <div className="text-center">
-                <Spinner className="w-8 h-8 mx-auto mb-4" />
-                <p className="text-gray-500">Loading posts...</p>
+                <Spinner className="w-6 sm:w-8 h-6 sm:h-8 mx-auto mb-3 sm:mb-4" />
+                <p className="text-gray-500 text-sm sm:text-base">Loading posts...</p>
               </div>
             </div>
           ) : error && posts.length === 0 ? (
-            <div className="bg-red-50 border border-red-200 p-8 rounded-xl shadow-lg text-center">
-              <div className="text-6xl mb-4">⚠️</div>
-              <h3 className="text-xl font-semibold text-red-800 mb-2">
+            <div className="bg-red-50 border border-red-200 p-6 sm:p-8 rounded-xl shadow-lg text-center">
+              <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">⚠️</div>
+              <h3 className="text-lg sm:text-xl font-semibold text-red-800 mb-2">
                 Failed to Load Posts
               </h3>
-              <p className="text-red-600 mb-4">{error}</p>
+              <p className="text-red-600 mb-4 text-sm sm:text-base">{error}</p>
               <button
                 onClick={() => fetchPosts(1, true)}
-                className="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                className="inline-flex items-center px-3 sm:px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm sm:text-base"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -250,55 +252,56 @@ export default function Dashboard() {
           ) : (
             <>
               {posts.length > 0 ? (
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   {posts.map((post, index) => (
-                      <PostCard post={post} refreshFeed={handleDataRefresh} />  
+                      <PostCard key={post._id} post={post} refreshFeed={handleDataRefresh} />  
                   ))}
                   
                   {/* Loading more indicator */}
                   {loadingMore && (
-                    <div className="flex justify-center py-8">
+                    <div className="flex justify-center py-6 sm:py-8">
                       <div className="text-center">
-                        <Spinner className="w-6 h-6 mx-auto mb-2" />
-                        <p className="text-gray-500 text-sm">Loading more posts...</p>
+                        <Spinner className="w-5 sm:w-6 h-5 sm:h-6 mx-auto mb-2" />
+                        <p className="text-gray-500 text-xs sm:text-sm">Loading more posts...</p>
                       </div>
                     </div>
                   )}
                   
                   {/* Load More Button - only show if not loading and has more posts */}
                   {!loadingMore && hasMore && posts.length > 0 && (
-                    <div className="flex justify-center py-6">
+                    <div className="flex justify-center py-4 sm:py-6">
                       <button
                         onClick={loadMorePosts}
-                        className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-full text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+                        className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 border border-transparent text-sm font-medium rounded-full text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 hover:shadow-lg transform hover:scale-105 transition-all duration-200"
                       >
                         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                         </svg>
-                        Load More Posts
+                        <span className="hidden sm:inline">Load More Posts</span>
+                        <span className="sm:hidden">Load More</span>
                       </button>
                     </div>
                   )}
                   
                   {/* End of feed indicator */}
                   {!hasMore && !loadingMore && posts.length > 0 && (
-                    <div className="text-center py-8">
-                      <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full mb-4">
-                        <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="text-center py-6 sm:py-8">
+                      <div className="inline-flex items-center justify-center w-10 sm:w-12 h-10 sm:h-12 bg-gray-100 rounded-full mb-3 sm:mb-4">
+                        <svg className="w-5 sm:w-6 h-5 sm:h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
-                      <p className="text-gray-500 text-sm">You've reached the end of the feed</p>
+                      <p className="text-gray-500 text-xs sm:text-sm">You've reached the end of the feed</p>
                     </div>
                   )}
                 </div>
               ) : (
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 p-8 rounded-xl shadow-lg text-center">
-                  <div className="text-6xl mb-4">📝</div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 p-6 sm:p-8 rounded-xl shadow-lg text-center">
+                  <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">📝</div>
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">
                     No Posts Yet
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-sm sm:text-base">
                     The community feed is empty. Be the first to share something!
                   </p>
                 </div>

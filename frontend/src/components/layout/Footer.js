@@ -51,7 +51,7 @@ export default function Footer() {
 
           <div className="flex items-center gap-4 mt-4 md:mt-0">
             {/* <p className="text-sm"> */}
-              <Link to="/about" className="font-semibold text-white underline">Meet out Developers</Link>
+              <Link to="/about" className="font-semibold text-white underline">Meet our Developers</Link>
             {/* </p> */}
             {/* <a href="https://www.linkedin.com/in/rahul-kumar-690370202/" target="_blank" rel="noopener noreferrer" className="group" aria-label="LinkedIn">
                             <LinkedInIcon />

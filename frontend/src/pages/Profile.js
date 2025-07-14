@@ -278,394 +278,381 @@ export default function Profile() {
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Mobile: Show main content first (order-1), Desktop: Show as second column (lg:order-2) */}
-          <div className="lg:col-span-2 order-1 lg:order-2">
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              {isEditing ? (
-                <div>
-                  <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                    <PencilIcon className="w-5 h-5 text-blue-600" />
-                    Edit Profile
-                  </h2>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Full Name *
-                        </label>
-                        <input
-                          name="fullName"
-                          type="text"
-                          value={formData.fullName}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                          required
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Phone Number
-                        </label>
-                        <input
-                          name="phoneNumber"
-                          type="tel"
-                          value={formData.phoneNumber}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Current Organization
-                        </label>
-                        <input
-                          name="currentOrganization"
-                          type="text"
-                          value={formData.currentOrganization}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Location
-                        </label>
-                        <input
-                          name="location"
-                          type="text"
-                          value={formData.location}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                        />
-                      </div>
-
-                      {/* <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Date of Birth
-                        </label>
-                        <input
-                          name="dateOfBirth"
-                          type="date"
-                          value={formData.dateOfBirth}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Admission Number
-                        </label>
-                        <input
-                          name="admissionNumber"
-                          type="text"
-                          value={formData.admissionNumber}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                        />
-                      </div>*/}
-                    </div> 
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Bio
-                      </label>
-                      <textarea
-                        name="bio"
-                        value={formData.bio}
-                        onChange={handleChange}
-                        rows="4"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                        placeholder="Tell us about yourself..."
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          LinkedIn Profile
-                        </label>
-                        <input
-                          name="linkedInProfile"
-                          type="url"
-                          value={formData.linkedInProfile}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                          placeholder="https://linkedin.com/in/..."
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Facebook Profile
-                        </label>
-                        <input
-                          name="facebookProfile"
-                          type="url"
-                          value={formData.facebookProfile}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                          placeholder="https://facebook.com/..."
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Instagram Profile
-                        </label>
-                        <input
-                          name="instagramProfile"
-                          type="url"
-                          value={formData.instagramProfile}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                          placeholder="https://instagram.com/..."
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex gap-4 pt-6">
-                      <button
-                        type="submit"
-                        disabled={loading || uploading}
-                        className="flex-1 flex items-center justify-center gap-2 py-3 px-6 bg-primary/70 text-white font-medium rounded-lg hover:bg-primary/70 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50"
-                      >
-                        {loading ? (
-                          <>
-                            <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
-                            Saving...
-                          </>
-                        ) : (
-                          <>
-                            <CheckIcon className="w-4 h-4" />
-                            Save Changes
-                          </>
-                        )}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setIsEditing(false)}
-                        className="px-6 py-3 bg-red-300  text-gray-700 font-medium rounded-lg hover:bg-red-400 transition-colors"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              ) : (
-                <>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Mobile: Show main content first (order-1), Desktop: Show as second column (lg:order-2) */}
+            <div className="lg:col-span-2 order-1 lg:order-2">
+              <div className="bg-white rounded-2xl shadow-lg p-6">
+                {isEditing ? (
                   <div>
                     <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                      <ChatBubbleLeftRightIcon className="w-5 h-5 text-blue-600" />
-                      About Me
+                      <PencilIcon className="w-5 h-5 text-blue-600" />
+                      Edit Profile
                     </h2>
-
-                    {profile.bio ? (
-                      <div className="prose prose-gray max-w-none">
-                        <p className="text-gray-700 leading-relaxed text-lg">
-                          {profile.bio}
-                        </p>
-                      </div>
-                    ) : (
-                      <div className="text-center py-12">
-                        <UserCircleIcon className="w-16 h-16 mx-auto text-gray-300 mb-4" />
-                        <p className="text-gray-500 text-lg">
-                          No bio added yet
-                        </p>
-                        <p className="text-gray-400 text-sm mt-2">
-                          Click "Edit Profile" to add your bio and tell others
-                          about yourself!
-                        </p>
-                      </div>
-                    )}
-
-                    {profile.currentOrganization && (
-                      <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-                        <div className="flex items-center gap-2 mb-2">
-                          <BuildingOfficeIcon className="w-5 h-5 text-blue-600" />
-                          <span className="font-medium text-blue-900">
-                            Currently Working At
-                          </span>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Full Name *
+                          </label>
+                          <input
+                            name="fullName"
+                            type="text"
+                            value={formData.fullName}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            required
+                          />
                         </div>
-                        <p className="text-blue-800 text-lg font-semibold">
-                          {profile.currentOrganization}
-                        </p>
+
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Phone Number
+                          </label>
+                          <input
+                            name="phoneNumber"
+                            type="tel"
+                            value={formData.phoneNumber}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Current Organization
+                          </label>
+                          <input
+                            name="currentOrganization"
+                            type="text"
+                            value={formData.currentOrganization}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Location
+                          </label>
+                          <input
+                            name="location"
+                            type="text"
+                            value={formData.location}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                          />
+                        </div>
+
+                        {/* <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Date of Birth
+                          </label>
+                          <input
+                            name="dateOfBirth"
+                            type="date"
+                            value={formData.dateOfBirth}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                          />
+                        </div> */}
+
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Bio
+                          </label>
+                          <textarea
+                            name="bio"
+                            value={formData.bio}
+                            onChange={handleChange}
+                            rows="4"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            placeholder="Tell us about yourself..."
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                              LinkedIn Profile
+                            </label>
+                            <input
+                              name="linkedInProfile"
+                              type="url"
+                              value={formData.linkedInProfile}
+                              onChange={handleChange}
+                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                              placeholder="https://linkedin.com/in/..."
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                              Facebook Profile
+                            </label>
+                            <input
+                              name="facebookProfile"
+                              type="url"
+                              value={formData.facebookProfile}
+                              onChange={handleChange}
+                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                              placeholder="https://facebook.com/..."
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                              Instagram Profile
+                            </label>
+                            <input
+                              name="instagramProfile"
+                              type="url"
+                              value={formData.instagramProfile}
+                              onChange={handleChange}
+                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                              placeholder="https://instagram.com/..."
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex gap-4 pt-6">
+                          <button
+                            type="submit"
+                            disabled={loading || uploading}
+                            className="flex-1 flex items-center justify-center gap-2 py-3 px-6 bg-primary/70 text-white font-medium rounded-lg hover:bg-primary/70 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50"
+                          >
+                            {loading ? (
+                              <>
+                                <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+                                Saving...
+                              </>
+                            ) : (
+                              <>
+                                <CheckIcon className="w-4 h-4" />
+                                Save Changes
+                              </>
+                            )}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setIsEditing(false)}
+                            className="px-6 py-3 bg-red-300  text-gray-700 font-medium rounded-lg hover:bg-red-400 transition-colors"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                ) : (
+                  <>
+                    <div>
+                      <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <ChatBubbleLeftRightIcon className="w-5 h-5 text-blue-600" />
+                        About Me
+                      </h2>
+
+                      {profile.bio ? (
+                        <div className="prose prose-gray max-w-none">
+                          <p className="text-gray-700 leading-relaxed text-lg">
+                            {profile.bio}
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="text-center py-12">
+                          <UserCircleIcon className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+                          <p className="text-gray-500 text-lg">
+                            No bio added yet
+                          </p>
+                          <p className="text-gray-400 text-sm mt-2">
+                            Click "Edit Profile" to add your bio and tell others
+                            about yourself!
+                          </p>
+                        </div>
+                      )}
+
+                      {profile.currentOrganization && (
+                        <div className="mt-8 p-4 bg-blue-50 rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <BuildingOfficeIcon className="w-5 h-5 text-blue-600" />
+                            <span className="font-medium text-blue-900">
+                              Currently Working At
+                            </span>
+                          </div>
+                          <p className="text-blue-800 text-lg font-semibold">
+                            {profile.currentOrganization}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Social Media Links */}
+                    {(profile.linkedInProfile ||
+                      profile.facebookProfile ||
+                      profile.instagramProfile) && (
+                      <div className="mt-8 bg-gray-50 rounded-2xl p-6">
+                        <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                          <GlobeAltIcon className="w-5 h-5 text-blue-600" />
+                          Social Media
+                        </h2>
+                        <div className="space-y-3">
+                          {profile.linkedInProfile && (
+                            <a
+                              href={profile.linkedInProfile}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-3 p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors"
+                            >
+                              <div className="text-blue-600">
+                                {getSocialIcon("linkedin")}
+                              </div>
+                              <div>
+                                <p className="font-medium text-gray-900">
+                                  LinkedIn
+                                </p>
+                                <p className="text-sm text-gray-500 truncate">
+                                  View Profile
+                                </p>
+                              </div>
+                            </a>
+                          )}
+
+                          {profile.facebookProfile && (
+                            <a
+                              href={profile.facebookProfile}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-3 p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors"
+                            >
+                              <div className="text-blue-600">
+                                {getSocialIcon("facebook")}
+                              </div>
+                              <div>
+                                <p className="font-medium text-gray-900">
+                                  Facebook
+                                </p>
+                                <p className="text-sm text-gray-500 truncate">
+                                  View Profile
+                                </p>
+                              </div>
+                            </a>
+                          )}
+
+                          {profile.instagramProfile && (
+                            <a
+                              href={profile.instagramProfile}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-3 p-3 rounded-lg bg-pink-50 hover:bg-pink-100 transition-colors"
+                            >
+                              <div className="text-pink-600">
+                                {getSocialIcon("instagram")}
+                              </div>
+                              <div>
+                                <p className="font-medium text-gray-900">
+                                  Instagram
+                                </p>
+                                <p className="text-sm text-gray-500 truncate">
+                                  View Profile
+                                </p>
+                              </div>
+                            </a>
+                          )}
+                        </div>
                       </div>
                     )}
-                  </div>
-
-                  {/* Social Media Links */}
-                  {(profile.linkedInProfile ||
-                    profile.facebookProfile ||
-                    profile.instagramProfile) && (
-                    <div className="mt-8 bg-gray-50 rounded-2xl p-6">
-                      <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <GlobeAltIcon className="w-5 h-5 text-blue-600" />
-                        Social Media
-                      </h2>
-                      <div className="space-y-3">
-                        {profile.linkedInProfile && (
-                          <a
-                            href={profile.linkedInProfile}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-3 p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors"
-                          >
-                            <div className="text-blue-600">
-                              {getSocialIcon("linkedin")}
-                            </div>
-                            <div>
-                              <p className="font-medium text-gray-900">
-                                LinkedIn
-                              </p>
-                              <p className="text-sm text-gray-500 truncate">
-                                View Profile
-                              </p>
-                            </div>
-                          </a>
-                        )}
-
-                        {profile.facebookProfile && (
-                          <a
-                            href={profile.facebookProfile}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-3 p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors"
-                          >
-                            <div className="text-blue-600">
-                              {getSocialIcon("facebook")}
-                            </div>
-                            <div>
-                              <p className="font-medium text-gray-900">
-                                Facebook
-                              </p>
-                              <p className="text-sm text-gray-500 truncate">
-                                View Profile
-                              </p>
-                            </div>
-                          </a>
-                        )}
-
-                        {profile.instagramProfile && (
-                          <a
-                            href={profile.instagramProfile}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-3 p-3 rounded-lg bg-pink-50 hover:bg-pink-100 transition-colors"
-                          >
-                            <div className="text-pink-600">
-                              {getSocialIcon("instagram")}
-                            </div>
-                            <div>
-                              <p className="font-medium text-gray-900">
-                                Instagram
-                              </p>
-                              <p className="text-sm text-gray-500 truncate">
-                                View Profile
-                              </p>
-                            </div>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-
-          {/* Mobile: Show sidebar second (order-2), Desktop: Show as first column (lg:order-1) */}
-          <div className="lg:col-span-1 space-y-6 order-2 lg:order-1">
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <UserIcon className="w-5 h-5 text-blue-600" />
-                Contact Information
-              </h2>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <EnvelopeIcon className="w-5 h-5 text-gray-400" />
-                  <div>
-                    <p className="text-sm text-gray-500">Email</p>
-                    <p className="font-medium text-gray-900">{profile.email}</p>
-                  </div>
-                </div>
-
-                {profile.phoneNumber && (
-                  <div className="flex items-center gap-3">
-                    <PhoneIcon className="w-5 h-5 text-gray-400" />
-                    <div>
-                      <p className="text-sm text-gray-500">Phone</p>
-                      <p className="font-medium text-gray-900">
-                        {profile.phoneNumber}
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {profile.location && (
-                  <div className="flex items-center gap-3">
-                    <MapPinIcon className="w-5 h-5 text-gray-400" />
-                    <div>
-                      <p className="text-sm text-gray-500">Location</p>
-                      <p className="font-medium text-gray-900">
-                        {profile.location}
-                      </p>
-                    </div>
-                  </div>
+                  </>
                 )}
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <AcademicCapIcon className="w-5 h-5 text-blue-600" />
-                Academic Information
-              </h2>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <CalendarIcon className="w-5 h-5 text-gray-400" />
-                  <div>
-                    <p className="text-sm text-gray-500">Batch Year</p>
-                    <p className="font-medium text-gray-900">
-                      {profile.batchYear}
-                    </p>
-                  </div>
-                </div>
-
-                {profile.admissionNumber && (
+            {/* Mobile: Show sidebar second (order-2), Desktop: Show as first column (lg:order-1) */}
+            <div className="lg:col-span-1 space-y-6 order-2 lg:order-1">
+              <div className="bg-white rounded-2xl shadow-lg p-6">
+                <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <UserIcon className="w-5 h-5 text-blue-600" />
+                  Contact Information
+                </h2>
+                <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <IdentificationIcon className="w-5 h-5 text-gray-400" />
+                    <EnvelopeIcon className="w-5 h-5 text-gray-400" />
                     <div>
-                      <p className="text-sm text-gray-500">Admission Number</p>
-                      <p className="font-medium text-gray-900">
-                        {profile.admissionNumber}
-                      </p>
+                      <p className="text-sm text-gray-500">Email</p>
+                      <p className="font-medium text-gray-900">{profile.email}</p>
                     </div>
                   </div>
-                )}
 
-                {profile.dateOfBirth && (
+                  {profile.phoneNumber && (
+                    <div className="flex items-center gap-3">
+                      <PhoneIcon className="w-5 h-5 text-gray-400" />
+                      <div>
+                        <p className="text-sm text-gray-500">Phone</p>
+                        <p className="font-medium text-gray-900">
+                          {profile.phoneNumber}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {profile.location && (
+                    <div className="flex items-center gap-3">
+                      <MapPinIcon className="w-5 h-5 text-gray-400" />
+                      <div>
+                        <p className="text-sm text-gray-500">Location</p>
+                        <p className="font-medium text-gray-900">
+                          {profile.location}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="bg-white rounded-2xl shadow-lg p-6">
+                <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <AcademicCapIcon className="w-5 h-5 text-blue-600" />
+                  Academic Information
+                </h2>
+                <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <CalendarIcon className="w-5 h-5 text-gray-400" />
                     <div>
-                      <p className="text-sm text-gray-500">Date of Birth</p>
+                      <p className="text-sm text-gray-500">Batch Year</p>
                       <p className="font-medium text-gray-900">
-                        {formatDate(profile.dateOfBirth)}
-                        {calculateAge(profile.dateOfBirth) && (
-                          <span className="text-gray-500 ml-2">
-                            ({calculateAge(profile.dateOfBirth)} years old)
-                          </span>
-                        )}
+                        {profile.batchYear}
                       </p>
                     </div>
                   </div>
-                )}
+
+                  {profile.admissionNumber && (
+                    <div className="flex items-center gap-3">
+                      <IdentificationIcon className="w-5 h-5 text-gray-400" />
+                      <div>
+                        <p className="text-sm text-gray-500">Admission Number</p>
+                        <p className="font-medium text-gray-900">
+                          {profile.admissionNumber}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {profile.dateOfBirth && (
+                    <div className="flex items-center gap-3">
+                      <CalendarIcon className="w-5 h-5 text-gray-400" />
+                      <div>
+                        <p className="text-sm text-gray-500">Date of Birth</p>
+                        <p className="font-medium text-gray-900">
+                          {formatDate(profile.dateOfBirth)}
+                          {calculateAge(profile.dateOfBirth) && (
+                            <span className="text-gray-500 ml-2">
+                              ({calculateAge(profile.dateOfBirth)} years old)
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

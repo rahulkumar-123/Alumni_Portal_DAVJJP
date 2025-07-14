@@ -117,36 +117,37 @@ export default function AlumniDirectory() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-8">
         {/* Header Section */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="bg-blue-100 p-3 rounded-full">
-              <UserGroupIcon className="w-8 h-8 text-blue-600" />
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="flex justify-center mb-3 sm:mb-4">
+            <div className="bg-blue-100 p-2 sm:p-3 rounded-full">
+              <UserGroupIcon className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
             Alumni Directory
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto px-4">
             Connect with fellow alumni and expand your professional network.
             Search by name, batch year, organization, or location.
           </p>
         </div>
 
         {/* Enhanced Filter Section */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-gray-100">
-          <div className="flex items-center gap-2 mb-4">
-            <FunnelIcon className="w-5 h-5 text-gray-500" />
-            <h2 className="text-lg font-semibold text-gray-900">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8 border border-gray-100">
+          <div className="flex items-center gap-2 mb-3 sm:mb-4">
+            <FunnelIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
+            <h2 className="text-base sm:text-lg font-semibold text-gray-900">
               Search & Filter
             </h2>
           </div>
 
-          <form onSubmit={handleFilterSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          <form onSubmit={handleFilterSubmit} className="space-y-4 sm:space-y-6">
+            {/* First Row: Filter Type and Search Input */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {/* Filter Type Dropdown */}
-              <div className="lg:col-span-1">
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Filter By
                 </label>
@@ -154,7 +155,7 @@ export default function AlumniDirectory() {
                   <select
                     value={filterType}
                     onChange={(e) => handleFilterTypeChange(e.target.value)}
-                    className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 appearance-none transition-colors"
+                    className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 appearance-none transition-colors text-sm"
                   >
                     {filterOptions.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -162,12 +163,16 @@ export default function AlumniDirectory() {
                       </option>
                     ))}
                   </select>
-                  <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none"></div>
+                  <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
                 </div>
               </div>
 
               {/* Search Input */}
-              <div className="lg:col-span-2">
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Search Value
                 </label>
@@ -182,243 +187,148 @@ export default function AlumniDirectory() {
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
                     placeholder={getCurrentFilter().placeholder}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-colors"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-colors text-sm"
                   />
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex gap-4 lg:p-[17px] lg:mt-3 width-full lg:col-span-1">
+              {/* Search Button */}
+              <div className="flex items-end">
                 <button
                   type="submit"
-                  className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-primary/70 text-white font-semibold rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 transition-all duration-200 shadow-md hover:shadow-lg"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-6 bg-gradient-to-r from-primary to-primary/80 text-white font-semibold rounded-lg hover:from-primary/90 hover:to-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 transition-all duration-200 shadow-md hover:shadow-lg text-sm transform hover:scale-105"
                 >
                   <MagnifyingGlassIcon className="w-5 h-5" />
-                  Search
-                </button>
-                <button
-                  type="button"
-                  onClick={handleClearFilters}
-                  className="px-6 py-3 bg-red-200 text-gray-700 font-medium rounded-lg hover:bg-red-300 transition-colors"
-                  title="Clear all filters h-[fit-content]"
-                >
-                  Clear
+                  <span>Search</span>
                 </button>
               </div>
             </div>
 
-            {/* Active Filters Display */}
-            {Object.entries(filters).some(([_, value]) => value !== "") && (
-              <div className="pt-4 border-t border-gray-200">
-                <div className="flex flex-wrap gap-2">
-                  <span className="text-sm font-medium text-gray-700">
-                    Active filters:
-                  </span>
-                  {Object.entries(filters).map(([key, value]) => {
-                    if (!value) return null;
-                    const option = filterOptions.find(
-                      (opt) => opt.value === key
-                    );
-                    return (
-                      <span
-                        key={key}
-                        className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full"
-                      >
-                        {option?.label}: {value}
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const newFilters = { ...filters, [key]: "" };
-                            setFilters(newFilters);
-                            if (filterType === key) setSearchValue("");
-                          }}
-                          className="ml-1 hover:bg-blue-200 rounded-full p-0.5 transition-colors"
-                        >
-                          <svg
-                            className="w-3 h-3"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M6 18L18 6M6 6l12 12"
-                            />
-                          </svg>
-                        </button>
+            {/* Second Row: Clear Button and Active Filters */}
+            <div className="flex items-center justify-between">
+              <button
+                type="button"
+                onClick={handleClearFilters}
+                className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 text-sm"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span>Clear All Filters</span>
+              </button>
+
+              {/* Active Filters Display */}
+              {Object.values(filters).some(value => value !== "") && (
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <span>Active filters:</span>
+                  {Object.entries(filters).map(([key, value]) => 
+                    value && (
+                      <span key={key} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 rounded-md text-xs">
+                        {filterOptions.find(opt => opt.value === key)?.label}: {value}
                       </span>
-                    );
-                  })}
+                    )
+                  )}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </form>
         </div>
 
         {/* Results Section */}
-        {loading ? (
-          <div className="flex justify-center items-center py-20">
-            <Spinner />
-          </div>
-        ) : users.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {users.map((user) => {
-              const profileImageUrl = user.profilePicture?.startsWith("http")
-                ? user.profilePicture
-                : user.profilePicture && user.profilePicture !== "no-photo.jpg"
-                ? `${API_URL}${user.profilePicture}`
-                : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                    user.fullName
-                  )}&background=8344AD&color=fff`;
-
-              return (
-                <div
-                  key={user._id}
-                  className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer border border-gray-100 group"
-                  onClick={() => setSelectedUser(user)}
-                >
-                  <div className="text-center">
-                    <div className="relative inline-block mb-4">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6">
+          {loading ? (
+            <div className="flex justify-center py-8 sm:py-12">
+              <Spinner />
+            </div>
+          ) : users.length > 0 ? (
+            <>
+              {/* Results Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+                {users.map((user) => (
+                  <div
+                    key={user._id}
+                    onClick={() => setSelectedUser(user)}
+                    className="bg-gray-50 rounded-xl p-4 sm:p-6 cursor-pointer hover:shadow-lg transition-all duration-200 border border-gray-100 hover:border-primary/20"
+                  >
+                    <div className="text-center">
                       <img
-                        className="h-20 w-20 rounded-full object-cover ring-4 ring-gray-100 group-hover:ring-blue-200 transition-all duration-300"
-                        src={profileImageUrl}
+                        src={
+                          user.profilePicture?.startsWith("http")
+                            ? user.profilePicture
+                            : user.profilePicture !== "no-photo.jpg"
+                            ? `${API_URL}${user.profilePicture}`
+                            : `https://ui-avatars.com/api/?name=${user.fullName}&background=8344AD&color=fff&size=128`
+                        }
                         alt={user.fullName}
-                      /> 
-                      {/*for showing online status */}
-                      {/* <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-400 rounded-full border-2 border-white shadow-sm"></div> */}
-                    </div>
-
-                    <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
-                      {user.fullName}
-                    </h3>
-
-                    <div className="flex items-center justify-center gap-1 mb-3">
-                      <AcademicCapIcon className="w-4 h-4 text-blue-600" />
-                      <span className="text-blue-600 font-semibold text-sm">
-                        Batch of {user.batchYear}
-                      </span>
-                    </div>
-
-                    {user.currentOrganization && (
-                      <div className="flex items-center justify-center gap-1 mb-2">
-                        <BuildingOfficeIcon className="w-4 h-4 text-gray-500" />
-                        <p className="text-sm text-gray-600 truncate max-w-full">
+                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 object-cover border-2 border-primary/20"
+                      />
+                      <h3 className="font-semibold text-gray-900 text-sm sm:text-base mb-1 truncate">
+                        {user.fullName}
+                      </h3>
+                      <p className="text-primary text-xs sm:text-sm font-medium mb-2">
+                        Class of {user.batchYear}
+                      </p>
+                      {user.currentOrganization && (
+                        <p className="text-gray-600 text-xs sm:text-sm truncate mb-1">
                           {user.currentOrganization}
                         </p>
-                      </div>
-                    )}
-
-                    {user.location && (
-                      <div className="flex items-center justify-center gap-1">
-                        <MapPinIcon className="w-4 h-4 text-gray-500" />
-                        <p className="text-sm text-gray-600 truncate max-w-full">
-                          {user.location}
+                      )}
+                      {user.location && (
+                        <p className="text-gray-500 text-xs truncate">
+                          📍 {user.location}
                         </p>
-                      </div>
-                    )}
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {pagination.totalPages > 1 && (
+                <div className="mt-6 sm:mt-8 flex items-center justify-between">
+                  <div className="text-sm text-gray-700">
+                    Showing page {pagination.currentPage} of {pagination.totalPages}
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => handlePageChange(pagination.currentPage - 1)}
+                      disabled={pagination.currentPage <= 1}
+                      className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <ChevronLeftIcon className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handlePageChange(pagination.currentPage + 1)}
+                      disabled={pagination.currentPage >= pagination.totalPages}
+                      className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <ChevronRightIcon className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="text-center py-20 bg-white rounded-2xl shadow-lg border border-gray-100">
-            <div className="flex justify-center mb-4">
-              <div className="bg-gray-100 p-4 rounded-full">
-                <UserGroupIcon className="w-12 h-12 text-gray-400" />
-              </div>
+              )}
+            </>
+          ) : (
+            <div className="text-center py-8 sm:py-12">
+              <div className="text-4xl sm:text-6xl mb-4">🔍</div>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">
+                No Alumni Found
+              </h3>
+              <p className="text-gray-600 text-sm sm:text-base">
+                Try adjusting your search criteria or filters.
+              </p>
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              No Alumni Found
-            </h3>
-            <p className="text-gray-600 mb-4">
-              No results match your current search criteria.
-            </p>
-            <button
-              onClick={handleClearFilters}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Clear Filters
-            </button>
-          </div>
-        )}
-
-        {/* Enhanced Pagination */}
-        {pagination && pagination.totalPages > 1 && (
-          <div className="flex flex-col sm:flex-row justify-between items-center mt-8 gap-4">
-            <div className="text-sm text-gray-600">
-              Showing {(pagination.currentPage - 1) * pagination.limit + 1} to{" "}
-              {Math.min(
-                pagination.currentPage * pagination.limit,
-                pagination.total
-              )}{" "}
-              of {pagination.total} alumni
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
-              >
-                <ChevronLeftIcon className="w-4 h-4" />
-                Previous
-              </button>
-
-              <div className="flex items-center gap-1">
-                {Array.from(
-                  { length: Math.min(5, pagination.totalPages) },
-                  (_, i) => {
-                    let pageNumber;
-                    if (pagination.totalPages <= 5) {
-                      pageNumber = i + 1;
-                    } else if (currentPage <= 3) {
-                      pageNumber = i + 1;
-                    } else if (currentPage >= pagination.totalPages - 2) {
-                      pageNumber = pagination.totalPages - 4 + i;
-                    } else {
-                      pageNumber = currentPage - 2 + i;
-                    }
-
-                    return (
-                      <button
-                        key={pageNumber}
-                        onClick={() => handlePageChange(pageNumber)}
-                        className={`w-10 h-10 rounded-lg font-medium transition-colors ${
-                          pageNumber === currentPage
-                            ? "bg-blue-600 text-white shadow-lg"
-                            : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
-                        }`}
-                      >
-                        {pageNumber}
-                      </button>
-                    );
-                  }
-                )}
-              </div>
-
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === pagination.totalPages}
-                className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
-              >
-                Next
-                <ChevronRightIcon className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Alumni Detail Modal */}
-        {selectedUser && (
-          <AlumniDetailModal
-            user={selectedUser}
-            onClose={() => setSelectedUser(null)}
-          />
-        )}
+          )}
+        </div>
       </div>
+
+      {/* Alumni Detail Modal */}
+      {selectedUser && (
+        <AlumniDetailModal
+          user={selectedUser}
+          onClose={() => setSelectedUser(null)}
+        />
+      )}
     </div>
   );
 }
