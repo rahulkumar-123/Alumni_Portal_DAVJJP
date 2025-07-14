@@ -6,7 +6,7 @@
         "stats": [
             {
                 "label": "Active Alumni",
-                "value": "140+",
+                "value": "160+",
                 "icon": "users"
             },
             {
@@ -131,9 +131,9 @@
         "description": "This alumni portal is crafted with passion and dedication by a team of talented developers who believe in the power of technology to connect people and create meaningful experiences.",
         "team": [
             {
-                "name": "Rauhl kumar",
+                "name": "Rahul kumar",
                 "role": "Lead Developer",
-                "description": "Man behind the project, specializing in full-stack development, UI/UX design, and the createion of innovative web applications which we are using here.",
+                "description": "Man behind the project, specializing in full-stack development, UI/UX design, and the creation of innovative web applications which we are using here.",
                 "expertise": [
                     "React",
                     "Node.js",
@@ -148,7 +148,7 @@
                     "instagram": "https://www.instagram.com/rahulkmr_123/",
                     "website": "https://rahulkumar-123.github.io/"
                 },
-                "quote": "one man army behind this project."
+                "quote": "One man army behind this project."
             },
             {
                 "name": "Raajesh Jha",
@@ -225,20 +225,20 @@
     },
     "testimonials": [
         {
-            "name": "Dr. Rahul Kumar",
+            "name": "Dr. Pranav Kumar",
             "role": "Principal, DAV Public School JJP",
             "message": "This alumni portal has revolutionized how we connect with our former students. It's a testament to modern technology serving educational excellence.",
             "avatar": "https://picsum.photos/id/238/200/300"
         },
         {
-            "name": "Priya Sharma",
+            "name": "Chaman Jha",
             "role": "Alumni Relations Officer",
             "message": "The platform has made alumni engagement seamless and effective. We've seen a 300% increase in alumni participation since its launch.",
             "avatar": "https://picsum.photos/id/239/200/300"
         },
         {
-            "name": "Amit Singh",
-            "role": "Alumni (Batch 2015)",
+            "name": "Rohan Jha",
+            "role": "Alumni (Batch 2019)",
             "message": "Finally, a platform that keeps me connected with my alma mater and fellow alumni. The user experience is exceptional!",
             "avatar": "https://picsum.photos/id/240/200/300"
         }
@@ -247,7 +247,7 @@
         "title": "Get in Touch",
         "description": "Have questions about the portal or want to contribute? We'd love to hear from you!",
         "email": "mnjhadavalumni@gmail.com",
-        "phone": "+91-181-2222222",
+        "phone": "",
         "address": "DAV Public School, Jhanjharpur, Bihar, India - 847403",
         "socialMedia": {
             "facebook": "https://facebook.com/davjhanjharpur",
