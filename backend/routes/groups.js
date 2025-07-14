@@ -5,7 +5,8 @@ const {
     joinGroup,
     getGroupDetails,
     isGroupMember,
-    leaveGroup
+    leaveGroup,
+    deleteGroup
 } = require('../controllers/groupController');
 const { protect } = require('../middleware/authMiddleware');
 const router = express.Router();
@@ -28,5 +29,8 @@ router.route('/:id/join')
 
 router.route('/:id/leave')
     .put(protect, leaveGroup);
+
+router.route('/:id')
+    .delete(deleteGroup);
 
 module.exports = router;

@@ -17,6 +17,7 @@ import Groups from './pages/Groups';
 import GroupChat from './pages/GroupChat';
 import AdminDashboard from './pages/AdminDashboard';
 import Feedback from './pages/Feedback';
+import AboutDeveloper from './pages/AboutDeveloper';
 import Preloader from './components/layout/Preloader';
 import { NotificationProvider } from './context/NotificationContext';
 import NotificationsPage from './pages/NotificationsPage';
@@ -73,12 +74,13 @@ const MainContent = () => {
   const isLandingPage = location.pathname === '/';
 
   return (
-    <main className={`flex-grow ${isLandingPage ? '' : 'container mx-auto px-4 sm:px-6 lg:px-8 py-8'}`}>
+    <main className={`flex-grow ${isLandingPage ? '' : 'container mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8'}`}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/about" element={<AboutDeveloper />} />
         <Route path="/directory" element={<PrivateRoute><AlumniDirectory /></PrivateRoute>} />
         <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
         <Route path="/feedback" element={<PrivateRoute><Feedback /></PrivateRoute>} />

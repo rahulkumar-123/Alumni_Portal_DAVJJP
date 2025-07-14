@@ -91,15 +91,79 @@ exports.updateProfile = async (req, res) => {
 // @access  Private
 exports.updateProfilePicture = async (req, res) => {
     try {
-        if (!req.file) {
+        // Debug logging
+        console.log('=== Profile Picture Upload Debug ===');
+        console.log('Request files:', req.files);
+        console.log('Request body:', req.body);
+        console.log('Request headers:', req.headers);
+
+        // Check if files were uploaded
+        if (!req.files) {
             return res.status(400).json({
                 success: false,
-                message: "Please upload a file",
+                message: "No files uploaded. Please select an image file."
             });
         }
 
-        const cloudinaryUrl = await uploadToCloudinary(req.file);
+        let profileImage;
+        
+        if (!req.files.profileImage) {
+            console.log('Available file fields:', Object.keys(req.files));
+            
+            // Check for other common field names
+            const possibleFields = ['profileImage', 'file', 'image', 'avatar', 'profilePicture'];
+            let foundFile = null;
+            
+            for (const field of possibleFields) {
+                if (req.files[field]) {
+                    foundFile = req.files[field];
+                    console.log(`Found file in field: ${field}`);
+                    break;
+                }
+            }
+            
+            if (!foundFile) {
+                return res.status(400).json({
+                    success: false,
+                    message: `No profile image file uploaded. Please select an image file with field name 'profileImage'. Available fields: ${Object.keys(req.files).join(', ')}`
+                });
+            }
+            
+            profileImage = foundFile;
+        } else {
+            profileImage = req.files.profileImage;
+        }
+        
+        console.log('Profile image details:', {
+            name: profileImage.name,
+            size: profileImage.size,
+            mimetype: profileImage.mimetype,
+            tempFilePath: profileImage.tempFilePath
+        });
+        
+        // Validate file type
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+        if (!allowedTypes.includes(profileImage.mimetype)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid file type. Only JPEG, JPG, PNG, and GIF are allowed."
+            });
+        }
 
+        // Validate file size (5MB limit)
+        if (profileImage.size > 5 * 1024 * 1024) {
+            return res.status(400).json({
+                success: false,
+                message: "File size too large. Maximum size is 5MB."
+            });
+        }
+
+        // Upload to Cloudinary
+        console.log('Starting Cloudinary upload...');
+        const cloudinaryUrl = await uploadToCloudinary(profileImage);
+        console.log('Cloudinary upload successful:', cloudinaryUrl);
+
+        // Update user profile picture in database
         const user = await User.findByIdAndUpdate(
             req.user.id,
             { profilePicture: cloudinaryUrl },
@@ -107,18 +171,26 @@ exports.updateProfilePicture = async (req, res) => {
         );
 
         if (!user) {
-            return res.status(404).json({ success: false, message: "User not found" });
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
         }
 
         res.status(200).json({
             success: true,
-            data: user,
+            message: "Profile picture updated successfully",
+            data: {
+                id: user._id,
+                fullName: user.fullName,
+                profilePicture: user.profilePicture
+            }
         });
     } catch (error) {
         console.error("Error in updateProfilePicture:", error);
-        res.status(400).json({
+        res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Server error while updating profile picture: " + error.message
         });
     }
 };

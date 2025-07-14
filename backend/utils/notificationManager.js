@@ -12,6 +12,20 @@ const parseMentions = (text) => {
 
 const sendNotification = async (req, notificationData) => {
     const { io, userSockets } = req;
+    
+    // Validate required fields
+    if (!notificationData.recipient || !notificationData.sender || !notificationData.type) {
+        console.error('Invalid notification data:', notificationData);
+        return;
+    }
+    
+    // Validate notification type
+    const validTypes = ['new_comment', 'new_post', 'mention_comment', 'mention_chat', 'new_group_message', 'new_like'];
+    if (!validTypes.includes(notificationData.type)) {
+        console.error('Invalid notification type:', notificationData.type);
+        return;
+    }
+    
     try {
         const notification = await Notification.create(notificationData);
         const recipientSocketId = userSockets.get(notification.recipient.toString());
@@ -19,8 +33,8 @@ const sendNotification = async (req, notificationData) => {
         if (recipientSocketId) {
             const populatedNotification = await Notification.findById(notification._id).populate([
                 { path: 'sender', select: 'fullName profilePicture' },
-                { path: 'post', select: 'title' },
-                { path: 'group', select: 'name' }
+                { path: 'post', select: 'title _id' },
+                { path: 'group', select: 'name _id' }
             ]);
             io.to(recipientSocketId).emit('new_notification', populatedNotification);
         }

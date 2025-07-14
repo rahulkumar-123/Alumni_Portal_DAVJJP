@@ -11,14 +11,23 @@ export const NotificationProvider = ({ children }) => {
     const socket = useSocket();
     const [notifications, setNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const fetchNotifications = useCallback(async () => {
         if (user) {
             try {
+                setLoading(true);
+                setError(null);
                 const res = await notificationService.getNotifications();
                 setNotifications(res.data.data);
                 setUnreadCount(res.data.data.filter(n => !n.read).length);
-            } catch (error) { console.error("Failed to fetch notifications"); }
+            } catch (error) { 
+                console.error("Failed to fetch notifications:", error);
+                setError("Failed to load notifications. Please try again.");
+            } finally {
+                setLoading(false);
+            }
         }
     }, [user]);
 
@@ -26,13 +35,33 @@ export const NotificationProvider = ({ children }) => {
 
     useEffect(() => {
         if (socket) {
-            socket.on('new_notification', (newNotification) => {
+            const handleNewNotification = (newNotification) => {
                 setNotifications(prev => [newNotification, ...prev]);
                 setUnreadCount(prev => prev + 1);
-            });
-            return () => socket.off('new_notification');
+            };
+
+            const handleSocketError = (error) => {
+                console.error('Socket error:', error);
+                setError("Connection lost. Notifications may not be real-time.");
+            };
+
+            const handleSocketReconnect = () => {
+                console.log('Socket reconnected, refreshing notifications...');
+                setError(null);
+                fetchNotifications();
+            };
+
+            socket.on('new_notification', handleNewNotification);
+            socket.on('connect_error', handleSocketError);
+            socket.on('reconnect', handleSocketReconnect);
+
+            return () => {
+                socket.off('new_notification', handleNewNotification);
+                socket.off('connect_error', handleSocketError);
+                socket.off('reconnect', handleSocketReconnect);
+            };
         }
-    }, [socket]);
+    }, [socket, fetchNotifications]);
 
     const markAllAsRead = async () => {
         if (unreadCount === 0) return;
@@ -40,10 +69,21 @@ export const NotificationProvider = ({ children }) => {
             await notificationService.markAsRead();
             setNotifications(notifications.map(n => ({ ...n, read: true })));
             setUnreadCount(0);
-        } catch (error) { console.error("Failed to mark notifications as read"); }
+        } catch (error) { 
+            console.error("Failed to mark notifications as read:", error);
+            // Don't update state if the API call failed
+        }
     };
 
-    const value = { notifications, unreadCount, markAllAsRead, refreshNotifications: fetchNotifications };
+    const value = { 
+        notifications, 
+        unreadCount, 
+        loading, 
+        error, 
+        markAllAsRead, 
+        refreshNotifications: fetchNotifications,
+        clearError: () => setError(null)
+    };
     return <NotificationContext.Provider value={value}>{children}</NotificationContext.Provider>;
 };
 

@@ -16,12 +16,19 @@ export default function PostPage() {
                 const res = await postService.getPostById(id);
                 setPost(res.data.data);
             } catch (error) {
-                toast.error("Could not load the post.");
+                if (error.response?.status === 404) {
+                    toast.error("Post not found. It may have been deleted.");
+                } else {
+                    toast.error("Could not load the post. Please try again.");
+                }
             } finally {
                 setLoading(false);
             }
         };
-        fetchPost();
+        
+        if (id) {
+            fetchPost();
+        }
     }, [id]);
 
     if (loading) return <div className="py-20"><Spinner /></div>;

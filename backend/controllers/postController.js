@@ -36,10 +36,29 @@ exports.getPosts = async (req, res) => {
 
 exports.getPostById = async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id).populate('user').populate('comments.user', 'fullName profilePicture');
-        if (!post) return res.status(404).json({ success: false, message: 'Post not found' });
+        // Validate the ID format
+        if (!req.params.id || req.params.id.length !== 24) {
+            return res.status(400).json({ success: false, message: 'Invalid post ID format' });
+        }
+        
+        const post = await Post.findById(req.params.id)
+            .populate('user', 'fullName profilePicture batchYear')
+            .populate('comments.user', 'fullName profilePicture');
+            
+        if (!post) {
+            return res.status(404).json({ success: false, message: 'Post not found' });
+        }
+        
+        // Check if post is approved (if approval system is in place)
+        if (post.isApproved === false) {
+            return res.status(404).json({ success: false, message: 'Post not found' });
+        }
+        
         res.status(200).json({ success: true, data: post });
     } catch (error) {
+        if (error.name === 'CastError') {
+            return res.status(400).json({ success: false, message: 'Invalid post ID format' });
+        }
         res.status(500).json({ success: false, message: 'Server Error' });
     }
 };
@@ -51,9 +70,10 @@ exports.likePost = async (req, res) => {
 
         const userId = req.user.id;
         const postAuthorId = post.user._id.toString();
+        const wasLiked = post.likes.includes(userId);
 
         // Check if the post has already been liked by this user
-        if (post.likes.includes(userId)) {
+        if (wasLiked) {
             // Unlike the post - no notification needed for unliking
             post.likes.pull(userId);
         } else {
@@ -72,6 +92,17 @@ exports.likePost = async (req, res) => {
         }
 
         await post.save();
+
+        // Emit real-time update to all connected clients
+        if (req.io) {
+            const eventName = wasLiked ? 'post_unliked' : 'post_liked';
+            req.io.emit(eventName, {
+                postId: post._id,
+                likes: post.likes,
+                userId: userId
+            });
+        }
+
         res.status(200).json({ success: true, data: post.likes });
     } catch (error) {
         console.error("Error liking post:", error);
@@ -125,6 +156,11 @@ exports.deletePost = async (req, res) => {
         if (post.user.toString() !== req.user.id && req.user.role !== 'admin') {
             return res.status(401).json({ success: false, message: 'Not authorized to delete this post' });
         }
+        
+        // Clean up notifications related to this post
+        const Notification = require('../models/Notification');
+        await Notification.deleteMany({ post: post._id });
+        
         await post.deleteOne();
         res.status(200).json({ success: true, message: 'Post deleted successfully' });
     } catch (error) {

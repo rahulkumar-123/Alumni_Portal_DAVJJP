@@ -1,0 +1,259 @@
+{
+    "heroSection": {
+        "title": "About Alumni Portal",
+        "subtitle": "Connecting Alumni, Building Networks, Creating Opportunities",
+        "description": "A comprehensive platform designed to strengthen the bond between our institution and its alumni, fostering lifelong connections and professional growth.",
+        "stats": [
+            {
+                "label": "Active Alumni",
+                "value": "140+",
+                "icon": "users"
+            },
+            {
+                "label": "Success Stories",
+                "value": "100+",
+                "icon": "trophy"
+            },
+            {
+                "label": "Events Hosted",
+                "value": "10+",
+                "icon": "calendar"
+            },
+            {
+                "label": "Years of Excellence",
+                "value": "20+",
+                "icon": "star"
+            }
+        ]
+    },
+    "aboutProject": {
+        "title": "About the Project",
+        "description": "The Alumni Portal is a modern, comprehensive platform designed to bridge the gap between our institution and its distinguished alumni community. This project aims to create a vibrant ecosystem where former students can reconnect, share experiences, and contribute to the growth of current students.",
+        "features": [
+            {
+                "title": "Alumni Directory",
+                "description": "Comprehensive search and filter system to find and connect with fellow alumni",
+                "icon": "users"
+            },
+            {
+                "title": "Interactive Dashboard",
+                "description": "Personalized dashboard with news, events, and networking opportunities",
+                "icon": "chart"
+            },
+            {
+                "title": "Real-time Communication",
+                "description": "Chat system and notifications to keep the community connected",
+                "icon": "message"
+            },
+            {
+                "title": "Career Opportunities",
+                "description": "Job postings and mentorship programs for career advancement",
+                "icon": "briefcase"
+            },
+            {
+                "title": "Success Stories",
+                "description": "Platform to share achievements and inspire fellow alumni",
+                "icon": "trophy"
+            }
+        ],
+        "technologies": [
+            {
+                "name": "React",
+                "description": "Modern frontend framework",
+                "color": "#61DAFB"
+            },
+            {
+                "name": "Node.js",
+                "description": "Backend runtime environment",
+                "color": "#339933"
+            },
+            {
+                "name": "MongoDB",
+                "description": "NoSQL database",
+                "color": "#47A248"
+            },
+            {
+                "name": "Socket.io",
+                "description": "Real-time communication",
+                "color": "#010101"
+            },
+            {
+                "name": "Tailwind CSS",
+                "description": "Utility-first CSS framework",
+                "color": "#06B6D4"
+            },
+            {
+                "name": "Framer Motion",
+                "description": "Animation library",
+                "color": "#FF0080"
+            }
+        ]
+    },
+"aboutInstitution": {
+  "title": "M.N. Jha DAV Public School, Jhanjharpur",
+  "fullName": "M.N. Jha DAV Public School, Behat, Jhanjharpur",
+  "description": "M.N. Jha DAV Public School, located in Behat, Jhanjharpur (Madhubani), Bihar, is a premier co-educational CBSE-affiliated school. Established in 2003 and managed by DAV College Trust and Management Society, the school is known for blending modern education with traditional Vedic values.",
+  "history": "Founded on July 1, 2003, the school was established to provide quality education in the region under the DAV College Managing Committee, New Delhi. It upholds the ideals of Maharishi Dayanand Saraswati and follows the principles of Arya Samaj. From modest beginnings, it has grown into one of the most respected schools in North Bihar.",
+  "vision": "To develop responsible citizens with a strong sense of ethics, academic brilliance, and a global outlook through value-based education.",
+  "mission": "To provide a nurturing and inclusive environment where students are encouraged to think critically, act with integrity, and grow into lifelong learners and responsible citizens.",
+  "values": [
+    {
+      "title": "Excellence",
+      "description": "Pursuing the highest standards in academics and personal conduct"
+    },
+    {
+      "title": "Discipline",
+      "description": "Cultivating a structured and focused learning atmosphere"
+    },
+    {
+      "title": "Integrity",
+      "description": "Upholding truthfulness and moral values in every action"
+    },
+    {
+      "title": "Respect",
+      "description": "Encouraging mutual respect among students, teachers, and society"
+    },
+    {
+      "title": "Service",
+      "description": "Contributing positively to the community and nation-building"
+    }
+  ],
+  "achievements": [
+    "Affiliated to CBSE (Affiliation No. 330269), valid till 2027",
+    "Excellent performance in CBSE Class X & XII board exams with 95%+ pass rate",
+    "Well-equipped science, computer, and mathematics laboratories",
+    "Participation and accolades in inter-school competitions (sports, debates, quizzes)",
+    "Strong focus on holistic development, including yoga, art, and moral education"
+  ]
+},
+    "aboutDevelopers": {
+        "title": "Meet the Development Team",
+        "description": "This alumni portal is crafted with passion and dedication by a team of talented developers who believe in the power of technology to connect people and create meaningful experiences.",
+        "team": [
+            {
+                "name": "Rauhl kumar",
+                "role": "Lead Developer",
+                "description": "Man behind the project, specializing in full-stack development, UI/UX design, and the createion of innovative web applications which we are using here.",
+                "expertise": [
+                    "React",
+                    "Node.js",
+                    "UI/UX Design",
+                    "Full-Stack Development",
+                    "AI/ML Integration"
+                ],
+                "avatar": "https://picsum.photos/id/236/200/300",
+                "social": {
+                    "github": "https://github.com/rahulkumar-123/",
+                    "linkedin": "https://www.linkedin.com/in/rahul-kumar-690370202/",
+                    "instagram": "https://www.instagram.com/rahulkmr_123/",
+                    "website": "https://rahulkumar-123.github.io/"
+                },
+                "quote": "one man army behind this project."
+            },
+            {
+                "name": "Raajesh Jha",
+                "role": "Full Stack Developer",
+                "description": "UI/UX design, database management, and API integration, ensuring the portal runs smoothly and efficiently.",
+                "expertise": [
+                    "Node.js",
+                    "Express",
+                    "MongoDB",
+                    "API Development",
+                    "Server Management"
+                ],
+                "avatar": "https://picsum.photos/id/238/200/300",
+                "social": {
+                    "github": "https://github.com/Rajs2001",
+                    "linkedin": "#",
+                    "instagram": "#",
+                    "website": "https://Rajs2001.github.io/"
+                },
+                "quote": "Ensuring the portal runs smoothly and efficiently."
+            }
+        ],
+        "technologies": {
+            "frontend": [
+                "React",
+                "Tailwind CSS",
+                "Framer Motion",
+                "Heroicons"
+            ],
+            "backend": [
+                "Node.js",
+                "Express",
+                "MongoDB",
+                "Socket.io"
+            ],
+            "tools": [
+                "VS Code",
+                "Git",
+                "Postman"
+            ],
+            "deployment": [
+                "Vercel",
+                "MongoDB Atlas",
+                "Cloudinary"
+            ]
+        },
+        "developmentProcess": [
+            {
+                "phase": "Planning & Design",
+                "description": "Comprehensive requirement analysis and UI/UX design",
+                "duration": "2 weeks"
+            },
+            {
+                "phase": "Frontend Development",
+                "description": "Building responsive and interactive user interfaces",
+                "duration": "4 weeks"
+            },
+            {
+                "phase": "Backend Development",
+                "description": "Creating robust APIs and database architecture",
+                "duration": "3 weeks"
+            },
+            {
+                "phase": "Integration & Testing",
+                "description": "Connecting all components and thorough testing",
+                "duration": "2 weeks"
+            },
+            {
+                "phase": "Deployment & Launch",
+                "description": "Production deployment and launch preparations",
+                "duration": "1 week"
+            }
+        ]
+    },
+    "testimonials": [
+        {
+            "name": "Dr. Rahul Kumar",
+            "role": "Principal, DAV Public School JJP",
+            "message": "This alumni portal has revolutionized how we connect with our former students. It's a testament to modern technology serving educational excellence.",
+            "avatar": "https://picsum.photos/id/238/200/300"
+        },
+        {
+            "name": "Priya Sharma",
+            "role": "Alumni Relations Officer",
+            "message": "The platform has made alumni engagement seamless and effective. We've seen a 300% increase in alumni participation since its launch.",
+            "avatar": "https://picsum.photos/id/239/200/300"
+        },
+        {
+            "name": "Amit Singh",
+            "role": "Alumni (Batch 2015)",
+            "message": "Finally, a platform that keeps me connected with my alma mater and fellow alumni. The user experience is exceptional!",
+            "avatar": "https://picsum.photos/id/240/200/300"
+        }
+    ],
+    "contactInfo": {
+        "title": "Get in Touch",
+        "description": "Have questions about the portal or want to contribute? We'd love to hear from you!",
+        "email": "mnjhadavalumni@gmail.com",
+        "phone": "+91-181-2222222",
+        "address": "DAV Public School, Jhanjharpur, Bihar, India - 847403",
+        "socialMedia": {
+            "facebook": "https://facebook.com/davjhanjharpur",
+            "twitter": "https://twitter.com/davjhanjharpur",
+            "linkedin": "https://linkedin.com/school/davjhanjharpur",
+            "instagram": "https://instagram.com/davjhanjharpur"
+        }
+    }
+}
