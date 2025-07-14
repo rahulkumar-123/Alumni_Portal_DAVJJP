@@ -749,7 +749,7 @@ export default function AboutDeveloper() {
                 >
                   {/* Background animation elements */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-purple-50/50 to-pink-50/50 opacity-0"
+                    className="absolute inset-0 bg-gradient-to-br  via-purple-50/50 to-pink-50/50 opacity-0"
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.3 + 0.5, duration: 1 }}
@@ -782,15 +782,15 @@ export default function AboutDeveloper() {
                       }}
                     />
                   </motion.div>
-
-                  <motion.h3
+             
+<motion.h3
                     className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-blue-600 transition-colors"
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.3 + 0.5, duration: 0.5 }}
-                  >
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: index * 0.3 + 0.5, duration: 0.5 }}
+>
                     {member.name}
-                  </motion.h3>
+</motion.h3>
                   
                   <motion.p
                     className="text-blue-600 font-semibold mb-3 sm:mb-4 text-sm sm:text-base"
@@ -839,51 +839,51 @@ export default function AboutDeveloper() {
                       transition={{ delay: index * 0.3 + 0.8, duration: 0.5 }}
                     >
                       {member.social.github && member.social.github !== "" && (
-                        <motion.a
-                          href={member.social.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center w-10 h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-full transition-colors duration-300"
+                       <motion.a
+                       href={member.social.github}
+                       target="_blank"
+                         rel="noopener noreferrer"
+                        className="flex items-center justify-center w-10 h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-full transition-colors duration-300"
                           custom={0}
                           variants={socialVariants}
                           initial="hidden"
                           animate="visible"
-                          whileHover={{ 
-                            scale: 1.2, 
-                            y: -4,
+                         whileHover={{ 
+                         scale: 1.2, 
+                           y: -4,
                             rotate: 5,
                             boxShadow: "0 8px 20px rgba(0,0,0,0.3)" 
-                          }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          {getSocialIcon("github", "w-5 h-5")}
-                        </motion.a>
+                              }}
+                               whileTap={{ scale: 0.9 }}
+                         >
+                         {getSocialIcon("github", "w-5 h-5")}
+                       </motion.a>
                       )}
                       {member.social.linkedin &&
                         member.social.linkedin !== "#" && (
-                          <motion.a
-                            href={member.social.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors duration-300"
+                           <motion.a
+                           href={member.social.linkedin}
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           className="flex items-center justify-center w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors duration-300"
                             custom={1}
                             variants={socialVariants}
                             initial="hidden"
                             animate="visible"
                             whileHover={{ 
-                              scale: 1.2, 
-                              y: -4,
-                              rotate: -5,
-                              boxShadow: "0 8px 20px rgba(59, 130, 246, 0.4)" 
-                            }}
+                            scale: 1.2, 
+                                 y: -4,
+                            rotate: -5,
+                             boxShadow: "0 8px 20px rgba(59, 130, 246, 0.4)" 
+                              }}
                             whileTap={{ scale: 0.9 }}
-                          >
-                            {getSocialIcon("linkedin", "w-5 h-5")}
-                          </motion.a>
+                              >
+                             {getSocialIcon("linkedin", "w-5 h-5")}
+                           </motion.a>
                         )}
                       {member.social.website &&
                         member.social.website !== "#" && (
-                          <motion.a
+                           <motion.a
                             href={member.social.website}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -892,16 +892,16 @@ export default function AboutDeveloper() {
                             variants={socialVariants}
                             initial="hidden"
                             animate="visible"
-                            whileHover={{ 
+                              whileHover={{ 
                               scale: 1.2, 
                               y: -4,
                               rotate: 5,
                               boxShadow: "0 8px 20px rgba(168, 85, 247, 0.4)" 
-                            }}
-                            whileTap={{ scale: 0.9 }}
-                          >
-                            {getSocialIcon("website", "w-5 h-5")}
-                          </motion.a>
+                               }}
+                              whileTap={{ scale: 0.9 }}
+                             >
+                             {getSocialIcon("website", "w-5 h-5")}
+                                </motion.a>
                         )}
                     </motion.div>
                   )}
