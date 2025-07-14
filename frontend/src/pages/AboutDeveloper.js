@@ -1118,7 +1118,7 @@ export default function AboutDeveloper() {
                 whileHover={{ scale: 1.05 }}
               >
                 <MapPinIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-                <span className="text-sm sm:text-base">Jalandhar, Punjab</span>
+                <span className="text-sm sm:text-base">Jhanjharpur, Bihar</span>
               </motion.div>
             </div>
 
