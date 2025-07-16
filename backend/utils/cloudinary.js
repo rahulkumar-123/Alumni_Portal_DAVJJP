@@ -11,6 +11,11 @@ const uploadToCloudinary = async (file) => {
       use_filename: true,
       unique_filename: true,
       overwrite: true,
+      width: 512, // Resize to max 512px width
+      height: 512, // Resize to max 512px height
+      crop: "limit", // Do not upscale, keep aspect ratio
+      quality: "auto:good", // Let Cloudinary choose good compression
+      fetch_format: "auto" 
     });
     
     if (fs.existsSync(filePath)) {
