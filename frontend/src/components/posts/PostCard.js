@@ -192,7 +192,7 @@ export default function PostCard({ post, refreshFeed }) {
           </h3>
 
           {/* Content */}
-          <div className="text-sm sm:text-base text-muted leading-relaxed">
+          <div className="text-sm sm:text-base text-muted leading-relaxed whitespace-pre-wrap">
             <Linkify
               componentDecorator={(href, text, key) => (
                 <a
