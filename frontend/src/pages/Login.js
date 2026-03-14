@@ -33,32 +33,44 @@ export default function Login() {
 
     return (
         <>
-            <div className="flex items-center justify-center py-8 sm:py-12 px-3 sm:px-4">
-                <div className="max-w-md w-full space-y-6 sm:space-y-8 p-6 sm:p-8 lg:p-10 bg-surface rounded-xl shadow-lg">
-                    {/* ... Login form header ... */}
-                    <div>
-                        <h2 className="mt-4 sm:mt-6 text-center text-2xl sm:text-3xl font-extrabold text-on-surface">Sign in to your account</h2>
-                        <p className="mt-2 text-center text-sm text-muted">Or{' '}<Link to="/register" className="font-medium text-primary hover:text-primary-dark">register for a new account</Link></p>
+            <div className="flex items-center justify-center py-12 sm:py-20 px-3 sm:px-4 min-h-[80vh]">
+                <div className="max-w-md w-full space-y-6 sm:space-y-8 p-6 sm:p-8 lg:p-10 bg-surface border border-white/5 rounded-2xl shadow-2xl relative">
+                    {/* Decorative glow */}
+                    <div className="absolute -top-24 -left-24 w-48 h-48 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <div className="relative z-10">
+                        <h2 className="mt-2 text-center text-3xl sm:text-4xl font-extrabold text-white" style={{ fontFamily: "'Fraunces', serif" }}>
+                            Welcome back.
+                        </h2>
+                        <p className="mt-3 text-center text-sm text-muted">
+                            New here?{' '}
+                            <Link to="/register" className="font-medium text-primary hover:text-[#ffc14a] transition-colors">
+                                Create an account
+                            </Link>
+                        </p>
                     </div>
-                    <form className="mt-6 sm:mt-8 space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
-                        {/* ... email and password inputs ... */}
-                        <input name="email" type="email" placeholder="Email Address" required value={formData.email} onChange={handleChange} className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base" />
-                        <input name="password" type="password" placeholder="Password" required value={formData.password} onChange={handleChange} className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base" />
+                    <form className="mt-8 space-y-5 relative z-10" onSubmit={handleSubmit}>
+                        <div>
+                            <input name="email" type="email" placeholder="Email Address" required value={formData.email} onChange={handleChange} className="w-full px-4 py-3 border border-white/10 rounded-lg bg-white/5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all sm:text-sm" />
+                        </div>
+                        <div>
+                            <input name="password" type="password" placeholder="Password" required value={formData.password} onChange={handleChange} className="w-full px-4 py-3 border border-white/10 rounded-lg bg-white/5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all sm:text-sm" />
+                        </div>
                         <div className="flex items-center justify-end">
                             <div className="text-sm">
-                                <button type="button" onClick={() => setForgotModalOpen(true)} className="font-medium text-primary hover:text-primary-dark">
+                                <button type="button" onClick={() => setForgotModalOpen(true)} className="font-medium text-muted hover:text-white transition-colors">
                                     Forgot your password?
                                 </button>
                             </div>
                         </div>
-                        <div>
+                        <div className="pt-2">
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className={`w-full py-2.5 sm:py-3 px-4 rounded-md text-white text-sm font-medium transition duration-150 ease-in-out
-      ${loading ? 'bg-primary/70 cursor-not-allowed' : 'bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary'}`}
+                                className={`w-full py-3 px-4 rounded-full text-black text-sm font-semibold shadow-lg transition duration-200 ease-in-out transform hover:-translate-y-0.5
+      ${loading ? 'bg-primary/70 cursor-not-allowed' : 'bg-primary hover:bg-[#ffc14a] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface'}`}
                             >
-                                {loading ? 'Signing in...' : 'Sign in'}
+                                {loading ? 'Signing in...' : 'Sign In ↗'}
                             </button>
                         </div>
 

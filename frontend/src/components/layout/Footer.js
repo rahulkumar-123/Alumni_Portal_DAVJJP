@@ -34,7 +34,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#111827] text-gray-400">
+    <footer className="bg-background border-t border-white/5 text-muted mt-auto">
       <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8 relative">
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
           <div className="text-sm">
@@ -51,7 +51,7 @@ export default function Footer() {
 
           <div className="flex items-center gap-4 mt-4 md:mt-0">
             {/* <p className="text-sm"> */}
-              <Link to="/about" className="font-semibold text-white underline">Meet our Developers</Link>
+              <Link to="/about" className="text-sm hover:text-white transition-colors">Meet our Developers</Link>
             {/* </p> */}
             {/* <a href="https://www.linkedin.com/in/rahul-kumar-690370202/" target="_blank" rel="noopener noreferrer" className="group" aria-label="LinkedIn">
                             <LinkedInIcon />
@@ -63,7 +63,7 @@ export default function Footer() {
         </div>
         <button
           onClick={scrollToTop}
-          className="absolute -top-5 right-8 bg-secondary text-primary rounded-full p-3 shadow-lg hover:bg-opacity-80 transition transform hover:-translate-y-1"
+          className="absolute -top-5 right-8 bg-surface border border-white/10 text-muted rounded-full p-2.5 shadow-lg hover:text-white hover:border-white/20 hover:bg-white/5 transition-all transform hover:-translate-y-1"
           aria-label="Back to top"
         >
           <ArrowUpIcon className="w-5 h-5" />

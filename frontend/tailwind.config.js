@@ -9,15 +9,15 @@ module.exports = {
             },
             colors: {
                 'primary': {
-                    light: '#A066CB',
-                    DEFAULT: '#8344AD',
-                    dark: '#5F307E',
+                    light: '#ffc14a',
+                    DEFAULT: '#f5a623', // amber
+                    dark: '#c47d0e',
                 },
-                'secondary': '#4ADAD2',
-                'background': '#F4F7FE',
-                'surface': '#FFFFFF',
-                'on-surface': '#1a202c',
-                'muted': '#718096',
+                'secondary': '#ff6b1a', // saffron
+                'background': '#080808', // deep black
+                'surface': '#111419', // dark card
+                'on-surface': '#f2ede8', // off-white text
+                'muted': 'rgba(242,237,232,0.55)',
             }
         },
     },

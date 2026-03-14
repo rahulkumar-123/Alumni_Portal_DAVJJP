@@ -78,20 +78,21 @@ export default function Navbar() {
               <div className="flex items-center">
                 <Link
                   to="/"
-                  className="text-lg sm:text-xl lg:text-2xl font-extrabold text-primary flex items-center shrink-0"
+                  className="text-lg sm:text-xl lg:text-2xl font-extrabold text-white flex items-center shrink-0"
+                  style={{ fontFamily: "'Fraunces', serif" }}
                 >
-                  <SparklesIcon className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-secondary" />
+                  <SparklesIcon className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-primary" />
                   <span className="hidden sm:block">MNJ DAV Alumni</span>
                   <span className="sm:hidden">MNJ DAV</span>
                 </Link>
-                <div className="hidden md:ml-6 md:flex md:space-x-4 lg:space-x-6">
+                <div className="hidden md:ml-8 md:flex md:space-x-2 lg:space-x-4">
                   {navigation.map((item) =>
                     item.onClick ? (
                       <a
                         key={item.name}
                         href={item.href}
                         onClick={(e) => item.onClick(e, item.href)}
-                        className="border-transparent text-muted hover:text-on-surface hover:border-gray-300 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-semibold transition-colors whitespace-nowrap"
+                        className="text-muted hover:text-white hover:bg-white/5 inline-flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap"
                       >
                         {item.name}
                       </a>
@@ -102,9 +103,9 @@ export default function Navbar() {
                         className={({ isActive }) =>
                           classNames(
                             isActive
-                              ? "border-primary text-on-surface"
-                              : "border-transparent text-muted hover:text-on-surface hover:border-gray-300",
-                            "inline-flex items-center border-b-2 px-1 pt-1 text-sm font-semibold transition-colors whitespace-nowrap"
+                              ? "bg-primary/10 text-primary"
+                              : "text-muted hover:text-white hover:bg-white/5",
+                            "inline-flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap"
                           )
                         }
                       >
@@ -127,7 +128,7 @@ export default function Navbar() {
                         onClick={() =>
                           setNotificationsOpen(!isNotificationsOpen)
                         }
-                        className="p-2 rounded-full text-muted hover:text-on-surface hover:bg-gray-100 transition-colors relative"
+                        className="p-2 rounded-full text-muted hover:text-on-surface hover:bg-white/5 transition-colors relative"
                       >
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -177,7 +178,7 @@ export default function Navbar() {
                               <Link
                                 to="/profile"
                                 className={classNames(
-                                  active ? "bg-gray-100" : "",
+                                  active ? "bg-white/5 text-white" : "text-muted hover:text-white",
                                   "block px-4 py-2 text-sm text-muted hover:text-on-surface"
                                 )}
                               >
@@ -190,7 +191,7 @@ export default function Navbar() {
                               <button
                                 onClick={handleLogout}
                                 className={classNames(
-                                  active ? "bg-gray-100" : "",
+                                  active ? "bg-white/5 text-white" : "text-muted hover:text-white",
                                   "block w-full text-left px-4 py-2 text-sm text-muted hover:text-on-surface"
                                 )}
                               >
@@ -208,7 +209,7 @@ export default function Navbar() {
                         onClick={() =>
                           setNotificationsOpen(!isNotificationsOpen)
                         }
-                        className="p-2 rounded-full text-muted hover:text-on-surface hover:bg-gray-100 transition-colors"
+                        className="p-2 rounded-full text-muted hover:text-on-surface hover:bg-white/5 transition-colors"
                       >
                         <BellIcon className="h-6 w-6" />
                         {unreadCount > 0 && (
@@ -228,7 +229,7 @@ export default function Navbar() {
                         onClick={() =>
                           setNotificationsOpen(!isNotificationsOpen)
                         }
-                        className="p-2 rounded-full text-muted hover:text-on-surface hover:bg-gray-100 transition-colors relative"
+                        className="p-2 rounded-full text-muted hover:text-on-surface hover:bg-white/5 transition-colors relative"
                       >
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-5 w-5" />
@@ -278,7 +279,7 @@ export default function Navbar() {
                               <Link
                                 to="/profile"
                                 className={classNames(
-                                  active ? "bg-gray-100" : "",
+                                  active ? "bg-white/5 text-white" : "text-muted hover:text-white",
                                   "block px-4 py-2 text-sm text-muted hover:text-on-surface"
                                 )}
                               >
@@ -291,7 +292,7 @@ export default function Navbar() {
                               <button
                                 onClick={handleLogout}
                                 className={classNames(
-                                  active ? "bg-gray-100" : "",
+                                  active ? "bg-white/5 text-white" : "text-muted hover:text-white",
                                   "block w-full text-left px-4 py-2 text-sm text-muted hover:text-on-surface"
                                 )}
                               >
@@ -306,16 +307,16 @@ export default function Navbar() {
                 ) : (
                   <>
                     {/* Desktop Auth Buttons */}
-                    <div className="hidden sm:flex items-center space-x-2">
+                    <div className="hidden sm:flex items-center space-x-3">
                       <Link
                         to="/login"
-                        className="text-sm font-semibold text-muted hover:text-primary transition-colors px-3 py-2 rounded-md hover:bg-gray-100"
+                        className="text-sm font-medium text-muted hover:text-white transition-colors px-4 py-2 rounded-full hover:bg-white/5 border border-transparent hover:border-white/10"
                       >
                         Sign In
                       </Link>
                       <Link
                         to="/register"
-                        className="inline-flex items-center rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white shadow-md hover:bg-primary-dark transition-colors"
+                        className="inline-flex items-center rounded-full bg-primary px-5 py-2 text-sm font-medium text-black shadow-md hover:bg-[#ffc14a] transition-all hover:-translate-y-0.5"
                       >
                         Register
                       </Link>
@@ -325,7 +326,7 @@ export default function Navbar() {
 
                 {/* Mobile Menu Button */}
                 <div className="flex items-center md:hidden">
-                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-surface p-2 text-muted hover:bg-gray-100 hover:text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors">
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-transparent p-2 text-muted hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface transition-colors">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -354,7 +355,7 @@ export default function Navbar() {
                         item.onClick(e, item.href);
                         close();
                       }}
-                      className="block rounded-md py-3 px-3 text-base font-medium text-muted hover:bg-gray-100 hover:text-on-surface transition-colors"
+                      className="block rounded-md py-3 px-3 text-base font-medium text-muted hover:bg-white/5 hover:text-white transition-colors"
                     >
                       {item.name}
                     </a>
@@ -366,7 +367,7 @@ export default function Navbar() {
                         classNames(
                           isActive
                             ? "bg-primary/10 text-primary border-l-4 border-primary"
-                            : "text-muted hover:bg-gray-100 hover:text-on-surface",
+                            : "text-muted hover:bg-white/5 hover:text-white",
                           "block rounded-md py-3 px-3 text-base font-medium transition-colors"
                         )
                       }
@@ -378,25 +379,25 @@ export default function Navbar() {
               ))}
             </div>
 
-            <div className="border-t border-gray-200 pt-4 pb-3">
+            <div className="border-t border-white/10 pt-4 pb-3">
               {user ? (
                 <div className="px-4 space-y-1">
                   {/* User Info Section */}
-                  <div className="flex items-center justify-between px-3 py-2 mb-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center justify-between px-3 py-2 mb-3 bg-white/5 rounded-lg border border-white/5">
                     <div className="flex items-center min-w-0 flex-1">
                       <img
-                        className="h-10 w-10 rounded-full object-cover flex-shrink-0"
+                        className="h-10 w-10 rounded-full object-cover flex-shrink-0 border border-white/10"
                         src={
                           user.profilePicture?.startsWith("http")
                             ? user.profilePicture
                             : user.profilePicture !== "no-photo.jpg"
                             ? `${API_URL}${user.profilePicture}`
-                            : `https://ui-avatars.com/api/?name=${user.fullName}&background=8344AD&color=fff`
+                            : `https://ui-avatars.com/api/?name=${user.fullName}&background=f5a623&color=000`
                         }
                         alt={user.fullName}
                       />
                       <div className="ml-3 min-w-0 flex-1">
-                        <div className="text-base font-medium text-on-surface truncate">
+                        <div className="text-base font-medium text-white truncate">
                           {user.fullName}
                         </div>
                         <div className="text-sm font-medium text-muted truncate">
@@ -410,7 +411,7 @@ export default function Navbar() {
                   <Link
                     to="/profile"
                     onClick={close}
-                    className="flex items-center w-full rounded-md py-3 px-3 text-base font-medium text-muted hover:bg-gray-100 hover:text-on-surface transition-colors"
+                    className="flex items-center w-full rounded-md py-3 px-3 text-base font-medium text-muted hover:bg-white/5 hover:text-white transition-colors"
                   >
                     <svg
                       className="w-5 h-5 mr-3"
@@ -432,7 +433,7 @@ export default function Navbar() {
                   <Link
                     to="/notifications"
                     onClick={close}
-                    className="flex items-center w-full rounded-md py-3 px-3 text-base font-medium text-muted hover:bg-gray-100 hover:text-on-surface transition-colors"
+                    className="flex items-center w-full rounded-md py-3 px-3 text-base font-medium text-muted hover:bg-white/5 hover:text-white transition-colors"
                   >
                     <BellIcon className="w-5 h-5 mr-3" />
                     Notifications
@@ -446,7 +447,7 @@ export default function Navbar() {
                   {/* Logout Button */}
                   <button
                     onClick={handleLogout}
-                    className="flex items-center w-full rounded-md py-3 px-3 text-base font-medium text-muted hover:bg-gray-100 hover:text-on-surface transition-colors"
+                    className="flex items-center w-full rounded-md py-3 px-3 text-base font-medium text-muted hover:bg-white/5 hover:text-white transition-colors"
                   >
                     <svg
                       className="w-5 h-5 mr-3"
@@ -465,18 +466,18 @@ export default function Navbar() {
                   </button>
                 </div>
               ) : (
-                <div className="space-y-2 px-4">
+                <div className="space-y-3 px-4 pt-4">
                   <Link
                     to="/login"
                     onClick={close}
-                    className="flex items-center justify-center w-full rounded-md py-3 px-3 text-base font-medium text-muted hover:bg-gray-100 hover:text-on-surface transition-colors border border-gray-300"
+                    className="flex items-center justify-center w-full rounded-full py-3 px-3 text-base font-medium text-white bg-white/5 hover:bg-white/10 transition-colors border border-white/10"
                   >
                     Sign In
                   </Link>
                   <Link
                     to="/register"
                     onClick={close}
-                    className="flex items-center justify-center w-full rounded-lg bg-primary py-3 px-3 text-base font-semibold text-white shadow-md hover:bg-primary-dark transition-colors"
+                    className="flex items-center justify-center w-full rounded-full bg-primary py-3 px-3 text-base font-semibold text-black shadow-md hover:bg-[#ffc14a] transition-all"
                   >
                     Register
                   </Link>
@@ -484,6 +485,8 @@ export default function Navbar() {
               )}
             </div>
           </Disclosure.Panel>
+          {/* subtle border line at the bottom of navbar for separation */}
+          <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent absolute bottom-0"></div>
         </>
       )}
     </Disclosure>
