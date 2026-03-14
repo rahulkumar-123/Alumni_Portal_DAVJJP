@@ -114,23 +114,26 @@ export default function Register() {
     };
 
     const getInputClassName = (fieldName) => {
-        const baseClasses = "w-full px-4 py-3 border rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary";
-        return `${baseClasses} ${errors[fieldName] ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'}`;
+        const baseClasses = "w-full px-4 py-3 border rounded-lg bg-white/5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all sm:text-sm";
+        return `${baseClasses} ${errors[fieldName] ? 'border-red-500 focus:ring-red-500' : 'border-white/10'}`;
     };
 
     return (
-        <div className="flex items-center justify-center py-8 sm:py-12 px-3 sm:px-4 lg:px-8">
-            <div className="max-w-md w-full space-y-6 sm:space-y-8 p-6 sm:p-8 lg:p-10 bg-surface rounded-xl shadow-lg">
-                <div>
-                    <h2 className="mt-4 sm:mt-6 text-center text-2xl sm:text-3xl font-extrabold text-on-surface">Create Your Alumni Account</h2>
-                    <p className="mt-2 text-center text-sm text-muted">
+        <div className="flex items-center justify-center py-12 sm:py-20 px-3 sm:px-4 lg:px-8 min-h-[80vh]">
+            <div className="max-w-md w-full space-y-6 sm:space-y-8 p-6 sm:p-8 lg:p-10 bg-surface border border-white/5 rounded-2xl shadow-2xl relative">
+                {/* Decorative glow */}
+                <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div className="relative z-10">
+                    <h2 className="mt-2 text-center text-3xl sm:text-4xl font-extrabold text-white" style={{ fontFamily: "'Fraunces', serif" }}>Join the Legacy.</h2>
+                    <p className="mt-3 text-center text-sm text-muted">
                         Already a member?{' '}
-                        <Link to="/login" className="font-medium text-primary hover:text-primary-dark transition-colors">
+                        <Link to="/login" className="font-medium text-primary hover:text-[#ffc14a] transition-colors">
                             Sign in
                         </Link>
                     </p>
                 </div>
-                <form className="mt-6 sm:mt-8 space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
+                <form className="mt-8 space-y-5 relative z-10" onSubmit={handleSubmit}>
                     <div>
                         <input 
                             name="fullName" 
@@ -200,15 +203,15 @@ export default function Register() {
                         {errors.dateOfBirth && <p className="mt-1 text-sm text-red-600">{errors.dateOfBirth}</p>}
                     </div>
                     
-                    <div>
+                    <div className="pt-2">
                         <button
                             type="submit"
                             disabled={loading}
-                            className={`w-full py-2.5 sm:py-3 px-4 rounded-md text-white text-sm font-medium transition duration-150 ease-in-out ${
-                                loading ? 'bg-primary/70 cursor-not-allowed' : 'bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary'
+                            className={`w-full py-3 px-4 rounded-full text-black text-sm font-semibold shadow-lg transition duration-200 ease-in-out transform hover:-translate-y-0.5 ${
+                                loading ? 'bg-primary/70 cursor-not-allowed' : 'bg-primary hover:bg-[#ffc14a] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface'
                             }`}
                         >
-                            {loading ? 'Creating account...' : 'Create Account'}
+                            {loading ? 'Creating account...' : 'Create Account ↗'}
                         </button>
                     </div>
                 </form>

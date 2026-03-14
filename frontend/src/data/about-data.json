@@ -225,22 +225,34 @@
     },
     "testimonials": [
         {
-            "name": "Dr. Pranav Kumar",
-            "role": "Principal, DAV Public School JJP",
+            "name": "Rahul Kumar",
+            "role": "Alumni (Batch 2019)",
             "message": "This alumni portal has revolutionized how we connect with our former students. It's a testament to modern technology serving educational excellence.",
             "avatar": "https://picsum.photos/id/238/200/300"
         },
         {
-            "name": "Chaman Jha",
-            "role": "Alumni Relations Officer",
-            "message": "The platform has made alumni engagement seamless and effective. We've seen a 300% increase in alumni participation since its launch.",
+            "name": "Rohan Jha",
+            "role": "Alumni (Batch 2019)",
+            "message": "The platform has made alumni engagement seamless and effective. We've seen a massive increase in alumni participation since its launch.",
             "avatar": "https://picsum.photos/id/239/200/300"
         },
         {
-            "name": "Rohan Jha",
+            "name": "Raajesh Kumar",
             "role": "Alumni (Batch 2019)",
-            "message": "Finally, a platform that keeps me connected with my alma mater and fellow alumni. The user experience is exceptional!",
+            "message": "Finally, a platform that keeps me connected with my alma mater and fellow alumni. The user experience is exceptional, and the networking is top-tier!",
             "avatar": "https://picsum.photos/id/240/200/300"
+        },
+        {
+            "name": "Deepa",
+            "role": "Alumni (Batch 2020)",
+            "message": "I was able to find incredible mentorship through this portal. It's amazing to see how willing our seniors are to help out the newer batches.",
+            "avatar": "https://picsum.photos/id/64/200/300"
+        },
+        {
+            "name": "Nikunj",
+            "role": "Alumni (Batch 2016)",
+            "message": "Reconnecting with old classmates has never been easier. Outstanding initiative by the developers and the school administration.",
+            "avatar": "https://picsum.photos/id/338/200/300"
         }
     ],
     "contactInfo": {

@@ -2,9 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 const alumni = [
-    { name: 'Rahul Jha', batch: '2022', role: 'NIT Patna', initial: 'R', color: '#f5a623', quote: 'The teachers here didn\'t just teach — they pushed us to think. The foundation I got at DAV shaped everything that followed.' },
-    { name: 'Priya Singh', batch: '2021', role: 'MBA, Delhi', initial: 'P', color: '#ff6b1a', quote: 'Cultural fest was my first stage. That confidence never left me. Now I present in boardrooms — but the training started right here.' },
-    { name: 'Amit Kumar', batch: '2023', role: 'UPSC Aspirant', initial: 'A', color: '#3dffa0', quote: 'Small town school, big results. The discipline and the faculty made me who I am today. Proud DAVian forever.' },
+    { name: 'Rahul Kumar', batch: '2019', role: 'Lead Developer', initial: 'R', color: '#f5a623', quote: 'Building this network has been a journey. The foundation I got at DAV shaped everything that followed.' },
+    { name: 'Rohan Jha', batch: '2019', role: 'Alumni', initial: 'R', color: '#ff6b1a', quote: 'The platform has made alumni engagement seamless and effective. Proud DAVian forever.' },
+    { name: 'Raajesh Kumar', batch: '2019', role: 'Full Stack Dev', initial: 'R', color: '#3dffa0', quote: 'Finally, a platform that keeps me connected with my alma mater and fellow alumni. The user experience is exceptional!' },
+    { name: 'Deepa', batch: '2020', role: 'Alumni', initial: 'D', color: '#8344AD', quote: 'I was able to find incredible mentorship through this portal. Amazing to see seniors helping newer batches.' },
+    { name: 'Nikunj', batch: '2016', role: 'Alumni', initial: 'N', color: '#4ADAD2', quote: 'Reconnecting with old classmates has never been easier. Outstanding initiative by the school.' },
 ];
 
 // Scroll-reveal hook

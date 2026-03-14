@@ -865,14 +865,14 @@ body {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 12px;
+  padding-bottom: 24px;
   margin: 0 -24px;
   padding-left: 24px;
   padding-right: 24px;
+  /* hide scrollbar but keep functionality */
+  scrollbar-width: none;
 }
-
 .lp-testimonials-scroll::-webkit-scrollbar { display: none; }
-.lp-testimonials-scroll { scrollbar-width: none; }
 
 .lp-tcard {
   background: var(--lp-card);
@@ -1029,9 +1029,10 @@ body {
   }
 
   .lp-testimonials-scroll {
-    margin: 0;
-    padding-left: 0;
-    padding-right: 0;
+    margin: 0 -60px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 32px;
   }
 
   .lp-cta-section {
