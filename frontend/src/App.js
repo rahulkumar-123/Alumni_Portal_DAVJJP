@@ -18,7 +18,6 @@ import GroupChat from './pages/GroupChat';
 import AdminDashboard from './pages/AdminDashboard';
 import Feedback from './pages/Feedback';
 import AboutDeveloper from './pages/AboutDeveloper';
-import Preloader from './components/layout/Preloader';
 import { NotificationProvider } from './context/NotificationContext';
 import NotificationsPage from './pages/NotificationsPage';
 import PostPage from './pages/PostPage';
@@ -26,27 +25,6 @@ import ResetPassword from './pages/ResetPassword';
 import NotFound from './pages/NotFound';
 import { Analytics } from "@vercel/analytics/react"
 function App() {
-  const [showPreloader, setShowPreloader] = useState(true);
-
-  useEffect(() => {
-    // This logic ensures the preloader is only shown once per session
-    const hasLoaded = sessionStorage.getItem('hasLoaded');
-    if (hasLoaded) {
-      setShowPreloader(false);
-    } else {
-      const timer = setTimeout(() => {
-        setShowPreloader(false);
-        sessionStorage.setItem('hasLoaded', 'true');
-      }, 3500); // Preloader will show for 3.5 seconds
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
-  // Conditionally render the preloader
-  if (showPreloader) {
-    return <Preloader />;
-  }
-
   return (
     <AuthProvider>
       <SocketProvider>
