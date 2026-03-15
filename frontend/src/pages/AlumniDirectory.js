@@ -99,7 +99,7 @@ export default function AlumniDirectory() {
               <UserGroupIcon className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
             </div>
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-on-surface mb-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-on-surface mb-2" style={{ fontFamily: "'Fraunces', serif" }}>
             Alumni Directory
           </h1>
           <p className="text-sm sm:text-base lg:text-lg text-muted max-w-2xl mx-auto px-4">

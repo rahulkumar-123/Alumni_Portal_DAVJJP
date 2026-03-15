@@ -62,7 +62,7 @@ export default function PrivacyPolicy() {
             </div>
 
             <div className="text-center mt-8">
-                <Link to="/" className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark">
+                <Link to="/" className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-background bg-primary hover:bg-primary-dark">
                     Back to Home
                 </Link>
             </div>

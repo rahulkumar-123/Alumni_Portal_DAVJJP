@@ -72,7 +72,7 @@ export default function CreateGroupModal({ setIsOpen, onGroupCreated }) {
                         <button 
                             type="submit" 
                             disabled={loading} 
-                            className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark font-semibold transition disabled:bg-primary-light"
+                            className="px-4 py-2 bg-primary text-background rounded-lg hover:bg-primary-dark font-semibold transition disabled:bg-primary-light"
                         >
                             {loading ? "Creating..." : "Create Group"}
                         </button>

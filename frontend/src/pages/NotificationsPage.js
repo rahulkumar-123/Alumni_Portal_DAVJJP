@@ -16,7 +16,7 @@ export default function NotificationsPage() {
         
         switch (n.type) {
             case 'new_like':
-                text = <><strong>{n.sender.fullName}</strong> liked your post: <strong>"{n.post?.title || 'your post'}"</strong></>;
+                text = <><strong>{n.sender?.fullName || 'Someone'}</strong> liked your post: <strong>"{n.post?.title || 'your post'}"</strong></>;
                 if (n.post?._id) {
                     link = `/posts/${n.post._id}`;
                     isValidLink = true;
@@ -24,7 +24,7 @@ export default function NotificationsPage() {
                 break;
 
             case 'new_comment':
-                text = <><strong>{n.sender.fullName}</strong> commented on your post.</>;
+                text = <><strong>{n.sender?.fullName || 'Someone'}</strong> commented on your post.</>;
                 if (n.post?._id) {
                     link = `/posts/${n.post._id}`;
                     isValidLink = true;
@@ -32,7 +32,7 @@ export default function NotificationsPage() {
                 break;
 
             case 'new_post':
-                text = <><strong>{n.sender.fullName}</strong> created a new post: "{n.post?.title || 'a new post'}"</>;
+                text = <><strong>{n.sender?.fullName || 'Someone'}</strong> created a new post: "{n.post?.title || 'a new post'}"</>;
                 if (n.post?._id) {
                     link = `/posts/${n.post._id}`;
                     isValidLink = true;
@@ -40,7 +40,7 @@ export default function NotificationsPage() {
                 break;
 
             case 'mention_comment':
-                text = <><strong>{n.sender.fullName}</strong> mentioned you in a comment.</>;
+                text = <><strong>{n.sender?.fullName || 'Someone'}</strong> mentioned you in a comment.</>;
                 if (n.post?._id) {
                     link = `/posts/${n.post._id}`;
                     isValidLink = true;
@@ -48,7 +48,7 @@ export default function NotificationsPage() {
                 break;
 
             case 'mention_chat':
-                text = <><strong>{n.sender.fullName}</strong> mentioned you in a group chat.</>;
+                text = <><strong>{n.sender?.fullName || 'Someone'}</strong> mentioned you in a group chat.</>;
                 if (n.group?._id) {
                     link = `/groups/${n.group._id}`;
                     isValidLink = true;
@@ -69,17 +69,18 @@ export default function NotificationsPage() {
 
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
-            <h1 className="text-3xl font-bold text-on-surface mb-6">All Notifications</h1>
+            <h1 className="text-3xl font-bold text-on-surface mb-6" style={{ fontFamily: "'Fraunces', serif" }}>All Notifications</h1>
             <div className="bg-surface rounded-xl shadow-lg">
                 <ul className="divide-y divide-white/10">
                     {notifications.length > 0 ? notifications.map(n => {
                         const { text, link, isValidLink } = getNotificationInfo(n);
 
-                        const profileImageUrl = n.sender.profilePicture?.startsWith('http')
+                        const senderName = n.sender?.fullName || 'Unknown User';
+                        const profileImageUrl = n.sender?.profilePicture?.startsWith('http')
                             ? n.sender.profilePicture
-                            : n.sender.profilePicture && n.sender.profilePicture !== 'no-photo.jpg'
+                            : n.sender?.profilePicture && n.sender.profilePicture !== 'no-photo.jpg'
                                 ? `${API_URL}${n.sender.profilePicture}`
-                                : `https://ui-avatars.com/api/?name=${n.sender.fullName}&background=8344AD&color=fff`;
+                                : `https://ui-avatars.com/api/?name=${senderName}&background=f5a623&color=080808`;
 
                         return (
                             <li key={n._id}>
@@ -89,7 +90,7 @@ export default function NotificationsPage() {
                                             <img
                                                 className="h-10 w-10 rounded-full object-cover"
                                                 src={profileImageUrl}
-                                                alt={n.sender.fullName}
+                                                alt={senderName}
                                             />
                                             <div className="ml-4">
                                                 <p className="text-sm text-on-surface">{text}</p>
@@ -105,7 +106,7 @@ export default function NotificationsPage() {
                                             <img
                                                 className="h-10 w-10 rounded-full object-cover"
                                                 src={profileImageUrl}
-                                                alt={n.sender.fullName}
+                                                alt={senderName}
                                             />
                                             <div className="ml-4">
                                                 <p className="text-sm text-on-surface">{text}</p>

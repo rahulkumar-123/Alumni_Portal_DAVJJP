@@ -36,7 +36,7 @@ export default function ForgotPasswordModal({ onClose }) {
                         <p className="text-muted mb-6">Enter your email address and we'll send you a link to reset your password.</p>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <input type="email" placeholder="Your Email Address" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full px-4 py-3 border border-white/10 rounded-md bg-white/5 text-on-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary" />
-                            <button type="submit" disabled={loading} className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-white bg-primary hover:bg-primary-dark transition-colors disabled:bg-primary-light">
+                            <button type="submit" disabled={loading} className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-background bg-primary hover:bg-primary-dark transition-colors disabled:bg-primary-light">
                                 {loading ? 'Sending...' : 'Send Reset Link'}
                             </button>
                         </form>

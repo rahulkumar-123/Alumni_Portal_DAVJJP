@@ -159,7 +159,7 @@ export default function GroupChat() {
                                     <img src={profileImageUrl} alt={msg.sender?.fullName} className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover self-start flex-shrink-0" />
                                 )}
 
-                                <div className={`p-2.5 sm:p-3 rounded-2xl max-w-[75%] sm:max-w-lg ${isMyMessage ? 'bg-primary text-background rounded-br-none' : 'bg-white/10 text-on-surface rounded-bl-none'}`}>
+                                <div className={`p-2.5 sm:p-3 rounded-2xl max-w-[75%] sm:max-w-lg ${isMyMessage ? 'bg-primary text-black rounded-br-none' : 'bg-white/10 text-on-surface rounded-bl-none'}`}>
                                     {!isMyMessage && (
                                         <p className="font-bold text-xs mb-1 text-primary-dark truncate">
                                             {msg.sender?.fullName}
@@ -201,7 +201,7 @@ export default function GroupChat() {
                     </div>
                     <button 
                         type="submit" 
-                        className="p-2.5 sm:p-3 bg-primary rounded-full text-white hover:bg-primary-dark transition-colors disabled:opacity-50" 
+                        className="p-2.5 sm:p-3 bg-primary rounded-full text-background hover:bg-primary-dark transition-colors disabled:opacity-50" 
                         disabled={!newMessage.trim()}
                         style={{ minWidth: '44px', width: '44px', height: '44px', flexShrink: 0 }}
                     >

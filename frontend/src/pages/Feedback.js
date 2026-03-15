@@ -27,12 +27,12 @@ export default function Feedback() {
     return (
         <div className="max-w-2xl mx-auto">
             <div className="bg-surface shadow-lg rounded-xl p-8">
-                <h1 className="text-2xl font-bold text-on-surface mb-4">Submit Feedback</h1>
+                <h1 className="text-2xl font-bold text-on-surface mb-4" style={{ fontFamily: "'Fraunces', serif" }}>Submit Feedback</h1>
                 <p className="text-muted mb-6">We would love to hear your thoughts, suggestions, or concerns.</p>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <input name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} required className="w-full px-4 py-3 border border-white/10 rounded-md bg-white/5 text-on-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary" />
                     <textarea name="message" placeholder="Your message" value={formData.message} onChange={handleChange} required rows="5" className="w-full px-4 py-3 border border-white/10 rounded-md bg-white/5 text-on-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
-                    <button type="submit" disabled={loading} className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-white bg-primary hover:bg-primary-dark transition-colors disabled:bg-primary-light">
+                    <button type="submit" disabled={loading} className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-background bg-primary hover:bg-primary-dark transition-colors disabled:bg-primary-light">
                         {loading ? 'Submitting...' : 'Submit Feedback'}
                     </button>
                 </form>

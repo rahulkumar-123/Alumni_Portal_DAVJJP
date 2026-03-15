@@ -53,12 +53,12 @@ export default function Groups() {
         <div>
             <div className="flex flex-col md:flex-row justify-between md:items-center text-center md:text-left mb-8">
                 <div className="mb-4 md:mb-0">
-                    <h1 className="text-4xl font-extrabold text-on-surface">Interest Groups</h1>
+                    <h1 className="text-3xl sm:text-4xl font-bold text-on-surface" style={{ fontFamily: "'Fraunces', serif" }}>Interest Groups</h1>
                     <p className="mt-2 text-lg text-muted max-w-2xl">This is your space! Create a group for your batch, your city, your hobby, or anything else.</p>
                 </div>
                 <button
                     onClick={() => setCreateModalOpen(true)}
-                    className="inline-flex items-center self-center gap-2 px-4 py-2 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-primary-dark transition-transform transform hover:scale-105"
+                    className="inline-flex items-center self-center gap-2 px-4 py-2 bg-primary text-background font-semibold rounded-lg shadow-md hover:bg-primary-dark transition-transform transform hover:scale-105"
                 >
                     <PlusIcon className="w-5 h-5" /> Create Group
                 </button>
@@ -90,7 +90,7 @@ export default function Groups() {
                                         <button
                                             onClick={() => handleJoinGroup(group._id)}
                                             disabled={isJoining}
-                                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark transition disabled:bg-primary-light disabled:cursor-not-allowed"
+                                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-background bg-primary hover:bg-primary-dark transition disabled:bg-primary-light disabled:cursor-not-allowed"
                                         >
                                             {isJoining ? 'Joining...' : 'Join Group'}
                                         </button>
