@@ -23,7 +23,6 @@ export default function AlumniDirectory() {
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
 
-  // New filtering system
   const [filterType, setFilterType] = useState("name");
   const [searchValue, setSearchValue] = useState("");
   const [filters, setFilters] = useState({
@@ -34,30 +33,10 @@ export default function AlumniDirectory() {
   });
 
   const filterOptions = [
-    {
-      value: "name",
-      label: "Name",
-      icon: UserGroupIcon,
-      placeholder: "Search by name...",
-    },
-    {
-      value: "batchYear",
-      label: "Batch Year",
-      icon: AcademicCapIcon,
-      placeholder: "e.g., 2020",
-    },
-    {
-      value: "currentOrganization",
-      label: "Organization",
-      icon: BuildingOfficeIcon,
-      placeholder: "Search by company/institute...",
-    },
-    {
-      value: "location",
-      label: "Location",
-      icon: MapPinIcon,
-      placeholder: "Search by location...",
-    },
+    { value: "name", label: "Name", icon: UserGroupIcon, placeholder: "Search by name..." },
+    { value: "batchYear", label: "Batch Year", icon: AcademicCapIcon, placeholder: "e.g., 2020" },
+    { value: "currentOrganization", label: "Organization", icon: BuildingOfficeIcon, placeholder: "Search by company/institute..." },
+    { value: "location", label: "Location", icon: MapPinIcon, placeholder: "Search by location..." },
   ];
 
   const getCurrentFilter = () =>
@@ -94,12 +73,7 @@ export default function AlumniDirectory() {
   };
 
   const handleClearFilters = () => {
-    setFilters({
-      name: "",
-      batchYear: "",
-      currentOrganization: "",
-      location: "",
-    });
+    setFilters({ name: "", batchYear: "", currentOrganization: "", location: "" });
     setSearchValue("");
     setCurrentPage(1);
   };
@@ -116,70 +90,63 @@ export default function AlumniDirectory() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-8">
-        {/* Header Section */}
+        {/* Header */}
         <div className="text-center mb-6 sm:mb-8">
           <div className="flex justify-center mb-3 sm:mb-4">
-            <div className="bg-blue-100 p-2 sm:p-3 rounded-full">
-              <UserGroupIcon className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
+            <div className="bg-primary/10 p-2 sm:p-3 rounded-full">
+              <UserGroupIcon className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
             </div>
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-on-surface mb-2">
             Alumni Directory
           </h1>
-          <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto px-4">
+          <p className="text-sm sm:text-base lg:text-lg text-muted max-w-2xl mx-auto px-4">
             Connect with fellow alumni and expand your professional network.
             Search by name, batch year, organization, or location.
           </p>
         </div>
 
-        {/* Enhanced Filter Section */}
-        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8 border border-gray-100">
+        {/* Filter Section */}
+        <div className="bg-surface rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8 border border-white/5">
           <div className="flex items-center gap-2 mb-3 sm:mb-4">
-            <FunnelIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
-            <h2 className="text-base sm:text-lg font-semibold text-gray-900">
+            <FunnelIcon className="w-4 h-4 sm:w-5 sm:h-5 text-muted" />
+            <h2 className="text-base sm:text-lg font-semibold text-on-surface">
               Search & Filter
             </h2>
           </div>
 
           <form onSubmit={handleFilterSubmit} className="space-y-4 sm:space-y-6">
-            {/* First Row: Filter Type and Search Input */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              {/* Filter Type Dropdown */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Filter By
-                </label>
+                <label className="block text-sm font-medium text-muted mb-2">Filter By</label>
                 <div className="relative">
                   <select
                     value={filterType}
                     onChange={(e) => handleFilterTypeChange(e.target.value)}
-                    className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 appearance-none transition-colors text-sm"
+                    className="w-full px-4 py-3 pr-10 border border-white/10 rounded-lg bg-white/5 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 appearance-none transition-colors text-sm"
                   >
                     {filterOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
+                      <option key={option.value} value={option.value} className="bg-surface text-on-surface">
                         {option.label}
                       </option>
                     ))}
                   </select>
                   <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
-                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </div>
                 </div>
               </div>
 
-              {/* Search Input */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Search Value
-                </label>
+                <label className="block text-sm font-medium text-muted mb-2">Search Value</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     {React.createElement(getCurrentFilter().icon, {
-                      className: "w-5 h-5 text-gray-400",
+                      className: "w-5 h-5 text-muted",
                     })}
                   </div>
                   <input
@@ -187,16 +154,15 @@ export default function AlumniDirectory() {
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
                     placeholder={getCurrentFilter().placeholder}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-colors text-sm"
+                    className="w-full pl-10 pr-4 py-3 border border-white/10 rounded-lg bg-white/5 text-on-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
                   />
                 </div>
               </div>
 
-              {/* Search Button */}
               <div className="flex items-end">
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-3 px-6 bg-gradient-to-r from-primary to-primary/80 text-white font-semibold rounded-lg hover:from-primary/90 hover:to-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 transition-all duration-200 shadow-md hover:shadow-lg text-sm transform hover:scale-105"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-6 bg-primary text-background font-semibold rounded-lg hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background transition-all duration-200 shadow-md hover:shadow-lg text-sm transform hover:scale-105"
                 >
                   <MagnifyingGlassIcon className="w-5 h-5" />
                   <span>Search</span>
@@ -204,12 +170,11 @@ export default function AlumniDirectory() {
               </div>
             </div>
 
-            {/* Second Row: Clear Button and Active Filters */}
             <div className="flex items-center justify-between">
               <button
                 type="button"
                 onClick={handleClearFilters}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 text-sm"
+                className="flex items-center gap-2 px-4 py-2 bg-white/5 text-on-surface font-medium rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-background transition-all duration-200 text-sm"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -217,13 +182,12 @@ export default function AlumniDirectory() {
                 <span>Clear All Filters</span>
               </button>
 
-              {/* Active Filters Display */}
               {Object.values(filters).some(value => value !== "") && (
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-muted">
                   <span>Active filters:</span>
                   {Object.entries(filters).map(([key, value]) => 
                     value && (
-                      <span key={key} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 rounded-md text-xs">
+                      <span key={key} className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary rounded-md text-xs">
                         {filterOptions.find(opt => opt.value === key)?.label}: {value}
                       </span>
                     )
@@ -235,20 +199,19 @@ export default function AlumniDirectory() {
         </div>
 
         {/* Results Section */}
-        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6">
+        <div className="bg-surface rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 border border-white/5">
           {loading ? (
             <div className="flex justify-center py-8 sm:py-12">
               <Spinner />
             </div>
           ) : users.length > 0 ? (
             <>
-              {/* Results Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                 {users.map((user) => (
                   <div
                     key={user._id}
                     onClick={() => setSelectedUser(user)}
-                    className="bg-gray-50 rounded-xl p-4 sm:p-6 cursor-pointer hover:shadow-lg transition-all duration-200 border border-gray-100 hover:border-primary/20"
+                    className="bg-white/5 rounded-xl p-4 sm:p-6 cursor-pointer hover:bg-white/10 transition-all duration-200 border border-white/10 hover:border-primary/20"
                   >
                     <div className="text-center">
                       <img
@@ -257,24 +220,24 @@ export default function AlumniDirectory() {
                             ? user.profilePicture
                             : user.profilePicture !== "no-photo.jpg"
                             ? `${API_URL}${user.profilePicture}`
-                            : `https://ui-avatars.com/api/?name=${user.fullName}&background=8344AD&color=fff&size=128`
+                            : `https://ui-avatars.com/api/?name=${user.fullName}&background=f5a623&color=080808&size=128`
                         }
                         alt={user.fullName}
                         className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 object-cover border-2 border-primary/20"
                       />
-                      <h3 className="font-semibold text-gray-900 text-sm sm:text-base mb-1 truncate">
+                      <h3 className="font-semibold text-on-surface text-sm sm:text-base mb-1 truncate">
                         {user.fullName}
                       </h3>
                       <p className="text-primary text-xs sm:text-sm font-medium mb-2">
                         Class of {user.batchYear}
                       </p>
                       {user.currentOrganization && (
-                        <p className="text-gray-600 text-xs sm:text-sm truncate mb-1">
+                        <p className="text-muted text-xs sm:text-sm truncate mb-1">
                           {user.currentOrganization}
                         </p>
                       )}
                       {user.location && (
-                        <p className="text-gray-500 text-xs truncate">
+                        <p className="text-muted text-xs truncate">
                           📍 {user.location}
                         </p>
                       )}
@@ -286,21 +249,21 @@ export default function AlumniDirectory() {
               {/* Pagination */}
               {pagination.totalPages > 1 && (
                 <div className="mt-6 sm:mt-8 flex items-center justify-between">
-                  <div className="text-sm text-gray-700">
+                  <div className="text-sm text-muted">
                     Showing page {pagination.currentPage} of {pagination.totalPages}
                   </div>
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => handlePageChange(pagination.currentPage - 1)}
                       disabled={pagination.currentPage <= 1}
-                      className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-3 py-2 text-sm font-medium text-muted bg-white/5 border border-white/10 rounded-md hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <ChevronLeftIcon className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => handlePageChange(pagination.currentPage + 1)}
                       disabled={pagination.currentPage >= pagination.totalPages}
-                      className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-3 py-2 text-sm font-medium text-muted bg-white/5 border border-white/10 rounded-md hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <ChevronRightIcon className="w-4 h-4" />
                     </button>
@@ -311,10 +274,10 @@ export default function AlumniDirectory() {
           ) : (
             <div className="text-center py-8 sm:py-12">
               <div className="text-4xl sm:text-6xl mb-4">🔍</div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">
+              <h3 className="text-lg sm:text-xl font-semibold text-on-surface mb-2">
                 No Alumni Found
               </h3>
-              <p className="text-gray-600 text-sm sm:text-base">
+              <p className="text-muted text-sm sm:text-base">
                 Try adjusting your search criteria or filters.
               </p>
             </div>
@@ -322,7 +285,6 @@ export default function AlumniDirectory() {
         </div>
       </div>
 
-      {/* Alumni Detail Modal */}
       {selectedUser && (
         <AlumniDetailModal
           user={selectedUser}

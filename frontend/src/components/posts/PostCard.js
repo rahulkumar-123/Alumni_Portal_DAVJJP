@@ -176,7 +176,7 @@ export default function PostCard({ post, refreshFeed }) {
               <button
                 onClick={handleDelete}
                 title="Delete Post"
-                className="p-1.5 sm:p-2 rounded-full text-muted hover:text-red-500 hover:bg-red-50 transition"
+                className="p-1.5 sm:p-2 rounded-full text-muted hover:text-red-500 hover:bg-red-900/30 transition"
               >
                 <TrashIcon className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
@@ -222,7 +222,7 @@ export default function PostCard({ post, refreshFeed }) {
           )}
 
           {/* ================= ACTIONS ================= */}
-          <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-gray-100">
+          <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-white/10">
             <div className="flex items-center gap-4 sm:gap-6">
               {/* Like Button */}
               <button

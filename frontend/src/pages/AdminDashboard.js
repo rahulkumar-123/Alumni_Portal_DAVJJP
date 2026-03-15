@@ -18,14 +18,14 @@ export default function AdminDashboard() {
             {/* Mobile Dropdown Menu */}
             <div className="sm:hidden mb-4">
                 <label htmlFor="tabs" className="sr-only">Select a tab</label>
-                <select id="tabs" name="tabs" className="block w-full rounded-md border-gray-300 focus:border-primary focus:ring-primary" onChange={(e) => setActiveTab(e.target.value)} value={activeTab}>
+                <select id="tabs" name="tabs" className="block w-full rounded-md border-white/10 bg-white/5 text-on-surface focus:border-primary focus:ring-primary" onChange={(e) => setActiveTab(e.target.value)} value={activeTab}>
                     {tabs.map((tab) => (<option key={tab.id} value={tab.id}>{tab.name}</option>))}
                 </select>
             </div>
 
             {/* Desktop Tab Navigation */}
             <div className="hidden sm:block">
-                <div className="border-b border-gray-200">
+                <div className="border-b border-white/10">
                     <nav className="-mb-px flex space-x-8" aria-label="Tabs">
                         {tabs.map((tab) => (
                             <button key={tab.name} onClick={() => setActiveTab(tab.id)}

@@ -25,7 +25,7 @@ export default function ForgotPasswordModal({ onClose }) {
     return (
         <div className="fixed inset-0 bg-black/70 z-50 flex justify-center items-center p-4" onClick={onClose}>
             <div className="bg-surface rounded-xl shadow-2xl p-8 w-full max-w-md animate-zoomIn" onClick={(e) => e.stopPropagation()}>
-                <button onClick={onClose} className="absolute top-4 right-4 text-muted hover:text-on-surface p-1 rounded-full hover:bg-gray-100">
+                <button onClick={onClose} className="absolute top-4 right-4 text-muted hover:text-on-surface p-1 rounded-full hover:bg-white/10">
                     <XMarkIcon className="w-6 h-6" />
                 </button>
                 <h2 className="text-2xl font-bold mb-4 text-on-surface">Reset Password</h2>
@@ -35,7 +35,7 @@ export default function ForgotPasswordModal({ onClose }) {
                     <>
                         <p className="text-muted mb-6">Enter your email address and we'll send you a link to reset your password.</p>
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <input type="email" placeholder="Your Email Address" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary" />
+                            <input type="email" placeholder="Your Email Address" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full px-4 py-3 border border-white/10 rounded-md bg-white/5 text-on-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary" />
                             <button type="submit" disabled={loading} className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-white bg-primary hover:bg-primary-dark transition-colors disabled:bg-primary-light">
                                 {loading ? 'Sending...' : 'Send Reset Link'}
                             </button>

@@ -8,13 +8,10 @@
 
 /* This is the main container for the input field */
 .mentions__control {
-    background-color: white !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
     border-radius: 24px !important;
-    /* full rounded corners */
     padding: 0.75rem 1.25rem !important;
-    /* 12px 20px - increased right padding */
-    border: 1px solid #d1d5db !important;
-    /* gray-300 */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     font-size: 1rem !important;
     min-height: 3rem !important;
     max-height: 8rem !important;
@@ -25,14 +22,14 @@
     position: relative !important;
     display: flex !important;
     align-items: center !important;
+    color: #f2ede8 !important;
 }
 
 .mentions__control:focus-within {
     outline: 2px solid transparent;
     outline-offset: 2px;
-    --tw-ring-color: #8344AD;
-    /* primary color */
-    /*box-shadow: 0 0 0 2px var(--tw-ring-color);*/
+    --tw-ring-color: #f5a623;
+    border-color: #f5a623 !important;
 }
 
 /* This is the actual text input area */
@@ -60,6 +57,11 @@
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale !important;
+    color: #f2ede8 !important;
+}
+
+.mentions__input::placeholder {
+    color: rgba(242, 237, 232, 0.55) !important;
 }
 
 /* This is the dropdown suggestion box */
@@ -72,32 +74,33 @@
 }
 
 .mentions__suggestions__list {
-    background-color: white;
-    border: 1px solid #d1d5db;
+    background-color: #111419;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.2);
     max-height: 15rem;
     overflow-y: auto;
+    color: #f2ede8;
 }
 
 .mentions__suggestions__item {
     padding: 0.5rem 1rem;
     cursor: pointer;
+    color: #f2ede8;
 }
 
 .mentions__suggestions__item--focused {
-    background-color: #f3f4f6;
-    /* gray-100 */
+    background-color: rgba(245, 166, 35, 0.15);
+    color: #f5a623;
 }
 
 /* This is the highlighted @mention text in the input */
 .mentions__mention {
     background-color: transparent !important;
     font-weight: 600 !important;
-    /* light purple */
     padding: 1px 3px !important;
     border-radius: 4px !important;
     font-weight: 600 !important;
-    color: #2563EB !important;
+    color: #f5a623 !important;
     margin: 0 1px !important;
 }

@@ -98,8 +98,8 @@ export default function ResetPassword() {
     };
 
     const getInputClassName = (fieldName) => {
-        const baseClasses = "w-full px-4 py-3 border rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary";
-        return `${baseClasses} ${errors[fieldName] ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'}`;
+        const baseClasses = "w-full px-4 py-3 border rounded-md bg-white/5 text-on-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary";
+        return `${baseClasses} ${errors[fieldName] ? 'border-red-500 focus:ring-red-500' : 'border-white/10'}`;
     };
 
     return (
