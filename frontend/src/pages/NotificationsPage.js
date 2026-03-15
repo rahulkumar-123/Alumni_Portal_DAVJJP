@@ -71,7 +71,7 @@ export default function NotificationsPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
             <h1 className="text-3xl font-bold text-on-surface mb-6">All Notifications</h1>
             <div className="bg-surface rounded-xl shadow-lg">
-                <ul className="divide-y divide-gray-200">
+                <ul className="divide-y divide-white/10">
                     {notifications.length > 0 ? notifications.map(n => {
                         const { text, link, isValidLink } = getNotificationInfo(n);
 
@@ -84,7 +84,7 @@ export default function NotificationsPage() {
                         return (
                             <li key={n._id}>
                                 {isValidLink ? (
-                                    <Link to={link} className={`block p-4 hover:bg-gray-50 ${!n.read ? 'bg-primary-light/10' : ''}`}>
+                                    <Link to={link} className={`block p-4 hover:bg-white/5 ${!n.read ? 'bg-primary/5' : ''}`}>
                                         <div className="flex items-center">
                                             <img
                                                 className="h-10 w-10 rounded-full object-cover"
@@ -100,7 +100,7 @@ export default function NotificationsPage() {
                                         </div>
                                     </Link>
                                 ) : (
-                                    <div className={`block p-4 ${!n.read ? 'bg-primary-light/10' : ''}`}>
+                                    <div className={`block p-4 ${!n.read ? 'bg-primary/5' : ''}`}>
                                         <div className="flex items-center">
                                             <img
                                                 className="h-10 w-10 rounded-full object-cover"
@@ -112,7 +112,7 @@ export default function NotificationsPage() {
                                                 <p className="text-xs text-muted mt-1">
                                                     {formatDistanceToNow(new Date(n.createdAt))} ago
                                                 </p>
-                                                <p className="text-xs text-gray-400 mt-1">
+                                                <p className="text-xs text-muted mt-1">
                                                     (Content no longer available)
                                                 </p>
                                             </div>

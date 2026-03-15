@@ -136,8 +136,8 @@ export default function GroupChat() {
 
     return (
         <div className="h-[75vh] sm:h-[80vh] flex flex-col bg-surface rounded-xl sm:rounded-2xl shadow-2xl">
-            <div className="p-3 sm:p-4 border-b flex items-center space-x-3 sm:space-x-4 sticky top-0 bg-surface rounded-t-xl sm:rounded-t-2xl">
-                <Link to="/groups" className="text-primary hover:text-primary-dark p-1.5 sm:p-2 rounded-full hover:bg-gray-100">
+            <div className="p-3 sm:p-4 border-b border-white/10 flex items-center space-x-3 sm:space-x-4 sticky top-0 bg-surface rounded-t-xl sm:rounded-t-2xl">
+                <Link to="/groups" className="text-primary hover:text-primary-dark p-1.5 sm:p-2 rounded-full hover:bg-white/10">
                     <ArrowLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </Link>
                 <h1 className="text-lg sm:text-2xl font-bold text-on-surface truncate">{group.name}</h1>
@@ -159,7 +159,7 @@ export default function GroupChat() {
                                     <img src={profileImageUrl} alt={msg.sender?.fullName} className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover self-start flex-shrink-0" />
                                 )}
 
-                                <div className={`p-2.5 sm:p-3 rounded-2xl max-w-[75%] sm:max-w-lg ${isMyMessage ? 'bg-primary text-white rounded-br-none' : 'bg-gray-200 text-on-surface rounded-bl-none'}`}>
+                                <div className={`p-2.5 sm:p-3 rounded-2xl max-w-[75%] sm:max-w-lg ${isMyMessage ? 'bg-primary text-background rounded-br-none' : 'bg-white/10 text-on-surface rounded-bl-none'}`}>
                                     {!isMyMessage && (
                                         <p className="font-bold text-xs mb-1 text-primary-dark truncate">
                                             {msg.sender?.fullName}
@@ -179,7 +179,7 @@ export default function GroupChat() {
                 <div ref={messagesEndRef} />
             </div>
 
-            <div className="p-3 sm:p-4 border-t bg-gray-50 rounded-b-xl sm:rounded-b-2xl">
+            <div className="p-3 sm:p-4 border-t border-white/10 bg-white/5 rounded-b-xl sm:rounded-b-2xl">
                 <form onSubmit={handleSendMessage} className="grid grid-cols-[1fr_auto] gap-3 sm:gap-4 w-full max-w-full">
                     <div className="w-full max-w-full overflow-hidden pr-1">
                         <MentionsInput

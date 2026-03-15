@@ -5,12 +5,10 @@ import postService from '../../services/postService';
 import toast from 'react-hot-toast';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 import { formatDistanceToNowStrict } from 'date-fns';
-// import useAuth from '../../hooks/useAuth';
 import './mentionStyle.css';
 import StyledText from '../common/StyledText';
 
 export default function CommentSection({ postId, comments: initialComments, onCommentPosted }) {
-    // const { user, isAdmin } = useAuth();
     const [comments, setComments] = useState(initialComments || []);
     const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(false);
@@ -43,21 +41,21 @@ export default function CommentSection({ postId, comments: initialComments, onCo
     };
 
     return (
-        <div className="p-4 sm:p-6 bg-gradient-to-b from-gray-50 to-gray-100">
+        <div className="p-4 sm:p-6 bg-background/50">
             <form onSubmit={handleSubmit} className="grid grid-cols-[1fr_auto] gap-3 sm:gap-4 mb-4 w-full max-w-full">
                 <div className="w-full max-w-full overflow-hidden pr-1">
                     <MentionsInput
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
                         placeholder="Write a comment..."
-                        className="mentions"
+                        className="mentions mentions--dark"
                         a11ySuggestionsListLabel={"Suggested users for mention"}
                         style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}
                     >
                         <Mention
                             trigger="@"
                             data={fetchUsersForMention}
-                            markup="@[__display__]" // <-- Simplified markup
+                            markup="@[__display__]"
                             displayTransform={(id, display) => `@${display}`}
                             className="mentions__mention"
                         />
@@ -66,7 +64,7 @@ export default function CommentSection({ postId, comments: initialComments, onCo
                 <button 
                     type="submit" 
                     disabled={loading || !newComment.trim()} 
-                    className="p-2.5 bg-blue-600 rounded-full text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg"
+                    className="p-2.5 bg-primary rounded-full text-background hover:bg-primary-light disabled:bg-white/10 disabled:text-muted disabled:cursor-not-allowed transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg"
                     style={{ minWidth: '44px', width: '44px', height: '44px', flexShrink: 0 }}
                 >
                     <PaperAirplaneIcon className="w-5 h-5" />
@@ -78,12 +76,12 @@ export default function CommentSection({ postId, comments: initialComments, onCo
                     .slice()
                     .sort(createdAt => new Date(createdAt).getTime())
                     .map(comment => (
-                        <div key={comment._id} className="bg-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200">
+                        <div key={comment._id} className="bg-white/5 p-3 sm:p-4 rounded-lg border border-white/10 hover:border-white/20 transition-all duration-200">
                             <div className="flex justify-between items-baseline mb-2">
-                                <p className="font-semibold text-sm text-gray-900">{comment.name}</p>
-                                <p className="text-xs text-gray-500">{formatDistanceToNowStrict(new Date(comment.createdAt))} ago</p>
+                                <p className="font-semibold text-sm text-on-surface">{comment.name}</p>
+                                <p className="text-xs text-muted">{formatDistanceToNowStrict(new Date(comment.createdAt))} ago</p>
                             </div>
-                            <div className="text-gray-700 text-sm">
+                            <div className="text-muted text-sm">
                                 <StyledText text={comment.text} />
                             </div>
                         </div>

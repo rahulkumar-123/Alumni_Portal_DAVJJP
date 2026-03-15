@@ -37,18 +37,12 @@ export default function AlumniDetailModal({ user, onClose }) {
     ? user.profilePicture
     : user.profilePicture && user.profilePicture !== "no-photo.jpg"
     ? `${API_URL}${user.profilePicture}`
-    : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-        user.fullName
-      )}&background=8344AD&color=fff&size=128`;
+    : `https://ui-avatars.com/api/?name=${encodeURIComponent(user.fullName)}&background=f5a623&color=080808&size=128`;
 
   const formatDate = (dateString) =>
     !dateString
       ? null
-      : new Date(dateString).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        });
+      : new Date(dateString).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
   const calculateAge = (dob) => {
     if (!dob) return null;
@@ -62,84 +56,65 @@ export default function AlumniDetailModal({ user, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm p-3 sm:p-4"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-3 sm:p-4"
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-xl sm:rounded-2xl shadow-2xl animate-slideIn
-                   w-full
-                   max-w-md sm:max-w-lg
-                   lg:max-w-4xl xl:max-w-5xl
+        className="bg-surface rounded-xl sm:rounded-2xl shadow-2xl animate-slideIn
+                   w-full max-w-md sm:max-w-lg lg:max-w-4xl xl:max-w-5xl
                    max-h-[90vh] lg:max-h-[80vh]
                    overflow-y-auto lg:overflow-hidden
-                   lg:flex lg:divide-x lg:divide-gray-100"
+                   lg:flex lg:divide-x lg:divide-white/10
+                   border border-white/10"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 z-10 rounded-full bg-secondary p-2
-                     text-gray-900 transition-all duration-200 hover:scale-110
-                     hover:bg-gray-300 hover:text-gray-600"
+          className="absolute top-3 right-3 z-10 rounded-full bg-white/10 p-2
+                     text-on-surface transition-all duration-200 hover:scale-110
+                     hover:bg-white/20"
         >
           <XMarkIcon className="h-5 w-5" />
         </button>
 
         <aside className="hidden lg:flex min-w-[310px] flex-col items-center px-6 py-8 xl:min-w-[360px]">
           <div className="relative w-full">
-            <div className="h-24 w-full overflow-hidden rounded-t-xl bg-gradient-to-br from-primary/90 via-primary/50 to-primary/90">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+            <div className="h-24 w-full overflow-hidden rounded-t-xl bg-gradient-to-br from-primary/40 via-primary/20 to-secondary/20">
+              <div className="absolute inset-0 bg-gradient-to-t from-surface/50 to-transparent" />
             </div>
             <img
               src={profileImageUrl}
               alt={user.fullName}
               className="absolute left-1/2 top-4 h-32 w-32 -translate-x-1/2 rounded-full
-                         border-4 border-white object-cover shadow-2xl"
+                         border-4 border-surface object-cover shadow-2xl"
             />
           </div>
 
           <div className="mt-20 space-y-3 text-center">
-            <h2 className="text-3xl font-bold text-gray-900">{user.fullName}</h2>
+            <h2 className="text-3xl font-bold text-on-surface">{user.fullName}</h2>
 
-            <div className="flex items-center justify-center gap-1 text-lg font-semibold text-blue-600">
+            <div className="flex items-center justify-center gap-1 text-lg font-semibold text-primary">
               <AcademicCapIcon className="h-5 w-5" />
               Class of {user.batchYear}
             </div>
 
-            {(user.linkedInProfile ||
-              user.facebookProfile ||
-              user.instagramProfile) && (
+            {(user.linkedInProfile || user.facebookProfile || user.instagramProfile) && (
               <div className="flex gap-3 justify-center">
                 {user.linkedInProfile && (
-                  <a
-                    href={user.linkedInProfile}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group rounded-full bg-blue-50 p-3 transition-all
-                               duration-300 hover:scale-110 hover:bg-blue-600 hover:text-white"
-                  >
+                  <a href={user.linkedInProfile} target="_blank" rel="noopener noreferrer"
+                    className="group rounded-full bg-white/5 p-3 transition-all duration-300 hover:scale-110 hover:bg-primary/20 text-muted hover:text-primary">
                     <LinkedInIcon />
                   </a>
                 )}
                 {user.facebookProfile && (
-                  <a
-                    href={user.facebookProfile}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group rounded-full bg-blue-50 p-3 transition-all
-                               duration-300 hover:scale-110 hover:bg-blue-600 hover:text-white"
-                  >
+                  <a href={user.facebookProfile} target="_blank" rel="noopener noreferrer"
+                    className="group rounded-full bg-white/5 p-3 transition-all duration-300 hover:scale-110 hover:bg-primary/20 text-muted hover:text-primary">
                     <FacebookIcon />
                   </a>
                 )}
                 {user.instagramProfile && (
-                  <a
-                    href={user.instagramProfile}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group rounded-full bg-pink-50 p-3 transition-all
-                               duration-300 hover:scale-110 hover:bg-gradient-to-r
-                               hover:from-pink-500 hover:to-purple-600 hover:text-white"
-                  >
+                  <a href={user.instagramProfile} target="_blank" rel="noopener noreferrer"
+                    className="group rounded-full bg-white/5 p-3 transition-all duration-300 hover:scale-110 hover:bg-secondary/20 text-muted hover:text-secondary">
                     <InstagramIcon />
                   </a>
                 )}
@@ -148,63 +123,34 @@ export default function AlumniDetailModal({ user, onClose }) {
           </div>
         </aside>
 
-        <div
-          className="flex-1 overflow-y-auto scrollbar-hide
-                     px-3 pb-4 pt-16
-                     sm:px-6 sm:pt-24
-                     lg:px-6 lg:pb-6 lg:pt-8
-                     xl:px-8"
-        >
+        <div className="flex-1 overflow-y-auto scrollbar-hide px-3 pb-4 pt-16 sm:px-6 sm:pt-24 lg:px-6 lg:pb-6 lg:pt-8 xl:px-8">
           <div className="lg:hidden mb-4 text-center">
-            <div className="py-4 flex justify-center bg-primary/90 -mt-10 rounded-lg">
-              <img
-                src={profileImageUrl}
-                alt={user.fullName}
-                className="h-32 w-32 rounded-full border-2 border-blue-200 object-cover shadow-lg"
-              />
+            <div className="py-4 flex justify-center bg-gradient-to-br from-primary/30 to-secondary/10 -mt-10 rounded-lg">
+              <img src={profileImageUrl} alt={user.fullName}
+                className="h-32 w-32 rounded-full border-2 border-primary/30 object-cover shadow-lg" />
             </div>
-            <h2 className="mb-1 text-lg font-bold text-gray-900 sm:text-xl">
-              {user.fullName}
-            </h2>
-            <div className="mb-2 flex items-center justify-center gap-1 text-sm font-semibold text-blue-600">
+            <h2 className="mb-1 text-lg font-bold text-on-surface sm:text-xl">{user.fullName}</h2>
+            <div className="mb-2 flex items-center justify-center gap-1 text-sm font-semibold text-primary">
               <AcademicCapIcon className="h-4 w-4" />
               Class of {user.batchYear}
             </div>
-            {(user.linkedInProfile ||
-              user.facebookProfile ||
-              user.instagramProfile) && (
+            {(user.linkedInProfile || user.facebookProfile || user.instagramProfile) && (
               <div className="flex justify-center gap-2">
                 {user.linkedInProfile && (
-                  <a
-                    href={user.linkedInProfile}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group rounded-full bg-blue-50 p-2 transition-all
-                               hover:scale-110 hover:bg-blue-600 hover:text-white"
-                  >
+                  <a href={user.linkedInProfile} target="_blank" rel="noopener noreferrer"
+                    className="group rounded-full bg-white/5 p-2 transition-all hover:scale-110 hover:bg-primary/20 text-muted hover:text-primary">
                     <LinkedInIcon />
                   </a>
                 )}
                 {user.facebookProfile && (
-                  <a
-                    href={user.facebookProfile}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group rounded-full bg-blue-50 p-2 transition-all
-                               hover:scale-110 hover:bg-blue-600 hover:text-white"
-                  >
+                  <a href={user.facebookProfile} target="_blank" rel="noopener noreferrer"
+                    className="group rounded-full bg-white/5 p-2 transition-all hover:scale-110 hover:bg-primary/20 text-muted hover:text-primary">
                     <FacebookIcon />
                   </a>
                 )}
                 {user.instagramProfile && (
-                  <a
-                    href={user.instagramProfile}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group rounded-full bg-pink-50 p-2 transition-all
-                               hover:scale-110 hover:bg-gradient-to-r
-                               hover:from-pink-500 hover:to-purple-600 hover:text-white"
-                  >
+                  <a href={user.instagramProfile} target="_blank" rel="noopener noreferrer"
+                    className="group rounded-full bg-white/5 p-2 transition-all hover:scale-110 hover:bg-secondary/20 text-muted hover:text-secondary">
                     <InstagramIcon />
                   </a>
                 )}
@@ -212,116 +158,86 @@ export default function AlumniDetailModal({ user, onClose }) {
             )}
           </div>
 
-          {/* ------------ DETAILS ------------- */}
           <div className="space-y-3 lg:space-y-6">
-            {/* Bio */}
             {user.bio && (
-              <section className="rounded-lg border border-blue-100 bg-gradient-to-r from-primary/20 to-primary/30 p-2 lg:p-4">
+              <section className="rounded-lg border border-primary/20 bg-primary/5 p-2 lg:p-4">
                 <div className="mb-2 flex items-center gap-2">
-                  <div className="rounded-md bg-blue-100 p-1.5">
-                    <ChatBubbleLeftRightIcon className="h-4 w-4 text-blue-600 lg:h-6 lg:w-6" />
+                  <div className="rounded-md bg-primary/10 p-1.5">
+                    <ChatBubbleLeftRightIcon className="h-4 w-4 text-primary lg:h-6 lg:w-6" />
                   </div>
-                  <span className="text-sm font-semibold text-gray-900 lg:text-xl">
-                    About
-                  </span>
+                  <span className="text-sm font-semibold text-on-surface lg:text-xl">About</span>
                 </div>
-                <p className="leading-relaxed text-gray-700 text-sm lg:text-lg">
-                  {user.bio}
-                </p>
+                <p className="leading-relaxed text-muted text-sm lg:text-lg">{user.bio}</p>
               </section>
             )}
 
-            {/* Grid cards */}
             <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-4">
-              {/* Email */}
-              <div className="group rounded-lg border border-gray-200 bg-white p-2 transition-all duration-300 hover:shadow-md hover:border-blue-300 lg:p-4">
+              <div className="group rounded-lg border border-white/10 bg-white/5 p-2 transition-all duration-300 hover:border-primary/20 lg:p-4">
                 <div className="flex items-start gap-2">
-                  <div className="rounded-md bg-blue-50 p-1.5 transition-colors group-hover:bg-blue-100">
-                    <EnvelopeIcon className="h-4 w-4 text-blue-600 lg:h-6 lg:w-6" />
+                  <div className="rounded-md bg-primary/10 p-1.5 transition-colors group-hover:bg-primary/20">
+                    <EnvelopeIcon className="h-4 w-4 text-primary lg:h-6 lg:w-6" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="mb-1 text-xs font-medium text-gray-500 lg:text-base">
-                      Email
-                    </p>
-                    <p className="break-all text-sm font-semibold text-gray-900 lg:text-lg">
-                      {user.email}
-                    </p>
+                    <p className="mb-1 text-xs font-medium text-muted lg:text-base">Email</p>
+                    <p className="break-all text-sm font-semibold text-on-surface lg:text-lg">{user.email}</p>
                   </div>
                 </div>
               </div>
 
-              {/* Organization */}
               {user.currentOrganization && (
-                <div className="group rounded-lg border border-gray-200 bg-white p-2 transition-all duration-300 hover:shadow-md hover:border-green-300 lg:p-4">
+                <div className="group rounded-lg border border-white/10 bg-white/5 p-2 transition-all duration-300 hover:border-primary/20 lg:p-4">
                   <div className="flex items-start gap-2">
-                    <div className="rounded-md bg-green-50 p-1.5 transition-colors group-hover:bg-green-100">
-                      <BuildingOfficeIcon className="h-4 w-4 text-green-600 lg:h-6 lg:w-6" />
+                    <div className="rounded-md bg-primary/10 p-1.5 transition-colors group-hover:bg-primary/20">
+                      <BuildingOfficeIcon className="h-4 w-4 text-primary lg:h-6 lg:w-6" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="mb-1 text-xs font-medium text-gray-500 lg:text-base">
-                        Current Organization
-                      </p>
-                      <p className="text-sm font-semibold text-gray-900 lg:text-lg">
-                        {user.currentOrganization}
-                      </p>
+                      <p className="mb-1 text-xs font-medium text-muted lg:text-base">Current Organization</p>
+                      <p className="text-sm font-semibold text-on-surface lg:text-lg">{user.currentOrganization}</p>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Location */}
               {user.location && (
-                <div className="group rounded-lg border border-gray-200 bg-white p-2 transition-all duration-300 hover:shadow-md hover:border-purple-300 lg:p-4">
+                <div className="group rounded-lg border border-white/10 bg-white/5 p-2 transition-all duration-300 hover:border-primary/20 lg:p-4">
                   <div className="flex items-start gap-2">
-                    <div className="rounded-md bg-purple-50 p-1.5 transition-colors group-hover:bg-purple-100">
-                      <MapPinIcon className="h-4 w-4 text-purple-600 lg:h-6 lg:w-6" />
+                    <div className="rounded-md bg-primary/10 p-1.5 transition-colors group-hover:bg-primary/20">
+                      <MapPinIcon className="h-4 w-4 text-primary lg:h-6 lg:w-6" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="mb-1 text-xs font-medium text-gray-500 lg:text-base">
-                        Location
-                      </p>
-                      <p className="text-sm font-semibold text-gray-900 lg:text-lg">
-                        {user.location}
-                      </p>
+                      <p className="mb-1 text-xs font-medium text-muted lg:text-base">Location</p>
+                      <p className="text-sm font-semibold text-on-surface lg:text-lg">{user.location}</p>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Phone */}
               {user.phoneNumber && (
-                <div className="group rounded-lg border border-gray-200 bg-white p-2 transition-all duration-300 hover:shadow-md hover:border-orange-300 lg:p-4">
+                <div className="group rounded-lg border border-white/10 bg-white/5 p-2 transition-all duration-300 hover:border-primary/20 lg:p-4">
                   <div className="flex items-start gap-2">
-                    <div className="rounded-md bg-orange-50 p-1.5 transition-colors group-hover:bg-orange-100">
-                      <PhoneIcon className="h-4 w-4 text-orange-600 lg:h-6 lg:w-6" />
+                    <div className="rounded-md bg-primary/10 p-1.5 transition-colors group-hover:bg-primary/20">
+                      <PhoneIcon className="h-4 w-4 text-primary lg:h-6 lg:w-6" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="mb-1 text-xs font-medium text-gray-500 lg:text-base">
-                        Phone
-                      </p>
-                      <p className="text-sm font-semibold text-gray-900 lg:text-lg">
-                        {user.phoneNumber}
-                      </p>
+                      <p className="mb-1 text-xs font-medium text-muted lg:text-base">Phone</p>
+                      <p className="text-sm font-semibold text-on-surface lg:text-lg">{user.phoneNumber}</p>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* DOB */}
               {user.dateOfBirth && (
-                <div className="group rounded-lg border border-gray-200 bg-white p-2 transition-all duration-300 hover:shadow-md hover:border-indigo-300 lg:col-span-2 lg:p-4">
+                <div className="group rounded-lg border border-white/10 bg-white/5 p-2 transition-all duration-300 hover:border-primary/20 lg:col-span-2 lg:p-4">
                   <div className="flex items-start gap-2">
-                    <div className="rounded-md bg-indigo-50 p-1.5 transition-colors group-hover:bg-indigo-100">
-                      <UserIcon className="h-4 w-4 text-indigo-600 lg:h-6 lg:w-6" />
+                    <div className="rounded-md bg-primary/10 p-1.5 transition-colors group-hover:bg-primary/20">
+                      <UserIcon className="h-4 w-4 text-primary lg:h-6 lg:w-6" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="mb-1 text-xs font-medium text-gray-500 lg:text-base">
-                        Date of Birth
-                      </p>
-                      <p className="text-sm font-semibold text-gray-900 lg:text-lg">
+                      <p className="mb-1 text-xs font-medium text-muted lg:text-base">Date of Birth</p>
+                      <p className="text-sm font-semibold text-on-surface lg:text-lg">
                         {formatDate(user.dateOfBirth)}
                         {calculateAge(user.dateOfBirth) && (
-                          <span className="ml-2 font-normal text-gray-500 text-xs lg:text-base">
+                          <span className="ml-2 font-normal text-muted text-xs lg:text-base">
                             ({calculateAge(user.dateOfBirth)} years old)
                           </span>
                         )}
@@ -335,21 +251,12 @@ export default function AlumniDetailModal({ user, onClose }) {
         </div>
       </div>
 
-      {/* animations */}
       <style jsx>{`
         @keyframes slideIn {
-          from {
-            transform: translateY(30px) scale(0.9);
-            opacity: 0;
-          }
-          to {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-          }
+          from { transform: translateY(30px) scale(0.9); opacity: 0; }
+          to { transform: translateY(0) scale(1); opacity: 1; }
         }
-        .animate-slideIn {
-          animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+        .animate-slideIn { animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
       `}</style>
     </div>
   );

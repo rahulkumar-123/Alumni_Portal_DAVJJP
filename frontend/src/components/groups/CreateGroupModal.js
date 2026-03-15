@@ -29,11 +29,11 @@ export default function CreateGroupModal({ setIsOpen, onGroupCreated }) {
 
     return (
         <div 
-            className="fixed inset-0 bg-black/30 z-50 flex justify-center items-center p-4"
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex justify-center items-center p-4"
             onClick={() => setIsOpen(false)} 
         >
             <div 
-                className="bg-surface rounded-xl shadow-2xl p-8 w-full max-w-md" 
+                className="bg-surface rounded-xl shadow-2xl p-8 w-full max-w-md border border-white/10" 
                 onClick={(e) => e.stopPropagation()} 
             >
                 <h2 className="text-2xl font-bold mb-4 text-on-surface">Create a New Group</h2>
@@ -46,7 +46,7 @@ export default function CreateGroupModal({ setIsOpen, onGroupCreated }) {
                             placeholder="E.g., Batch of 2015" 
                             required 
                             onChange={handleChange} 
-                            className="mt-1 w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary"
+                            className="mt-1 w-full px-4 py-3 border border-white/10 rounded-md bg-white/5 text-on-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                     </div>
                     <div>
@@ -58,14 +58,14 @@ export default function CreateGroupModal({ setIsOpen, onGroupCreated }) {
                             required 
                             rows="4" 
                             onChange={handleChange} 
-                            className="mt-1 w-full px-4 py-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary">
+                            className="mt-1 w-full px-4 py-3 border border-white/10 rounded-md bg-white/5 text-on-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary">
                         </textarea>
                     </div>
                     <div className="flex justify-end gap-4 pt-4">
                         <button 
                             type="button" 
                             onClick={() => setIsOpen(false)} 
-                            className="px-4 py-2 bg-gray-200 text-on-surface rounded-lg hover:bg-gray-300 font-semibold transition"
+                            className="px-4 py-2 bg-white/10 text-on-surface rounded-lg hover:bg-white/20 font-semibold transition"
                         >
                             Cancel
                         </button>

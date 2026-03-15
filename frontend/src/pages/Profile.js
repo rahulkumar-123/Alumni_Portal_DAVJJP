@@ -71,7 +71,6 @@ export default function Profile() {
       }
     };
 
-    // Only try to fetch if the user object is available
     if (user) {
       fetchProfile();
     } else {
@@ -97,11 +96,10 @@ export default function Profile() {
       setLoading(false);
     }
   };
-  // Add this function to handle profile picture upload
+
   const handleProfilePictureChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    // Basic validation
     if (!file.type.startsWith("image/")) {
       toast.error("Please upload an image file");
       return;
@@ -123,7 +121,7 @@ export default function Profile() {
       setUploading(false);
     }
   };
-  // Helper function to format date
+
   const formatDate = (dateString) => {
     if (!dateString) return "Not provided";
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -133,23 +131,18 @@ export default function Profile() {
     });
   };
 
-  // Helper function to calculate age
   const calculateAge = (dateOfBirth) => {
     if (!dateOfBirth) return null;
     const today = new Date();
     const birthDate = new Date(dateOfBirth);
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birthDate.getDate())
-    ) {
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
     return age;
   };
 
-  // Helper function to get social media icon
   const getSocialIcon = (platform) => {
     switch (platform) {
       case "linkedin":
@@ -175,20 +168,19 @@ export default function Profile() {
     }
   };
 
-  // console.log("Profile data:", profile);
   if (loading)
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center">
         <Spinner />
       </div>
     );
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center p-8 bg-white rounded-lg shadow-lg">
-          <UserCircleIcon className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-          <p className="text-red-500 text-lg font-medium">
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center p-8 bg-surface rounded-lg shadow-lg border border-white/10">
+          <UserCircleIcon className="w-16 h-16 mx-auto text-muted mb-4" />
+          <p className="text-red-400 text-lg font-medium">
             Could not load profile. Please try logging in again.
           </p>
         </div>
@@ -197,27 +189,27 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br">
+    <div className="min-h-screen">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-6 py-2">
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
-          <div className="relative bg-gradient-to-r from-primary/50 via-primary/20 to-primary/50 py-8 px-4 sm:px-6">
-            <div className="absolute inset-0 bg-black/20 pointer-events-none rounded-t-2xl"></div>
+        <div className="bg-surface rounded-2xl shadow-xl overflow-hidden mb-8 border border-white/5">
+          <div className="relative bg-gradient-to-r from-primary/30 via-primary/10 to-secondary/20 py-8 px-4 sm:px-6">
+            <div className="absolute inset-0 bg-black/30 pointer-events-none rounded-t-2xl"></div>
             <div className="relative z-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
               <div className="flex flex-col sm:flex-row items-center sm:items-end gap-4">
                 <div className="relative group">
                   <img
-                    className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-white shadow-lg"
+                    className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-surface shadow-lg"
                     src={
                       profile.profilePicture?.startsWith("http")
                         ? profile.profilePicture
                         : profile.profilePicture !== "no-photo.jpg"
                         ? `${API_URL}${profile.profilePicture}`
-                        : `https://ui-avatars.com/api/?name=${profile.fullName}&background=8344AD&color=fff&size=128`
+                        : `https://ui-avatars.com/api/?name=${profile.fullName}&background=f5a623&color=080808&size=128`
                     }
                     alt={profile.fullName}
                   />
 
-                  <label className="absolute bottom-2 right-2 bg-white text-gray-700 rounded-full p-2 cursor-pointer shadow-lg hover:bg-gray-100 transition-all duration-200 group-hover:scale-110">
+                  <label className="absolute bottom-2 right-2 bg-primary text-background rounded-full p-2 cursor-pointer shadow-lg hover:bg-primary-light transition-all duration-200 group-hover:scale-110">
                     <CameraIcon className="w-4 h-4" />
                     <input
                       type="file"
@@ -230,12 +222,12 @@ export default function Profile() {
 
                   {uploading && (
                     <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center">
-                      <div className="animate-spin h-8 w-8 border-2 border-white border-t-transparent rounded-full"></div>
+                      <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full"></div>
                     </div>
                   )}
                 </div>
 
-                <div className="text-white text-center sm:text-left">
+                <div className="text-on-surface text-center sm:text-left">
                   <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">
                     {profile.fullName}
                   </h1>
@@ -260,7 +252,7 @@ export default function Profile() {
                   className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-200 ${
                     isEditing
                       ? "bg-red-500 text-white hover:bg-red-600"
-                      : "bg-white text-gray-700 hover:bg-gray-100"
+                      : "bg-white/10 text-on-surface hover:bg-white/20 border border-white/10"
                   } shadow-lg`}
                 >
                   {isEditing ? (
@@ -280,19 +272,18 @@ export default function Profile() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Mobile: Show main content first (order-1), Desktop: Show as second column (lg:order-2) */}
             <div className="lg:col-span-2 order-1 lg:order-2">
-              <div className="bg-white rounded-2xl shadow-lg p-6">
+              <div className="bg-surface rounded-2xl p-6">
                 {isEditing ? (
                   <div>
-                    <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                      <PencilIcon className="w-5 h-5 text-blue-600" />
+                    <h2 className="text-xl font-bold text-on-surface mb-6 flex items-center gap-2">
+                      <PencilIcon className="w-5 h-5 text-primary" />
                       Edit Profile
                     </h2>
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <label className="block text-sm font-medium text-muted mb-2">
                             Full Name *
                           </label>
                           <input
@@ -300,13 +291,13 @@ export default function Profile() {
                             type="text"
                             value={formData.fullName}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            className="w-full px-4 py-3 border border-white/10 rounded-lg bg-white/5 text-on-surface placeholder:text-muted focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                             required
                           />
                         </div>
 
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <label className="block text-sm font-medium text-muted mb-2">
                             Phone Number
                           </label>
                           <input
@@ -314,12 +305,12 @@ export default function Profile() {
                             type="tel"
                             value={formData.phoneNumber}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            className="w-full px-4 py-3 border border-white/10 rounded-lg bg-white/5 text-on-surface placeholder:text-muted focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <label className="block text-sm font-medium text-muted mb-2">
                             Current Organization
                           </label>
                           <input
@@ -327,12 +318,12 @@ export default function Profile() {
                             type="text"
                             value={formData.currentOrganization}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            className="w-full px-4 py-3 border border-white/10 rounded-lg bg-white/5 text-on-surface placeholder:text-muted focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <label className="block text-sm font-medium text-muted mb-2">
                             Location
                           </label>
                           <input
@@ -340,25 +331,12 @@ export default function Profile() {
                             type="text"
                             value={formData.location}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            className="w-full px-4 py-3 border border-white/10 rounded-lg bg-white/5 text-on-surface placeholder:text-muted focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                           />
                         </div>
 
-                        {/* <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Date of Birth
-                          </label>
-                          <input
-                            name="dateOfBirth"
-                            type="date"
-                            value={formData.dateOfBirth}
-                            onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                          />
-                        </div> */}
-
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <label className="block text-sm font-medium text-muted mb-2">
                             Bio
                           </label>
                           <textarea
@@ -366,14 +344,14 @@ export default function Profile() {
                             value={formData.bio}
                             onChange={handleChange}
                             rows="4"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            className="w-full px-4 py-3 border border-white/10 rounded-lg bg-white/5 text-on-surface placeholder:text-muted focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                             placeholder="Tell us about yourself..."
                           />
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-muted mb-2">
                               LinkedIn Profile
                             </label>
                             <input
@@ -381,13 +359,13 @@ export default function Profile() {
                               type="url"
                               value={formData.linkedInProfile}
                               onChange={handleChange}
-                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                              className="w-full px-4 py-3 border border-white/10 rounded-lg bg-white/5 text-on-surface placeholder:text-muted focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                               placeholder="https://linkedin.com/in/..."
                             />
                           </div>
 
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-muted mb-2">
                               Facebook Profile
                             </label>
                             <input
@@ -395,13 +373,13 @@ export default function Profile() {
                               type="url"
                               value={formData.facebookProfile}
                               onChange={handleChange}
-                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                              className="w-full px-4 py-3 border border-white/10 rounded-lg bg-white/5 text-on-surface placeholder:text-muted focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                               placeholder="https://facebook.com/..."
                             />
                           </div>
 
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-muted mb-2">
                               Instagram Profile
                             </label>
                             <input
@@ -409,7 +387,7 @@ export default function Profile() {
                               type="url"
                               value={formData.instagramProfile}
                               onChange={handleChange}
-                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                              className="w-full px-4 py-3 border border-white/10 rounded-lg bg-white/5 text-on-surface placeholder:text-muted focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                               placeholder="https://instagram.com/..."
                             />
                           </div>
@@ -419,11 +397,11 @@ export default function Profile() {
                           <button
                             type="submit"
                             disabled={loading || uploading}
-                            className="flex-1 flex items-center justify-center gap-2 py-3 px-6 bg-primary/70 text-white font-medium rounded-lg hover:bg-primary/70 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50"
+                            className="flex-1 flex items-center justify-center gap-2 py-3 px-6 bg-primary text-background font-medium rounded-lg hover:bg-primary-light focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface transition-colors disabled:opacity-50"
                           >
                             {loading ? (
                               <>
-                                <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+                                <div className="animate-spin h-4 w-4 border-2 border-background border-t-transparent rounded-full"></div>
                                 Saving...
                               </>
                             ) : (
@@ -436,7 +414,7 @@ export default function Profile() {
                           <button
                             type="button"
                             onClick={() => setIsEditing(false)}
-                            className="px-6 py-3 bg-red-300  text-gray-700 font-medium rounded-lg hover:bg-red-400 transition-colors"
+                            className="px-6 py-3 bg-red-500/20 text-red-400 font-medium rounded-lg hover:bg-red-500/30 transition-colors"
                           >
                             Cancel
                           </button>
@@ -447,24 +425,24 @@ export default function Profile() {
                 ) : (
                   <>
                     <div>
-                      <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                        <ChatBubbleLeftRightIcon className="w-5 h-5 text-blue-600" />
+                      <h2 className="text-xl font-bold text-on-surface mb-6 flex items-center gap-2">
+                        <ChatBubbleLeftRightIcon className="w-5 h-5 text-primary" />
                         About Me
                       </h2>
 
                       {profile.bio ? (
-                        <div className="prose prose-gray max-w-none">
-                          <p className="text-gray-700 leading-relaxed text-lg">
+                        <div>
+                          <p className="text-muted leading-relaxed text-lg">
                             {profile.bio}
                           </p>
                         </div>
                       ) : (
                         <div className="text-center py-12">
-                          <UserCircleIcon className="w-16 h-16 mx-auto text-gray-300 mb-4" />
-                          <p className="text-gray-500 text-lg">
+                          <UserCircleIcon className="w-16 h-16 mx-auto text-white/10 mb-4" />
+                          <p className="text-muted text-lg">
                             No bio added yet
                           </p>
-                          <p className="text-gray-400 text-sm mt-2">
+                          <p className="text-muted text-sm mt-2">
                             Click "Edit Profile" to add your bio and tell others
                             about yourself!
                           </p>
@@ -472,14 +450,14 @@ export default function Profile() {
                       )}
 
                       {profile.currentOrganization && (
-                        <div className="mt-8 p-4 bg-blue-50 rounded-lg">
+                        <div className="mt-8 p-4 bg-primary/5 rounded-lg border border-primary/10">
                           <div className="flex items-center gap-2 mb-2">
-                            <BuildingOfficeIcon className="w-5 h-5 text-blue-600" />
-                            <span className="font-medium text-blue-900">
+                            <BuildingOfficeIcon className="w-5 h-5 text-primary" />
+                            <span className="font-medium text-primary">
                               Currently Working At
                             </span>
                           </div>
-                          <p className="text-blue-800 text-lg font-semibold">
+                          <p className="text-on-surface text-lg font-semibold">
                             {profile.currentOrganization}
                           </p>
                         </div>
@@ -490,9 +468,9 @@ export default function Profile() {
                     {(profile.linkedInProfile ||
                       profile.facebookProfile ||
                       profile.instagramProfile) && (
-                      <div className="mt-8 bg-gray-50 rounded-2xl p-6">
-                        <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                          <GlobeAltIcon className="w-5 h-5 text-blue-600" />
+                      <div className="mt-8 bg-white/5 rounded-2xl p-6 border border-white/10">
+                        <h2 className="text-xl font-bold text-on-surface mb-4 flex items-center gap-2">
+                          <GlobeAltIcon className="w-5 h-5 text-primary" />
                           Social Media
                         </h2>
                         <div className="space-y-3">
@@ -501,18 +479,14 @@ export default function Profile() {
                               href={profile.linkedInProfile}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-3 p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors"
+                              className="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:border-white/10"
                             >
-                              <div className="text-blue-600">
+                              <div className="text-primary">
                                 {getSocialIcon("linkedin")}
                               </div>
                               <div>
-                                <p className="font-medium text-gray-900">
-                                  LinkedIn
-                                </p>
-                                <p className="text-sm text-gray-500 truncate">
-                                  View Profile
-                                </p>
+                                <p className="font-medium text-on-surface">LinkedIn</p>
+                                <p className="text-sm text-muted truncate">View Profile</p>
                               </div>
                             </a>
                           )}
@@ -522,18 +496,14 @@ export default function Profile() {
                               href={profile.facebookProfile}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-3 p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors"
+                              className="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:border-white/10"
                             >
-                              <div className="text-blue-600">
+                              <div className="text-primary">
                                 {getSocialIcon("facebook")}
                               </div>
                               <div>
-                                <p className="font-medium text-gray-900">
-                                  Facebook
-                                </p>
-                                <p className="text-sm text-gray-500 truncate">
-                                  View Profile
-                                </p>
+                                <p className="font-medium text-on-surface">Facebook</p>
+                                <p className="text-sm text-muted truncate">View Profile</p>
                               </div>
                             </a>
                           )}
@@ -543,18 +513,14 @@ export default function Profile() {
                               href={profile.instagramProfile}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-3 p-3 rounded-lg bg-pink-50 hover:bg-pink-100 transition-colors"
+                              className="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:border-white/10"
                             >
-                              <div className="text-pink-600">
+                              <div className="text-secondary">
                                 {getSocialIcon("instagram")}
                               </div>
                               <div>
-                                <p className="font-medium text-gray-900">
-                                  Instagram
-                                </p>
-                                <p className="text-sm text-gray-500 truncate">
-                                  View Profile
-                                </p>
+                                <p className="font-medium text-on-surface">Instagram</p>
+                                <p className="text-sm text-muted truncate">View Profile</p>
                               </div>
                             </a>
                           )}
@@ -566,85 +532,77 @@ export default function Profile() {
               </div>
             </div>
 
-            {/* Mobile: Show sidebar second (order-2), Desktop: Show as first column (lg:order-1) */}
+            {/* Sidebar */}
             <div className="lg:col-span-1 space-y-6 order-2 lg:order-1">
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <UserIcon className="w-5 h-5 text-blue-600" />
+              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                <h2 className="text-xl font-bold text-on-surface mb-4 flex items-center gap-2">
+                  <UserIcon className="w-5 h-5 text-primary" />
                   Contact Information
                 </h2>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <EnvelopeIcon className="w-5 h-5 text-gray-400" />
+                    <EnvelopeIcon className="w-5 h-5 text-muted" />
                     <div>
-                      <p className="text-sm text-gray-500">Email</p>
-                      <p className="font-medium text-gray-900">{profile.email}</p>
+                      <p className="text-sm text-muted">Email</p>
+                      <p className="font-medium text-on-surface">{profile.email}</p>
                     </div>
                   </div>
 
                   {profile.phoneNumber && (
                     <div className="flex items-center gap-3">
-                      <PhoneIcon className="w-5 h-5 text-gray-400" />
+                      <PhoneIcon className="w-5 h-5 text-muted" />
                       <div>
-                        <p className="text-sm text-gray-500">Phone</p>
-                        <p className="font-medium text-gray-900">
-                          {profile.phoneNumber}
-                        </p>
+                        <p className="text-sm text-muted">Phone</p>
+                        <p className="font-medium text-on-surface">{profile.phoneNumber}</p>
                       </div>
                     </div>
                   )}
 
                   {profile.location && (
                     <div className="flex items-center gap-3">
-                      <MapPinIcon className="w-5 h-5 text-gray-400" />
+                      <MapPinIcon className="w-5 h-5 text-muted" />
                       <div>
-                        <p className="text-sm text-gray-500">Location</p>
-                        <p className="font-medium text-gray-900">
-                          {profile.location}
-                        </p>
+                        <p className="text-sm text-muted">Location</p>
+                        <p className="font-medium text-on-surface">{profile.location}</p>
                       </div>
                     </div>
                   )}
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <AcademicCapIcon className="w-5 h-5 text-blue-600" />
+              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                <h2 className="text-xl font-bold text-on-surface mb-4 flex items-center gap-2">
+                  <AcademicCapIcon className="w-5 h-5 text-primary" />
                   Academic Information
                 </h2>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <CalendarIcon className="w-5 h-5 text-gray-400" />
+                    <CalendarIcon className="w-5 h-5 text-muted" />
                     <div>
-                      <p className="text-sm text-gray-500">Batch Year</p>
-                      <p className="font-medium text-gray-900">
-                        {profile.batchYear}
-                      </p>
+                      <p className="text-sm text-muted">Batch Year</p>
+                      <p className="font-medium text-on-surface">{profile.batchYear}</p>
                     </div>
                   </div>
 
                   {profile.admissionNumber && (
                     <div className="flex items-center gap-3">
-                      <IdentificationIcon className="w-5 h-5 text-gray-400" />
+                      <IdentificationIcon className="w-5 h-5 text-muted" />
                       <div>
-                        <p className="text-sm text-gray-500">Admission Number</p>
-                        <p className="font-medium text-gray-900">
-                          {profile.admissionNumber}
-                        </p>
+                        <p className="text-sm text-muted">Admission Number</p>
+                        <p className="font-medium text-on-surface">{profile.admissionNumber}</p>
                       </div>
                     </div>
                   )}
 
                   {profile.dateOfBirth && (
                     <div className="flex items-center gap-3">
-                      <CalendarIcon className="w-5 h-5 text-gray-400" />
+                      <CalendarIcon className="w-5 h-5 text-muted" />
                       <div>
-                        <p className="text-sm text-gray-500">Date of Birth</p>
-                        <p className="font-medium text-gray-900">
+                        <p className="text-sm text-muted">Date of Birth</p>
+                        <p className="font-medium text-on-surface">
                           {formatDate(profile.dateOfBirth)}
                           {calculateAge(profile.dateOfBirth) && (
-                            <span className="text-gray-500 ml-2">
+                            <span className="text-muted ml-2">
                               ({calculateAge(profile.dateOfBirth)} years old)
                             </span>
                           )}

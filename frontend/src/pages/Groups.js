@@ -77,7 +77,7 @@ export default function Groups() {
                                     <h2 className="text-2xl font-bold text-on-surface">{group.name}</h2>
                                     <p className="text-muted mt-2 flex-grow">{group.description}</p>
                                 </div>
-                                <div className="bg-gray-50 p-4 flex justify-between items-center rounded-b-xl">
+                                <div className="bg-white/5 p-4 flex justify-between items-center rounded-b-xl border-t border-white/5">
                                     <button disabled={!isMember} onClick={() => isMember && setViewingMembersOf(group)} className="flex items-center text-muted disabled:cursor-default enabled:hover:text-primary transition-colors">
                                         <UsersIcon className="w-5 h-5 mr-2" />
                                         <span className="text-sm font-medium">{group.members.length} members</span>
