@@ -147,7 +147,7 @@ const generateBirthdayEmailTemplate = (user) => {
                     
                     <p style="color: #adb5bd; margin: 0; font-size: 11px; font-family: Arial, Helvetica, sans-serif;">
                         <a href="${process.env.CLIENT_URL || 'https://alumni-portal-davjjp.vercel.app'}/" style="color: #667eea; text-decoration: none;">Share Love</a> •
-                        <a href="mailto:mnjhadavalumni@gmail.com" style="color: #667eea; text-decoration: none;">Tell Story</a>
+                        <a href="mailto:mnjdavalumni@gmail.com" style="color: #667eea; text-decoration: none;">Tell Story</a>
                     </p>
                     
                 </td>

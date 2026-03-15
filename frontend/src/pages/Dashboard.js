@@ -151,7 +151,7 @@ export default function Dashboard() {
         {/* Birthday Section */}
         <div className="w-full lg:w-1/3 order-1 lg:order-2 space-y-3 sm:space-y-4">
           <div className="bg-surface border border-white/5 p-3 sm:p-4 rounded-xl shadow-lg lg:sticky lg:top-24">
-            <h2 className="text-xl sm:text-2xl font-bold text-primary mb-2 sm:mb-3 flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-primary mb-2 sm:mb-3 flex items-center gap-2" style={{ fontFamily: "'Fraunces', serif" }}>
               <span className="text-xl sm:text-2xl">🎂</span>
               Happy Birthday!
             </h2>
@@ -182,7 +182,7 @@ export default function Dashboard() {
         <div className="w-full lg:w-2/3 order-2 lg:order-1 space-y-4 sm:space-y-6">
           {/* Post Creation Form */}
           <div className="bg-surface border border-white/5 p-4 sm:p-6 rounded-xl shadow-lg">
-            <h2 className="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4 flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4 flex items-center gap-2" style={{ fontFamily: "'Fraunces', serif" }}>
               <span className="text-xl sm:text-2xl">✍️</span>
               Create a Post
             </h2>
